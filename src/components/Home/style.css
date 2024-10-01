@@ -1,0 +1,57 @@
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.slick-prev:before {
+  color: #3a3a3a !important;
+}
+.slick-next:before {
+  color: #3a3a3a !important;
+}
+.slick-track {
+  display: flex;
+  align-items: center;
+}
+/* index -1  */
+.slide-icon {
+  /* border-width: 1px; */
+  /* border-color: rgb(255, 196, 205); */
+  /* border-style: solid; */
+  /* border-radius: 5%;
+  background-color: #eeeaea;
+  text-align: center; */
+  display: block;
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 0px 0.5vw;
+}
+
+.slide-icon span {
+  font-family: "Inter", monospace;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  display: inline-block;
+  word-wrap: break-word; /* Ensures text wraps inside the box */
+  max-width: 100%; /* Prevents the text from overflowing */
+  overflow: hidden;
+}
+.slide-icon img {
+  display: block;
+  margin: 0 auto;
+  padding-bottom: 5px;
+  width: 50px;
+}
+
+.highlight .slide-icon {
+  background: #dedede; /* Add the highlight background for selected */
+  border-radius: 5%;
+  color: #000;
+  transition: background 0.3s ease; /* Smooth transition for color change */
+}
+
+.highlight .slide-icon img {
+  filter: brightness(110%); /* Highlighted image */
+  transition: filter 0.3s ease;
+}

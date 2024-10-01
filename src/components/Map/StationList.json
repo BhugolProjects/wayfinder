@@ -1,0 +1,226 @@
+[
+    {
+      "Station_Code": "CUP",
+      "Station_Name": "Cuffe Parade",
+      "Station_Commercial_Name": "Cuffe Parade",
+      "Station_Type": "Underground",
+      "Station_Latitude": 18.912955,
+      "Station_Longitude": 72.820196
+    },
+    {
+      "Station_Code": "VIDB",
+      "Station_Name": "Vidhan Bhavan",
+      "Station_Commercial_Name": "SBI-Vidhan Bhavan",
+      "Station_Type": "Underground",
+      "Station_Latitude": 18.924696,
+      "Station_Longitude": 72.825616
+    },
+    {
+      "Station_Code": "CHGM",
+      "Station_Name": "Churchgate Metro",
+      "Station_Commercial_Name": "LIC-Churchgate Metro",
+      "Station_Type": "Underground",
+      "Station_Latitude": 18.930663,
+      "Station_Longitude": 72.826163
+    },
+    {
+      "Station_Code": "HUC",
+      "Station_Name": "Hutatma Chowk",
+      "Station_Commercial_Name": "LIC-Hutatma Chowk",
+      "Station_Type": "Underground",
+      "Station_Latitude": 18.934579,
+      "Station_Longitude": 72.832826
+    },
+    {
+      "Station_Code": "CSTM",
+      "Station_Name": "Chhatrapati Shivaji Maharaj Terminus Metro",
+      "Station_Commercial_Name": "KOTAK-Chhatrapati Shivaji Maharaj Terminus Metro",
+      "Station_Type": "Underground",
+      "Station_Latitude": 18.940664,
+      "Station_Longitude": 72.83217
+    },
+    {
+      "Station_Code": "KLBD",
+      "Station_Name": "Kalbadevi",
+      "Station_Commercial_Name": "Kalbadevi",
+      "Station_Type": "Underground",
+      "Station_Latitude": 18.946899,
+      "Station_Longitude": 72.826943
+    },
+    {
+      "Station_Code": "GIRG",
+      "Station_Name": "Girgaon",
+      "Station_Commercial_Name": "Girgaon",
+      "Station_Type": "Underground",
+      "Station_Latitude": 18.951929,
+      "Station_Longitude": 72.822606
+    },
+    {
+      "Station_Code": "GTRM",
+      "Station_Name": "Grant Road Metro",
+      "Station_Commercial_Name": "Grant Road Metro",
+      "Station_Type": "Underground",
+      "Station_Latitude": 18.962924,
+      "Station_Longitude": 72.817997
+    },
+    {
+      "Station_Code": "MCLM",
+      "Station_Name": "Jagannath Shankar Sheth Metro",
+      "Station_Commercial_Name": "Jagannath Shankar Sheth Metro",
+      "Station_Type": "Underground",
+      "Station_Latitude": 18.970603,
+      "Station_Longitude": 72.821382
+    },
+    {
+      "Station_Code": "MLXM",
+      "Station_Name": "Mahalaxmi Metro",
+      "Station_Commercial_Name": "Mahalaxmi Metro",
+      "Station_Type": "Underground",
+      "Station_Latitude": 18.979485,
+      "Station_Longitude": 72.825295
+    },
+    {
+      "Station_Code": "SCMU",
+      "Station_Name": "Science Centre",
+      "Station_Commercial_Name": "Science Centre",
+      "Station_Type": "Underground",
+      "Station_Latitude": 18.990318,
+      "Station_Longitude": 72.82177
+    },
+    {
+      "Station_Code": "ACA",
+      "Station_Name": "Acharya Atre Chowk",
+      "Station_Commercial_Name": "Acharya Atre Chowk",
+      "Station_Type": "Underground",
+      "Station_Latitude": 18.997126,
+      "Station_Longitude": 72.818179
+    },
+    {
+      "Station_Code": "WOR",
+      "Station_Name": "Worli",
+      "Station_Commercial_Name": "Worli",
+      "Station_Type": "Underground",
+      "Station_Latitude": 19.00878,
+      "Station_Longitude": 72.819401
+    },
+    {
+      "Station_Code": "SIDV",
+      "Station_Name": "Siddhivinayak",
+      "Station_Commercial_Name": "ICICI Lombard-Siddhivinayak",
+      "Station_Type": "Underground",
+      "Station_Latitude": 19.015876,
+      "Station_Longitude": 72.830735
+    },
+    {
+      "Station_Code": "DDRM",
+      "Station_Name": "Dadar Metro",
+      "Station_Commercial_Name": "SBI-Dadar Metro",
+      "Station_Type": "Underground",
+      "Station_Latitude": 19.023667,
+      "Station_Longitude": 72.8393
+    },
+    {
+      "Station_Code": "SDIT",
+      "Station_Name": "Shitala Devi Mandir",
+      "Station_Commercial_Name": "Shitala Devi Mandir",
+      "Station_Type": "Underground",
+      "Station_Latitude": 19.038392,
+      "Station_Longitude": 72.842133
+    },
+    {
+      "Station_Code": "DHAV",
+      "Station_Name": "Dharavi",
+      "Station_Commercial_Name": "Dharavi",
+      "Station_Type": "Underground",
+      "Station_Latitude": 19.046277,
+      "Station_Longitude": 72.849952
+    },
+    {
+      "Station_Code": "BDRM",
+      "Station_Name": "Bandra-Kurla Complex",
+      "Station_Commercial_Name": "KOTAK-Bandra-Kurla Complex",
+      "Station_Type": "Underground",
+      "Station_Latitude": 19.060216,
+      "Station_Longitude": 72.854956
+    },
+    {
+      "Station_Code": "VIDN",
+      "Station_Name": "Bandra Colony",
+      "Station_Commercial_Name": "Bandra Colony",
+      "Station_Type": "Underground",
+      "Station_Latitude": 19.070103,
+      "Station_Longitude": 72.849266
+    },
+    {
+      "Station_Code": "STZM",
+      "Station_Name": "Santacruz Metro",
+      "Station_Commercial_Name": "Santacruz Metro",
+      "Station_Type": "Underground",
+      "Station_Latitude": 19.078528,
+      "Station_Longitude": 72.847181
+    },
+    {
+      "Station_Code": "CIAD",
+      "Station_Name": "Chhatrapati Shivaji Maharaj International Airport-T1",
+      "Station_Commercial_Name": "Chhatrapati Shivaji Maharaj International Airport-T1",
+      "Station_Type": "Underground",
+      "Station_Latitude": 19.093926,
+      "Station_Longitude": 72.853447
+    },
+    {
+      "Station_Code": "SHRR",
+      "Station_Name": "Sahar Road",
+      "Station_Commercial_Name": "Sahar Road",
+      "Station_Type": "Underground",
+      "Station_Latitude": 19.102196,
+      "Station_Longitude": 72.865299
+    },
+    {
+      "Station_Code": "CSIA",
+      "Station_Name": "Chhatrapati Shivaji Maharaj International Airport-T2",
+      "Station_Commercial_Name": "SBI Chhatrapati Shivaji Maharaj International Airport-T2",
+      "Station_Type": "Underground",
+      "Station_Latitude": 19.102274,
+      "Station_Longitude": 72.874413
+    },
+    {
+      "Station_Code": "MNK",
+      "Station_Name": "Marol Naka",
+      "Station_Commercial_Name": "Marol Naka",
+      "Station_Type": "Underground",
+      "Station_Latitude": 19.108436,
+      "Station_Longitude": 72.878579
+    },
+    {
+      "Station_Code": "MIDC",
+      "Station_Name": "MIDC-Andheri",
+      "Station_Commercial_Name": "MIDC-Andheri",
+      "Station_Type": "Underground",
+      "Station_Latitude": 19.117303,
+      "Station_Longitude": 72.87382
+    },
+    {
+      "Station_Code": "SEPZ",
+      "Station_Name": "SEEPZ",
+      "Station_Commercial_Name": "SEEPZ",
+      "Station_Type": "Underground",
+      "Station_Latitude": 19.12578,
+      "Station_Longitude": 72.873447
+    },
+    {
+      "Station_Code": "ARYJ",
+      "Station_Name": "Aarey JVLR",
+      "Station_Commercial_Name": "Aarey JVLR",
+      "Station_Type": "At Grade",
+      "Station_Latitude": 19.13101,
+      "Station_Longitude": 72.884255
+    },
+    {
+      "Station_Code": "ARYD",
+      "Station_Name": "Aarey Depot",
+      "Station_Commercial_Name": "Aarey Depot",
+      "Station_Type": "At Grade",
+      "Station_Latitude": 19.13097114,
+      "Station_Longitude": 72.88134359
+    }
+  ]

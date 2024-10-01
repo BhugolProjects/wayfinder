@@ -1,0 +1,93 @@
+.mapboxgl-ctrl-top-right{
+    margin-top: 15vh;
+}
+
+.marker-icon {
+    background-position: center;
+    background-size: 22px 22px;
+    border-radius: 10%; /* added border radius */
+    height: 22px; /* changed to match width */
+    left: 4px;
+    position: absolute;
+    text-align: center;
+    top: 3px;
+    width: 22px;
+}
+.marker {
+    height: 30px;
+    width: 30px;
+}
+.marker-content {
+    background: #c30b82;
+    border-radius: 10% 10% 10% 10%;
+    height: 30px;
+    left: 50%;
+    margin: -15px 0 0 -15px;
+    position: absolute;
+    top: 50%;
+    /* transform: rotate(-45deg); */
+    width: 30px;
+}
+.marker-content::before {
+    background: #ffffff;
+    border-radius: 5%;
+    content: "";
+    height: 24px;
+    margin: 3px 0 0 3px;
+    position: absolute;
+    width: 24px;
+}
+
+.marker-pointer {
+    position: absolute;
+    left: 50%; /* center it horizontally */
+    transform: translateX(-50%);
+    bottom: -10px; /* place it below the marker-content */
+    border-style: solid;
+    border-width: 10px 10px 0 10px; /* adjust the border width to form a downward-pointing triangle */
+    border-color: #c31a26 transparent transparent transparent; /* keep the original red color */
+    height: 0;
+    width: 0;
+}
+
+
+
+
+
+
+.marker-circle-icon {
+    background-position: center;
+    background-size: 22px 22px;
+    border-radius: 50%;
+    height: 22px;
+    left: 4px;
+    position: absolute;
+    text-align: center;
+    top: 3px;
+    transform: rotate(45deg);
+    width: 22px;
+}
+.marker-circle {
+    height: 30px;
+    width: 30px;
+}
+.marker-circle-content {
+    background: #c30b82;
+    border-radius: 50% 50% 50% 0;
+    height: 30px;
+    left: 50%;
+    margin: -15px 0 0 -15px;
+    position: absolute;
+    top: 50%;
+    transform: rotate(-45deg);
+    width: 30px;
+}
+.marker-circle-content::before {
+    background: #ffffff;
+    border-radius: 50%;
+    content: "";
+    height: 24px;
+    margin: 3px 0 0 3px;
+    position: absolute;
+    width: 24px;
+}
