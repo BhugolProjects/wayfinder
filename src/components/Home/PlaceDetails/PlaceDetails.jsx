@@ -54,7 +54,7 @@ function PlaceDetails({ place, selected, refProp, cardcolor }) {
     <Card
     style={{ backgroundColor: cardcolor, borderRadius: "5%", margin: "1vh" }}
       >
-        <Box display="flex" alignItems="start" style={{ width: "100%" }}>
+        <Box display="flex" style={{ width: "100%" }} flexDirection='row' alignItems='center'>
           {/* Image on the left */}
           <CardMedia
             style={{
@@ -90,7 +90,7 @@ function PlaceDetails({ place, selected, refProp, cardcolor }) {
               // paddingRight: "5px",
             }}
           >
-            <CardContent style={{ flexGrow: 1, padding:5, marginTop: "10px" }}>
+            <CardContent style={{ flexGrow: 1, padding:5 }}>
               <Typography
                 gutterBottom
                 variant="h6" // Changed to smaller font size as in the second code

@@ -21,21 +21,20 @@ function SplashScreen({ stationName }) {
         </div>
       </header>
 
-      <h1 className="mt-48 text-xl font-bold tracking-tighter text-black">
-        WELCOME TO LINE 3 WAYFINDER
+      <h1 className="mt-16 text-lg font-bold tracking-tighter text-black">
+        WELCOME TO <span className='italic'>{stationName.toUpperCase()}</span> METRO STATION
       </h1>
 
-      <div className="px-6 mt-16 w-40 h-40 text-base tracking-tighter text-center rounded-full bg-zinc-300 text-stone-400">
-        LOGO
-        <br />
-        PLACEHOLDER
+      <img src="splash.gif" alt="Splash image" className="px-6 mt-10 w-40 h-40 text-base tracking-tighter text-center rounded-full bg-zinc-300 text-stone-400 object-cover"/>
+
+
+
+      <div className="mt-16 text-md font-medium tracking-tighter text-center text-mmbutton italic">
+        I agree to the <a href='terms' className='underline'>terms and conditions</a><br/>
+        <a href='/home'><button className="px-4 py-2 mt-4 text-sm font-semibold tracking-tighter text-white bg-mmbutton rounded-lg">I agree</button></a>
       </div>
 
-      <p className="mt-16 text-lg font-medium tracking-tighter text-center text-violet-900">
-        {stationName ? `YOU ARE AT ${stationName.toUpperCase()} METRO STATION` : ''}
-      </p>
-
-      <footer className="flex gap-3 self-end mt-52 text-xs font-semibold tracking-tight text-center text-neutral-600">
+      <div className="flex gap-3 self-end mt-10 text-xs font-semibold tracking-tight text-center text-neutral-600">
         <p className="grow my-auto">Developed by</p>
         <img
           loading="lazy"
@@ -43,7 +42,7 @@ function SplashScreen({ stationName }) {
           alt="Developer logo"
           className="object-contain shrink-0 max-w-full rounded-lg aspect-[4.74] w-[152px]"
         />
-      </footer>
+      </div>
 
     </main>
   );

@@ -7,6 +7,7 @@ import Home from "./components/Home/Home";
 import Map from "./components/Map/Map";
 import { getPlacesData } from "./api";
 import SplashScreen from "./components/Splash/SplashScreen";
+import Terms from "./components/Terms/Terms";
 
 function App() {
   const [places, setPlaces] = useState([]);
@@ -22,16 +23,16 @@ function App() {
   const [type, setType] = useState("Transportation");
   const [rating, setRating] = useState(0);
 
-  const [showSplashScreen, setShowSplashScreen] = useState(true); // State to manage the splash screen
+  // const [showSplashScreen, setShowSplashScreen] = useState(true); // State to manage the splash screen
 
-  // Show splash screen for 3 seconds
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSplashScreen(false);
-    }, 3000); // Adjust the time as needed (3 seconds)
+  // // Show splash screen for 3 seconds
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setShowSplashScreen(false);
+  //   }, 3000); // Adjust the time as needed (3 seconds)
 
-    return () => clearTimeout(timer); // Clear the timer when the component unmounts
-  }, []);
+  //   return () => clearTimeout(timer); // Clear the timer when the component unmounts
+  // }, []);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -81,11 +82,11 @@ function App() {
   }, [type, bounds]);
 
   // If splash screen is active, show it
-  if (showSplashScreen) {
-    return <SplashScreen 
-    stationName={'AAREY'}
-    />;
-  }
+  // if (showSplashScreen) {
+  //   return <SplashScreen 
+  //   stationName={'AAREY'}
+  //   />;
+  // }
 
   // Main app routes after the splash screen disappears
   return (
@@ -94,6 +95,12 @@ function App() {
         <Routes>
           <Route
             path="/"
+            element={
+              <SplashScreen stationName={'Aarey'}/>
+            }
+          />
+          <Route
+            path="/home"
             element={
               <Home
                 setCoordinates={setCoordinates}
@@ -123,6 +130,11 @@ function App() {
                 rating={rating}
                 setRating={setRating}
               />
+            }
+          />
+          <Route path="/terms"
+            element={
+              <Terms />
             }
           />
         </Routes>

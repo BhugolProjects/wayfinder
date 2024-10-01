@@ -68,7 +68,7 @@ function PlaceList({
               width: "100%",
               overflowX: "scroll",
               scrollBehavior: "smooth",
-              marginTop: "10px",
+              // marginTop: "10px",
               "::-webkit-scrollbar": { display: "none" }, // Hide scrollbar for Webkit browsers
               "-ms-overflow-style": "none", // Hide scrollbar for IE and Edge
               "scrollbar-width": "none", // Hide scrollbar for Firefox
