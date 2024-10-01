@@ -66,6 +66,7 @@ const handleChipClick = (value) => {
                             sx={{
                                 width: '100%',
                                 overflowX: 'auto',
+                                scrollbarWidth: 'none',
                                 scrollBehavior: 'smooth',
                                 padding: 0,
                             }}
@@ -78,10 +79,10 @@ const handleChipClick = (value) => {
                                     variant={type === option.value ? 'filled' : 'outlined'}
                                     onClick={() => handleChipClick(option.value)}
                                     sx={{
-                                        backgroundColor: type === option.value ? '#606060' : '#ffffff',
+                                        backgroundColor: type === option.value ? '#0091B7' : '#ffffff',
                                         color: type === option.value ? '#FFF' : '#000',
                                         '&:hover': {
-                                            backgroundColor: type === option.value ? '#303030' : '#BDBDBD',
+                                            backgroundColor: type === option.value ? '#0091B7' : '#BDBDBD',
                                         },
                                     }}
                                 />

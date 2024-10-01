@@ -17,7 +17,7 @@ import { MapContainer } from "./styles.js";
 import "./Map.css";
 import stationGeoJSON from "./MML3_Alignment.geojson";
 import { ArrowBack } from "@mui/icons-material";
-import NearMeIcon from "@mui/icons-material/NearMe";
+import DirectionsIcon from '@mui/icons-material/Directions';
 import { getStationData } from "../../api/index.js";
 
 function createMarker(
@@ -36,7 +36,7 @@ function createMarker(
   markerElement.className = "marker";
 
   var markerContentElement = document.createElement("div");
-  markerContentElement.className = "marker-content";
+  markerContentElement.className = "";
   markerContentElement.style.backgroundColor = color;
   markerElement.appendChild(markerContentElement);
 
@@ -45,9 +45,9 @@ function createMarker(
   iconElement.style.backgroundImage = `url(${icon})`;
   markerContentElement.appendChild(iconElement);
 
-  var markerPointerElement = document.createElement("div");
-  markerPointerElement.className = "marker-pointer";
-  markerContentElement.appendChild(markerPointerElement);
+  // var markerPointerElement = document.createElement("div");
+  // markerPointerElement.className = "marker-pointer";
+  // markerContentElement.appendChild(markerPointerElement);
 
   var popup = new tt.Popup({ offset: 30 }).setText(popupText);
 
@@ -302,7 +302,7 @@ function FullMapView({
                 place.SVG_Icon
                   ? process.env.REACT_APP_BASE_URL + "assets/" + place.SVG_Icon
                   : (!place.Sub_Type_of_Locality
-                      ? place.Type_of_Locality
+                      ? `location/`+place.Type_of_Locality
                       : place.Sub_Type_of_Locality
                     )
                       .replace(/ /g, "_")
@@ -615,7 +615,7 @@ function FullMapView({
           }}
         >
           <Button
-            startIcon={<NearMeIcon style={{ fontSize: 16 }} />}
+            endIcon={<DirectionsIcon style={{ fontSize: 23 }} />}
             color="primary"
             onClick={() => handleGetDirections(selectedPlace)}
             style={{

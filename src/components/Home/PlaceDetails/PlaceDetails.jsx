@@ -1,7 +1,7 @@
 import React from "react";
 
 import PhoneIcon from "@mui/icons-material/Phone";
-import NearMeIcon from "@mui/icons-material/NearMe";
+import DirectionsIcon from '@mui/icons-material/Directions';
 import LanguageIcon from "@mui/icons-material/Language";
 
 import Rating from "@mui/lab/Rating";
@@ -52,107 +52,121 @@ function PlaceDetails({ place, selected, refProp, cardcolor }) {
 
   return (
     <Card
-      style={{ backgroundColor: cardcolor, borderRadius: "5%", margin: "1vh" }}
-    >
-      <Box display="flex" justifyContent="space-between">
-        <CardMedia
-          style={{
-            width: "33.33%", // 1/3 of the card width
-            margin: 15,
-            borderRadius: 5,
-            objectFit: "cover", // Ensures the image maintains its aspect ratio
-          }}
-          image={
-            place.Image
-              ? `${process.env.REACT_APP_BASE_URL + "assets/" + place.Image}`
-              : "https://plus.unsplash.com/premium_photo-1686090448301-4c453ee74718?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          }
-          title={place.Locality_Name}
-        />
-
-        <CardContent style={{ flexGrow: 1, width: "66.67%" }}>
-          {" "}
-          {/* 2/3 of the card width */}
-          <Typography
-            gutterBottom
-            variant="h5"
+    style={{ backgroundColor: cardcolor, borderRadius: "5%", margin: "1vh" }}
+      >
+        <Box display="flex" alignItems="start" style={{ width: "100%" }}>
+          {/* Image on the left */}
+          <CardMedia
             style={{
-              fontWeight: "bold",
-              lineHeight: "24px",
+              width: "104px", // Fixed width as in the second code
+              height: "104px", // Ensure the image height adapts to the content
+              objectFit: "cover", // Use object-cover to ensure the image scales properly
+              borderRadius: "12px", // Rounded corners similar to the second code
+              marginLeft: "10px", // Add some space between the image and content
+              marginTop: "10px", // Add some space at the top
+              padding:5
+            }}
+            component="img" // Explicitly set it as an img component
+            image={
+              place.Image
+                ? `${
+                    process.env.REACT_APP_BASE_URL +
+                    "assets/" +
+                    place.Image
+                  }`
+                : "https://plus.unsplash.com/premium_photo-1686090448301-4c453ee74718?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            }
+            title={place.Locality_Name}
+          />
+      
+          {/* Content on the right */}
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="flex-start"
+            style={{
+              // width: "200px", // Match the width of the content from the second code
+              // paddingLeft: "5px",
+              // paddingRight: "5px",
+            }}
+          >
+            <CardContent style={{ flexGrow: 1, padding:5, marginTop: "10px" }}>
+              <Typography
+                gutterBottom
+                variant="h6" // Changed to smaller font size as in the second code
+                style={{
+                  fontWeight: "bold",
+                  color: "#000000", // Black color for text
+                  fontSize: "16px", // Match the text size from the second code
+                  marginBottom: "8px",
+                  fontFamily: "Inter",
+                }}
+              >
+                {place.Locality_Name}
+              </Typography>
+              <Typography
+                style={{
+                  color: "#71717A", // Adapted to match the gray color from the second code
+                  marginTop: "8px",
+                  fontSize: "14px",
+                  lineHeight: "1.4",
+                  fontFamily: "Inter",
+                }}
+              >
+                {place.Type_of_Locality}{" "}
+                {place.Sub_Type_of_Locality
+                  ? `- ${place.Sub_Type_of_Locality}`
+                  : ""}
+              </Typography>
+              <Typography
+                style={{
+                  color: "#65a30d", // Lime green to match the second code
+                  marginTop: "6px",
+                  fontWeight: "500", // Medium font weight for emphasis
+                  fontSize: "14px",
+                  fontFamily: "Inter",
+                }}
+              >
+                Nearest Gates: {place.Nearest_Gates}
+              </Typography>
+            </CardContent>
+          </Box>
+        </Box>
+      
+        {/* Directions button at the bottom, centered */}
+        <Box
+          display="flex"
+          justifyContent="center"
+          style={{
+            width: "100%",
+            // paddingTop: "10px",
+            paddingBottom: "10px",
+            // backgroundColor: cardcolor,
+          }}
+        >
+          <Button
+            endIcon={<DirectionsIcon style={{ fontSize: 23 }} />}
+            color="primary"
+            onClick={() => handleGetDirections(place)}
+            style={{
+              marginTop:5,
+              backgroundColor: "rgba(0, 145, 183, 1)",
+              color: "white",
+              borderRadius: "12px", // Rounded corners as in the second code
+              textTransform: "none",
+              paddingLeft: "10px",
+              paddingRight: "10px",
+              width: "90%", // Button takes 90% of the card width
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
               fontFamily: "Inter",
             }}
           >
-            {place.Locality_Name}
-          </Typography>
-          <Box display="flex" alignItems="center">
-            {place?.cuisine?.slice(0, 2).map((cuisine, index) => (
-              <React.Fragment key={cuisine.name}>
-                <Typography style={{ fontWeight: "semibold" }}>
-                  {cuisine.name}
-                </Typography>
-
-                {index < place.cuisine.slice(0, 2).length - 1 && (
-                  <Typography style={{ margin: "0 4px", fontWeight: "heavy" }}>
-                    •
-                  </Typography>
-                )}
-              </React.Fragment>
-            ))}
-          </Box>
-          <Box display="flex" alignItems="center" justifyItems="center">
-            <Typography
-              gutterBottom
-              variant="subtitle1"
-              style={{
-                color: "#808080",
-                marginRight: "8px",
-                lineHeight: "28px",
-                fontFamily: "Inter",
-              }}
-            >
-              {place.Type_of_Locality}{" "}
-              {place.Sub_Type_of_Locality
-                ? `- ${place.Sub_Type_of_Locality}`
-                : ""}
-            </Typography>
-          </Box>
-          <Box display="flex">
-            <Typography
-              gutterBottom
-              variant="subtitle1"
-              style={{ color: "green", marginTop: "-8px", fontFamily: "Inter" }}
-            >
-              Nearest Gates: {place.Nearest_Gates}
-            </Typography>
-          </Box>
-          <CardActions>
-            <Button
-              endIcon={
-                <NearMeIcon style={{ fontSize: 16, fontFamily: "Inter" }} />
-              }
-              color="primary"
-              onClick={handleGetDirections}
-              style={{
-                backgroundColor: "rgba(0, 145, 183, 1)",
-                color: "white",
-                borderRadius: "5px",
-                textTransform: "none",
-                paddingLeft: "10px",
-                paddingRight: "10px",
-                margin: "-10px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontFamily: "Inter",
-                width: "100%",
-              }}
-            >
-              Directions
-            </Button>
-          </CardActions>
-        </CardContent>
-      </Box>
-    </Card>
+            Directions
+          </Button>
+        </Box>
+      </Card>
   );
 }
 
