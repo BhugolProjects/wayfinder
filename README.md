@@ -1,4 +1,4 @@
-# Metro App
+# Wayfinder
 
 ## Tech Stack
 
