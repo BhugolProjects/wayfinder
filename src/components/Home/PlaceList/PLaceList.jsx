@@ -14,6 +14,9 @@ function PlaceList({
   rating,
   setRating,
   setCoordinates,
+  nearestStation,
+  selectedStation,
+  username
 }) {
   const [elRefs, setElRefs] = useState([]);
 
@@ -82,6 +85,9 @@ function PlaceList({
                     selected={Number(childClicked) === i}
                     refProp={elRefs[i]}
                     cardcolor={cardcolors[i % cardcolors.length]}
+                    nearestStation={nearestStation}
+                    selectedStation={selectedStation}
+                    username={username}
                   />
                 </Grid>
               ) : null

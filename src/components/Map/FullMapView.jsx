@@ -18,7 +18,8 @@ import "./Map.css";
 import stationGeoJSON from "./MML3_Alignment.geojson";
 import { ArrowBack } from "@mui/icons-material";
 import DirectionsIcon from '@mui/icons-material/Directions';
-import { getStationData } from "../../api/index.js";
+import { addVisitor, addVisitorAnalysis, getStationData } from "../../api/index.js";
+import { getDistance } from "geolib";
 
 function createMarker(
   icon,
@@ -210,9 +211,10 @@ function initializeMap(containerId, coordinates, setCoordinates) {
   return map;
 }
 
-const handleGetDirections = (place) => {
+const handleGetDirections = async (place, username, nearestStation) => {
   const latitude = place.Latitude;
   const longitude = place.Longitude;
+  await addVisitorAnalysis(place, username, nearestStation)
   if (latitude && longitude) {
     window.open(
       `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
@@ -238,6 +240,14 @@ function FullMapView({
   type,
   setType,
   isFullView = true,
+  username,
+  StationData,
+  nearestStation,
+  selectedStation,
+  stationsWithinRadius,
+  setNearestStation,
+  setStationsWithinRadius,
+  setSelectedStation,
 }) {
   const [selectedPlace, setSelectedPlace] = useState(null); // State for selected place
   const mapRef = useRef(null); // UseRef to hold the map instance
@@ -256,6 +266,46 @@ function FullMapView({
 
     fetchStationData();
   }, []);
+
+  useEffect(() => {
+    if (coordinates.lat && coordinates.lng) {
+      const { lat, lng } = coordinates;
+
+      // Find stations within the radius
+      const filteredStations = stationData.filter(station => {
+        const distance = getDistance(
+          { latitude: lat, longitude: lng },
+          { latitude: station.Station_Latitude, longitude: station.Station_Longitude }
+        );
+        return distance <= 1000; // Filter stations within 1000 meters
+      });
+
+      // If there are any stations within the radius, find the closest one
+      if (filteredStations.length > 0) {
+        const nearest = filteredStations.reduce((prev, curr) => {
+          const prevDistance = getDistance(
+            { latitude: lat, longitude: lng },
+            { latitude: prev.Station_Latitude, longitude: prev.Station_Longitude }
+          );
+          const currDistance = getDistance(
+            { latitude: lat, longitude: lng },
+            { latitude: curr.Station_Latitude, longitude: curr.Station_Longitude }
+          );
+          return currDistance < prevDistance ? curr : prev;
+        });
+        // console.log(nearest);
+        addVisitor(nearest); // Increment visitor count for the nearest station
+        setNearestStation(nearest);
+        setStationsWithinRadius(filteredStations);
+        setSelectedStation(nearest.Station_Code); // Set selected station to nearest one
+      } else {
+        // No station within the radius
+        setNearestStation(null);
+        setStationsWithinRadius([]);
+        setSelectedStation("no-station"); // Use a unique value to indicate no station
+      }
+    }
+  }, [coordinates]);
 
   // Initialize the map only once
   useEffect(() => {
@@ -617,7 +667,7 @@ function FullMapView({
           <Button
             endIcon={<DirectionsIcon style={{ fontSize: 23 }} />}
             color="primary"
-            onClick={() => handleGetDirections(selectedPlace)}
+            onClick={() => handleGetDirections(selectedPlace, username, nearestStation)}
             style={{
               marginTop:5,
               backgroundColor: "rgba(0, 145, 183, 1)",

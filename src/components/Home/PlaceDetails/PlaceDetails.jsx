@@ -14,14 +14,16 @@ import {
   CardContent,
   CardActions,
 } from "@mui/material";
+import { addVisitorAnalysis } from "../../../api";
 
-function PlaceDetails({ place, selected, refProp, cardcolor }) {
+function PlaceDetails({ place, selected, refProp, cardcolor, nearestStation, selectedStation, username }) {
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 
-  const handleGetDirections = () => {
+  const handleGetDirections = async (place, username, nearestStation) =>{
     const latitude = place.Latitude;
     const longitude = place.Longitude;
+    await addVisitorAnalysis(place, username, nearestStation)
     if (latitude && longitude) {
       window.open(
         `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
@@ -147,7 +149,7 @@ function PlaceDetails({ place, selected, refProp, cardcolor }) {
           <Button
             endIcon={<DirectionsIcon style={{ fontSize: 23 }} />}
             color="primary"
-            onClick={() => handleGetDirections(place)}
+            onClick={() => handleGetDirections(place, username, nearestStation)}
             style={{
               marginTop:5,
               backgroundColor: "rgba(0, 145, 183, 1)",

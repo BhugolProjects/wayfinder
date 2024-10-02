@@ -5,9 +5,10 @@ import CategorySection from "./components/Home/CategorySection";
 import MapView from "./components/Home/MapView";
 import Home from "./components/Home/Home";
 import Map from "./components/Map/Map";
-import { getPlacesData } from "./api";
+import { addVisitor, getPlacesData, getStationData } from "./api";
 import SplashScreen from "./components/Splash/SplashScreen";
 import Terms from "./components/Terms/Terms";
+import { getDistance } from "geolib";
 
 function App() {
   const [places, setPlaces] = useState([]);
@@ -23,6 +24,13 @@ function App() {
   const [type, setType] = useState("Transportation");
   const [rating, setRating] = useState(0);
 
+  const [username, setUsername] = useState('');
+
+  const [nearestStation, setNearestStation] = useState(null);
+  const [selectedStation, setSelectedStation] = useState("");
+  const [StationData, setStationData] = useState([]);
+  const [stationsWithinRadius, setStationsWithinRadius] = useState([]);
+
   // const [showSplashScreen, setShowSplashScreen] = useState(true); // State to manage the splash screen
 
   // // Show splash screen for 3 seconds
@@ -33,6 +41,18 @@ function App() {
 
   //   return () => clearTimeout(timer); // Clear the timer when the component unmounts
   // }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem('wayfinderUsername')){
+      setUsername(localStorage.getItem('wayfinderUsername'));
+    } 
+    else {
+    // Generate username when the component mounts
+    const timestamp = Date.now(); // Get the current timestamp
+    const newUsername = `USER${timestamp}`;
+    setUsername(newUsername);
+    }
+  }, []); // Empty dependency array ensures it only runs on mount
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -81,6 +101,60 @@ function App() {
     }
   }, [type, bounds]);
 
+  
+
+
+  useEffect(() => {
+    const fetchStationData = async () => {
+      const data = await getStationData();  // Fetch station data
+      setStationData(data);  // Update state with fetched station data
+    };
+
+    fetchStationData();
+  }, []);
+
+
+
+  useEffect(() => {
+    if (coordinates.lat && coordinates.lng) {
+      const { lat, lng } = coordinates;
+
+      // Find stations within the radius
+      const filteredStations = StationData.filter(station => {
+        const distance = getDistance(
+          { latitude: lat, longitude: lng },
+          { latitude: station.Station_Latitude, longitude: station.Station_Longitude }
+        );
+        return distance <= 1000; // Filter stations within 1000 meters
+      });
+
+      // If there are any stations within the radius, find the closest one
+      if (filteredStations.length > 0) {
+        const nearest = filteredStations.reduce((prev, curr) => {
+          const prevDistance = getDistance(
+            { latitude: lat, longitude: lng },
+            { latitude: prev.Station_Latitude, longitude: prev.Station_Longitude }
+          );
+          const currDistance = getDistance(
+            { latitude: lat, longitude: lng },
+            { latitude: curr.Station_Latitude, longitude: curr.Station_Longitude }
+          );
+          return currDistance < prevDistance ? curr : prev;
+        });
+        // console.log(nearest);
+        addVisitor(nearest); // Increment visitor count for the nearest station
+        setNearestStation(nearest);
+        setStationsWithinRadius(filteredStations);
+        setSelectedStation(nearest.Station_Code); // Set selected station to nearest one
+      } else {
+        // No station within the radius
+        setNearestStation(null);
+        setStationsWithinRadius([]);
+        setSelectedStation("no-station"); // Use a unique value to indicate no station
+      }
+    }
+  }, [coordinates]);
+
   // If splash screen is active, show it
   // if (showSplashScreen) {
   //   return <SplashScreen 
@@ -113,6 +187,14 @@ function App() {
                 setType={setType}
                 rating={rating}
                 setRating={setRating}
+                StationData={StationData}
+                nearestStation={nearestStation}
+                selectedStation={selectedStation}
+                stationsWithinRadius={stationsWithinRadius}
+                setNearestStation={setNearestStation}
+                setSelectedStation={setSelectedStation}
+                setStationsWithinRadius={setStationsWithinRadius}
+                username={username}
               />
             }
           />
@@ -129,6 +211,14 @@ function App() {
                 setType={setType}
                 rating={rating}
                 setRating={setRating}
+                StationData={StationData}
+                nearestStation={nearestStation}
+                selectedStation={selectedStation}
+                stationsWithinRadius={stationsWithinRadius}
+                setNearestStation={setNearestStation}
+                setSelectedStation={setSelectedStation}
+                setStationsWithinRadius={setStationsWithinRadius}
+                username={username}
               />
             }
           />

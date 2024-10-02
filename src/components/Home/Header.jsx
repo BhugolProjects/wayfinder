@@ -4,67 +4,15 @@ import { getDistance } from 'geolib'; // Import geolib for distance calculations
 import { getStationData, addVisitor } from "../../api/index.js";
 import { useTranslation } from 'react-i18next';
 
-function Header({ coordinates, setCoordinates }) {
+function Header({ coordinates, setCoordinates, StationData, nearestStation, setNearestStation, setSelectedStation, selectedStation }) {
   const { t, i18n } = useTranslation();
-  const [StationData, setStationData] = useState([]);
-  const [nearestStation, setNearestStation] = useState(null);
-  const [stationsWithinRadius, setStationsWithinRadius] = useState([]);
-  const [selectedStation, setSelectedStation] = useState("");
+  // const [StationData, setStationData] = useState([]);
 
-  useEffect(() => {
-    const fetchStationData = async () => {
-      const data = await getStationData();  // Fetch station data
-      setStationData(data);  // Update state with fetched station data
-    };
-
-    fetchStationData();
-  }, []);
+  
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
-
-
-
-  useEffect(() => {
-    if (coordinates.lat && coordinates.lng) {
-      const { lat, lng } = coordinates;
-
-      // Find stations within the radius
-      const filteredStations = StationData.filter(station => {
-        const distance = getDistance(
-          { latitude: lat, longitude: lng },
-          { latitude: station.Station_Latitude, longitude: station.Station_Longitude }
-        );
-        return distance <= 1000; // Filter stations within 1000 meters
-      });
-
-      // If there are any stations within the radius, find the closest one
-      if (filteredStations.length > 0) {
-        const nearest = filteredStations.reduce((prev, curr) => {
-          const prevDistance = getDistance(
-            { latitude: lat, longitude: lng },
-            { latitude: prev.Station_Latitude, longitude: prev.Station_Longitude }
-          );
-          const currDistance = getDistance(
-            { latitude: lat, longitude: lng },
-            { latitude: curr.Station_Latitude, longitude: curr.Station_Longitude }
-          );
-          return currDistance < prevDistance ? curr : prev;
-        });
-        // console.log(nearest);
-        addVisitor(nearest); // Increment visitor count for the nearest station
-        setNearestStation(nearest);
-        setStationsWithinRadius(filteredStations);
-        setSelectedStation(nearest.Station_Code); // Set selected station to nearest one
-      } else {
-        // No station within the radius
-        setNearestStation(null);
-        setStationsWithinRadius([]);
-        setSelectedStation("no-station"); // Use a unique value to indicate no station
-      }
-    }
-  }, [coordinates]);
 
   const handleStationChange = (event) => {
     const selectedStationCode = event.target.value;
