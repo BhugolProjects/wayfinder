@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useSearchParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Header from "./components/Home/Header";
 import CategorySection from "./components/Home/CategorySection";
@@ -13,46 +13,27 @@ import { getDistance } from "geolib";
 function App() {
   const [places, setPlaces] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
-
   const [childClicked, setChildClicked] = useState(null);
-
   const [coordinates, setCoordinates] = useState({});
   const [bounds, setBounds] = useState({});
-
   const [isLoading, setIsLoading] = useState(false);
-
   const [type, setType] = useState("Transportation");
   const [rating, setRating] = useState(0);
-
   const [username, setUsername] = useState('');
-
   const [nearestStation, setNearestStation] = useState(null);
   const [selectedStation, setSelectedStation] = useState("");
   const [StationData, setStationData] = useState([]);
   const [stationsWithinRadius, setStationsWithinRadius] = useState([]);
 
-  // const [showSplashScreen, setShowSplashScreen] = useState(true); // State to manage the splash screen
-
-  // // Show splash screen for 3 seconds
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setShowSplashScreen(false);
-  //   }, 3000); // Adjust the time as needed (3 seconds)
-
-  //   return () => clearTimeout(timer); // Clear the timer when the component unmounts
-  // }, []);
-
   useEffect(() => {
     if (localStorage.getItem('wayfinderUsername')){
       setUsername(localStorage.getItem('wayfinderUsername'));
-    } 
-    else {
-    // Generate username when the component mounts
-    const timestamp = Date.now(); // Get the current timestamp
-    const newUsername = `USER${timestamp}`;
-    setUsername(newUsername);
+    } else {
+      const timestamp = Date.now();
+      const newUsername = `USER${timestamp}`;
+      setUsername(newUsername);
     }
-  }, []); // Empty dependency array ensures it only runs on mount
+  }, []);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -101,34 +82,26 @@ function App() {
     }
   }, [type, bounds]);
 
-  
-
-
   useEffect(() => {
     const fetchStationData = async () => {
-      const data = await getStationData();  // Fetch station data
-      setStationData(data);  // Update state with fetched station data
+      const data = await getStationData();
+      setStationData(data);
     };
 
     fetchStationData();
   }, []);
 
-
-
   useEffect(() => {
     if (coordinates.lat && coordinates.lng) {
       const { lat, lng } = coordinates;
-
-      // Find stations within the radius
       const filteredStations = StationData.filter(station => {
         const distance = getDistance(
           { latitude: lat, longitude: lng },
           { latitude: station.Station_Latitude, longitude: station.Station_Longitude }
         );
-        return distance <= 1000; // Filter stations within 1000 meters
+        return distance <= 1000;
       });
 
-      // If there are any stations within the radius, find the closest one
       if (filteredStations.length > 0) {
         const nearest = filteredStations.reduce((prev, curr) => {
           const prevDistance = getDistance(
@@ -141,38 +114,23 @@ function App() {
           );
           return currDistance < prevDistance ? curr : prev;
         });
-        // console.log(nearest);
-        addVisitor(nearest); // Increment visitor count for the nearest station
+        addVisitor(nearest);
         setNearestStation(nearest);
         setStationsWithinRadius(filteredStations);
-        setSelectedStation(nearest.Station_Code); // Set selected station to nearest one
+        setSelectedStation(nearest.Station_Code);
       } else {
-        // No station within the radius
         setNearestStation(null);
         setStationsWithinRadius([]);
-        setSelectedStation("no-station"); // Use a unique value to indicate no station
+        setSelectedStation("no-station");
       }
     }
   }, [coordinates]);
 
-  // If splash screen is active, show it
-  // if (showSplashScreen) {
-  //   return <SplashScreen 
-  //   stationName={'AAREY'}
-  //   />;
-  // }
-
-  // Main app routes after the splash screen disappears
   return (
     <main className="flex overflow-hidden flex-col mx-auto w-full bg-white rounded max-w-[480px]">
       <Router>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <SplashScreen stationName={'Aarey'}/>
-            }
-          />
+          <Route path="/" element={<SplashScreenWithQuery nearestStation={nearestStation}/>} />
           <Route
             path="/home"
             element={
@@ -198,7 +156,8 @@ function App() {
               />
             }
           />
-          <Route path="/map"
+          <Route
+            path="/map"
             element={
               <Map
                 setCoordinates={setCoordinates}
@@ -222,15 +181,18 @@ function App() {
               />
             }
           />
-          <Route path="/terms"
-            element={
-              <Terms />
-            }
-          />
+          <Route path="/terms" element={<Terms />} />
         </Routes>
       </Router>
     </main>
   );
+}
+
+function SplashScreenWithQuery(nearestStation) {
+  const [searchParams] = useSearchParams();
+  const stationName = searchParams.get("stationName") || nearestStation.stationName || ""; // Default to 'Aarey' if no stationName is provided
+
+  return <SplashScreen stationName={stationName} />;
 }
 
 export default App;
