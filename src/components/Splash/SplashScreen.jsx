@@ -2,7 +2,7 @@ import React from "react";
 
 function SplashScreen({ stationName }) {
   return (
-    <main className="flex overflow-hidden flex-col items-center p-5 mx-auto w-full bg-white max-w-[480px]">
+    <main className="flex overflow-hidden flex-col items-center p-5 mx-auto w-full h-[100vh] bg-white max-w-[480px]">
       <header className="flex gap-4 self-start text-neutral-900">
         <img
           loading="lazy"
