@@ -525,7 +525,7 @@ function FullMapView({
                 {suggestions.map((suggestion, index) => (
                   <li
                     key={index}
-                    className="p-2 hover:bg-blue-500 hover:text-black cursor-pointer"
+                    className="p-2 hover:bg-blue-500 hover:text-black border border-gray-300 cursor-pointer"
                     onClick={() => handleSuggestionClick(suggestion)}
                   >
                     {suggestion.Locality_Name}
@@ -562,7 +562,7 @@ function FullMapView({
         <Card
         style={{
           position: "absolute",
-          bottom: "10vh",
+          bottom: "5vh",
           left: "50%", // Center horizontally
           transform: "translateX(-50%)", // Shift it back by 50% of its own width
           width: "90vw", // Card takes 90% of the viewport width

@@ -51,7 +51,7 @@ function SplashScreen({ stationName }) {
         </a>
       </div>
 
-      <div className="flex gap-3 self-end mt-10 text-xs font-semibold tracking-tight text-center text-neutral-600">
+      <div className="flex gap-3 self-end mt-20 mb-5 text-xs font-semibold tracking-tight text-center text-neutral-600">
         <p className="grow my-auto">Developed by</p>
         <img
           loading="lazy"
