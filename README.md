@@ -10,7 +10,7 @@
 
 **Clone the repository**
 ```bash
-  git clone git@github.com:VinaySavla/MetroApp.git
+  https://github.com/BhugolProjects/wayfinder.git
 ```
 
 **Install dependencies**
