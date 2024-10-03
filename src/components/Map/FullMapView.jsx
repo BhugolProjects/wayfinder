@@ -562,7 +562,7 @@ function FullMapView({
         <Card
         style={{
           position: "absolute",
-          bottom: "5vh",
+          bottom: "7vh",
           left: "50%", // Center horizontally
           transform: "translateX(-50%)", // Shift it back by 50% of its own width
           width: "90vw", // Card takes 90% of the viewport width
