@@ -24,7 +24,7 @@ function SplashScreen({ stationName }) {
         {stationName ? (
           <>
             WELCOME TO{" "}
-            <span className="italic">{stationName.toUpperCase()}</span> METRO
+            <span className="italic">{stationName.toUpperCase().replace("%20"," ")}</span> METRO
             STATION
           </>
         ) : (
