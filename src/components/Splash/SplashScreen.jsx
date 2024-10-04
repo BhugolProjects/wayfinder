@@ -20,12 +20,12 @@ function SplashScreen({ stationName }) {
         </div>
       </header>
 
-      <h1 className="mt-16 text-lg font-bold tracking-tighter text-black">
+      <h1 className="mt-16 text-lg font-bold text-center tracking-tighter text-black">
         {stationName ? (
           <>
-            WELCOME TO{" "}
-            <span className="italic">{stationName.toUpperCase().replace("%20"," ")}</span> METRO
-            STATION
+            WELCOME TO<br />
+            <span className="italic">{stationName.toUpperCase().replaceAll("%20"," ")} </span>
+            METRO STATION
           </>
         ) : (
           "WELCOME TO MUMBAI METRO LINE 3"
