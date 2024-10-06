@@ -1,6 +1,6 @@
 import React from "react";
 
-function SplashScreen({ stationName }) {
+function SplashScreen() {
   return (
     <main className="flex overflow-hidden flex-col items-center p-5 mx-auto w-full h-[100vh] bg-white max-w-[480px]">
       <header className="flex gap-4 self-start text-neutral-900">
@@ -21,15 +21,7 @@ function SplashScreen({ stationName }) {
       </header>
 
       <h1 className="mt-16 text-lg font-bold text-center tracking-tighter text-black">
-        {stationName ? (
-          <>
-            WELCOME TO<br />
-            <span className="italic">{stationName.toUpperCase().replaceAll("%20"," ")} </span>
-            METRO STATION
-          </>
-        ) : (
-          "WELCOME TO MUMBAI METRO LINE 3"
-        )}
+        "WELCOME TO MUMBAI METRO LINE 3"
       </h1>
 
       <img

@@ -130,7 +130,7 @@ function App() {
     <main className="flex overflow-hidden flex-col mx-auto w-full bg-white rounded max-w-[480px]">
       <Router>
         <Routes>
-          <Route path="/" element={<SplashScreenWithQuery nearestStation={nearestStation}/>} />
+          <Route path="/" element={<SplashScreenWithQuery/>} />
           <Route
             path="/home"
             element={
@@ -188,11 +188,11 @@ function App() {
   );
 }
 
-function SplashScreenWithQuery(nearestStation) {
+function SplashScreenWithQuery() {
   const [searchParams] = useSearchParams();
-  const stationName = searchParams.get("stationName") || nearestStation.stationName || ""; // Default to 'Aarey' if no stationName is provided
+  const stationName = searchParams.get("stationName") || ""; // Default to 'Aarey' if no stationName is provided
 
-  return <SplashScreen stationName={stationName} />;
+  return <SplashScreen />;
 }
 
 export default App;
