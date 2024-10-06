@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { CssBaseline, Grid } from "@mui/material";
 import "../../App.css";
 import Header from "./Header";
@@ -26,6 +26,16 @@ function Home({
   setSelectedStation,
   setStationsWithinRadius,
 }) {
+  // Ref for FullMapView
+  const fullMapViewRef = useRef(null);
+
+  // Scroll to FullMapView when down arrow is clicked
+  const handleScrollToMap = () => {
+    if (fullMapViewRef.current) {
+      fullMapViewRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <main className="flex overflow-hidden flex-col px-5 pt-5 pb-5 mx-auto w-full bg-white rounded max-w-[480px]">
       <Header
@@ -43,23 +53,48 @@ function Home({
 
       <br />
 
-      <FullMapView
-        setCoordinates={setCoordinates}
-        coordinates={coordinates}
-        places={places}
-        setChildClicked={setChildClicked}
-        type={type}
-        setType={setType}
-        isFullView={false}
-        username={username}
-        nearestStation={nearestStation}
-        selectedStation={selectedStation}
-        stationsWithinRadius={stationsWithinRadius}
-        setNearestStation={setNearestStation}
-        setSelectedStation={setSelectedStation}
-        setStationsWithinRadius={setStationsWithinRadius}
-      />
-      <br />
+      {/* FullMapView with ref */}
+      <div ref={fullMapViewRef}>
+        <FullMapView
+          setCoordinates={setCoordinates}
+          coordinates={coordinates}
+          places={places}
+          setChildClicked={setChildClicked}
+          type={type}
+          setType={setType}
+          isFullView={false}
+          username={username}
+          nearestStation={nearestStation}
+          selectedStation={selectedStation}
+          stationsWithinRadius={stationsWithinRadius}
+          setNearestStation={setNearestStation}
+          setSelectedStation={setSelectedStation}
+          setStationsWithinRadius={setStationsWithinRadius}
+        />
+      </div>
+
+      {/* Bouncing arrow */}
+      <div className="relative rounded-xl overflow-auto pt-4">
+        <div className="flex justify-center">
+          <div
+            onClick={handleScrollToMap} // Scroll on arrow click
+            className="cursor-pointer animate-bounce bg-gradient-to-t from-mmwhite to-mmblue shadow-md w-10 h-10 ring-1 ring-slate-900/5 dark:ring-slate-200/20 shadow-lg rounded-full flex items-center justify-center"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              style={{ transform: "translateY(2px)" }}
+            >
+              <path d="M2 7 L12 17 L22   7" stroke="black" stroke-width="4" fill="none" />
+            </svg>
+          </div>
+        </div>
+      </div>
 
       <PlaceList
         setCoordinates={setCoordinates}

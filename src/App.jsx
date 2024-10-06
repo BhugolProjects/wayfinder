@@ -25,6 +25,15 @@ function App() {
   const [StationData, setStationData] = useState([]);
   const [stationsWithinRadius, setStationsWithinRadius] = useState([]);
 
+  
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      ({ coords: { latitude, longitude } }) => {
+        setCoordinates({ lat: latitude, lng: longitude });
+      }
+    );
+  }, []);
+  
   useEffect(() => {
     if (localStorage.getItem('wayfinderUsername')){
       setUsername(localStorage.getItem('wayfinderUsername'));
@@ -34,15 +43,7 @@ function App() {
       setUsername(newUsername);
     }
   }, []);
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      ({ coords: { latitude, longitude } }) => {
-        setCoordinates({ lat: latitude, lng: longitude });
-      }
-    );
-  }, []);
-
+  
   useEffect(() => {
     if (places && places.length > 0) {
       const filteredPlaces = places;
