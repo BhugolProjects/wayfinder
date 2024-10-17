@@ -54,7 +54,7 @@ export async function getStationData() {
   }
 }
 
-export async function addVisitor(station) {
+export async function addVisitor(station,username) {
   try {
     // Increment the visitor count
     
@@ -62,12 +62,15 @@ export async function addVisitor(station) {
     const Visitors_Count = parseInt(stationData.data.data.Visitors_Count) + 1;
 
     // Make a PUT request to update only the Visitors_Count for the specific station
-    const response = await axios.patch(`${process.env.REACT_APP_BASE_URL}items/Stations/${station.id}`, {
-      "Visitors_Count": Visitors_Count
+    if(username != null){
+    const response = await axios.post(`${process.env.REACT_APP_BASE_URL}items/Visitor_Analysis/`, {
+      "Username": username,
+      "Station": station.id,
     });
-
+    
     // Return the updated station data
     return response.data.data;
+  }
   } catch (error) {
     console.log(error);
   }

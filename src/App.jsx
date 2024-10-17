@@ -115,7 +115,7 @@ function App() {
           );
           return currDistance < prevDistance ? curr : prev;
         });
-        addVisitor(nearest);
+        addVisitor(nearest, username);
         setNearestStation(nearest);
         setStationsWithinRadius(filteredStations);
         setSelectedStation(nearest.Station_Code);
