@@ -45,7 +45,7 @@ function toRadians(deg) {
 
 export async function getStationData() {
   try {
-    const response = await axios.get(`${process.env.REACT_APP_BASE_URL}items/Stations?limit=1000000`);
+    const response = await axios.get(`${process.env.REACT_APP_BASE_URL}items/Stations?limit=1000000&sort=Display_Order`);
     const  data = response.data.data;
     // const data = stationData;
     return data;
