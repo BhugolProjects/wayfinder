@@ -21,7 +21,7 @@ function SplashScreen() {
       </header>
 
       <h1 className="mt-16 text-lg font-bold text-center tracking-tighter text-black">
-        WELCOME TO MUMBAI METRO LINE 3
+        WELCOME TO MUMBAI AQUA LINE
       </h1>
 
       <img
