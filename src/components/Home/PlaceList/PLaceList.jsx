@@ -3,8 +3,6 @@ import { CircularProgress, Grid, Box } from "@mui/material";
 import { Container, ListContainer, LoadingContainer } from "./styles.jsx";
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
 
-
-
 function PlaceList({
   places,
   childClicked,
@@ -16,10 +14,9 @@ function PlaceList({
   setCoordinates,
   nearestStation,
   selectedStation,
-  username
+  username,
 }) {
   const [elRefs, setElRefs] = useState([]);
-
 
   const options = [
     { value: "Transportation", label: "Transport" },
@@ -48,13 +45,11 @@ function PlaceList({
     setElRefs(refs);
   }, [places]);
 
-  const cardcolors = ['rgba(3, 182, 187, 0.1)', 'rgba(90, 69, 149, 0.1)', 'rgba(255, 107, 131, 0.1)'];
-
-
-
-
-
-
+  const cardcolors = [
+    "rgba(3, 182, 187, 0.1)",
+    "rgba(90, 69, 149, 0.1)",
+    "rgba(255, 107, 131, 0.1)",
+  ];
 
   return (
     <Container>
@@ -79,7 +74,15 @@ function PlaceList({
           >
             {places?.map((place, i) =>
               place.Type_of_Locality === type ? (
-                <Grid ref={elRefs[i]} item key={i} xs={12}>
+                <Grid
+                  ref={elRefs[i]}
+                  item
+                  key={i}
+                  xs={12}
+                  sx={{
+                    marginBottom: "16px", // Adds vertical spacing between cards
+                  }}
+                >
                   <PlaceDetails
                     place={place}
                     selected={Number(childClicked) === i}
