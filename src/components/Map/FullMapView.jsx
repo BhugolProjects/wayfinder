@@ -15,11 +15,19 @@ import tt from "@tomtom-international/web-sdk-maps";
 import "@tomtom-international/web-sdk-maps/dist/maps.css";
 import { MapContainer } from "./styles.js";
 import "./Map.css";
-import stationGeoJSON from "./MML3_Alignment.geojson";
 import { ArrowBack } from "@mui/icons-material";
-import DirectionsIcon from '@mui/icons-material/Directions';
-import { addVisitor, addVisitorAnalysis, getStationData } from "../../api/index.js";
+import DirectionsIcon from "@mui/icons-material/Directions";
+import {
+  addVisitor,
+  addVisitorAnalysis,
+  getStationData,
+} from "../../api/index.js";
 import { getDistance } from "geolib";
+// layers
+
+import stationGeoJSON from "./MML3_Alignment.geojson";
+import stationsPolygonJSON from "./Station_1_Area.geojson";
+import stationsPolygonJSON2 from "./Station_2_Area.geojson";
 
 function createMarker(
   icon,
@@ -198,6 +206,34 @@ function initializeMap(containerId, coordinates, setCoordinates) {
         "line-width": 5,
       },
     });
+
+    // Add polygon layer for station polygons
+    map.addLayer({
+      id: "station-polygon-1",
+      type: "fill",
+      source: {
+        type: "geojson",
+        data: stationsPolygonJSON, // Replace with your station polygon GeoJSON
+      },
+      paint: {
+        "fill-color": "#8C1C13", // Fill color for the polygons
+        "fill-opacity": 0.8, // Transparency
+      },
+    });
+
+    // two files for different stations
+    map.addLayer({
+      id: "station-polygon-2",
+      type: "fill",
+      source: {
+        type: "geojson",
+        data: stationsPolygonJSON2,
+      },
+      paint: {
+        "fill-color": "#8C1C13", // Fill color for the polygons
+        "fill-opacity": 0.8, // Transparency
+      },
+    });
   });
 
   // Set user's current location if available
@@ -214,7 +250,7 @@ function initializeMap(containerId, coordinates, setCoordinates) {
 const handleGetDirections = async (place, username, nearestStation) => {
   const latitude = place.Latitude;
   const longitude = place.Longitude;
-  await addVisitorAnalysis(place, username, nearestStation)
+  await addVisitorAnalysis(place, username, nearestStation);
   if (latitude && longitude) {
     window.open(
       `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
@@ -272,10 +308,13 @@ function FullMapView({
       const { lat, lng } = coordinates;
 
       // Find stations within the radius
-      const filteredStations = stationData.filter(station => {
+      const filteredStations = stationData.filter((station) => {
         const distance = getDistance(
           { latitude: lat, longitude: lng },
-          { latitude: station.Station_Latitude, longitude: station.Station_Longitude }
+          {
+            latitude: station.Station_Latitude,
+            longitude: station.Station_Longitude,
+          }
         );
         return distance <= 1000; // Filter stations within 1000 meters
       });
@@ -285,11 +324,17 @@ function FullMapView({
         const nearest = filteredStations.reduce((prev, curr) => {
           const prevDistance = getDistance(
             { latitude: lat, longitude: lng },
-            { latitude: prev.Station_Latitude, longitude: prev.Station_Longitude }
+            {
+              latitude: prev.Station_Latitude,
+              longitude: prev.Station_Longitude,
+            }
           );
           const currDistance = getDistance(
             { latitude: lat, longitude: lng },
-            { latitude: curr.Station_Latitude, longitude: curr.Station_Longitude }
+            {
+              latitude: curr.Station_Latitude,
+              longitude: curr.Station_Longitude,
+            }
           );
           return currDistance < prevDistance ? curr : prev;
         });
@@ -352,7 +397,7 @@ function FullMapView({
                 place.SVG_Icon
                   ? process.env.REACT_APP_BASE_URL + "assets/" + place.SVG_Icon
                   : (!place.Sub_Type_of_Locality
-                      ? `location/`+place.Type_of_Locality
+                      ? `location/` + place.Type_of_Locality
                       : place.Sub_Type_of_Locality
                     )
                       .replace(/ /g, "_")
@@ -560,134 +605,139 @@ function FullMapView({
 
       {isFullView && selectedPlace && (
         <Card
-        style={{
-          position: "absolute",
-          bottom: "7vh",
-          left: "50%", // Center horizontally
-          transform: "translateX(-50%)", // Shift it back by 50% of its own width
-          width: "90vw", // Card takes 90% of the viewport width
-          backgroundColor: "#ffffff", // Updated to match the white background
-          borderRadius: "20px", // Match the rounded corners from the second code
-          // padding: "20px", // Added padding to mimic the second code's padding
-          margin: "1vh",
-          zIndex: 5000,
-          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)", // Added subtle shadow for depth
-        }}
-      >
-        <Box display="flex" alignItems="start" style={{ width: "100%" }}>
-          {/* Image on the left */}
-          <CardMedia
-            style={{
-              width: "104px", // Fixed width as in the second code
-              height: "104px", // Ensure the image height adapts to the content
-              objectFit: "cover", // Use object-cover to ensure the image scales properly
-              borderRadius: "12px", // Rounded corners similar to the second code
-              marginLeft: "10px", // Add some space between the image and content
-              marginTop: "10px", // Add some space at the top
-              padding:5
-            }}
-            component="img" // Explicitly set it as an img component
-            image={
-              selectedPlace.Image
-                ? `${
-                    process.env.REACT_APP_BASE_URL +
-                    "assets/" +
-                    selectedPlace.Image
-                  }`
-                : "https://plus.unsplash.com/premium_photo-1686090448301-4c453ee74718?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            }
-            title={selectedPlace.Locality_Name}
-          />
-      
-          {/* Content on the right */}
-          <Box
-            display="flex"
-            flexDirection="column"
-            justifyContent="flex-start"
-            style={{
-              // width: "200px", // Match the width of the content from the second code
-              // paddingLeft: "5px",
-              // paddingRight: "5px",
-            }}
-          >
-            <CardContent style={{ flexGrow: 1, padding:5, marginTop: "10px" }}>
-              <Typography
-                gutterBottom
-                variant="h6" // Changed to smaller font size as in the second code
-                style={{
-                  fontWeight: "bold",
-                  color: "#000000", // Black color for text
-                  fontSize: "16px", // Match the text size from the second code
-                  marginBottom: "8px",
-                  fontFamily: "Inter",
-                }}
-              >
-                {selectedPlace.Locality_Name}
-              </Typography>
-              <Typography
-                style={{
-                  color: "#71717A", // Adapted to match the gray color from the second code
-                  marginTop: "8px",
-                  fontSize: "14px",
-                  lineHeight: "1.4",
-                  fontFamily: "Inter",
-                }}
-              >
-                {selectedPlace.Type_of_Locality}{" "}
-                {selectedPlace.Sub_Type_of_Locality
-                  ? `- ${selectedPlace.Sub_Type_of_Locality}`
-                  : ""}
-              </Typography>
-              <Typography
-                style={{
-                  color: "#65a30d", // Lime green to match the second code
-                  marginTop: "6px",
-                  fontWeight: "500", // Medium font weight for emphasis
-                  fontSize: "14px",
-                  fontFamily: "Inter",
-                }}
-              >
-                Nearest Gates: {selectedPlace.Nearest_Gates}
-              </Typography>
-            </CardContent>
-          </Box>
-        </Box>
-      
-        {/* Directions button at the bottom, centered */}
-        <Box
-          display="flex"
-          justifyContent="center"
           style={{
-            width: "100%",
-            // paddingTop: "10px",
-            paddingBottom: "10px",
-            backgroundColor: "white",
+            position: "absolute",
+            bottom: "7vh",
+            left: "50%", // Center horizontally
+            transform: "translateX(-50%)", // Shift it back by 50% of its own width
+            width: "90vw", // Card takes 90% of the viewport width
+            backgroundColor: "#ffffff", // Updated to match the white background
+            borderRadius: "20px", // Match the rounded corners from the second code
+            // padding: "20px", // Added padding to mimic the second code's padding
+            margin: "1vh",
+            zIndex: 5000,
+            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)", // Added subtle shadow for depth
           }}
         >
-          <Button
-            endIcon={<DirectionsIcon style={{ fontSize: 23 }} />}
-            color="primary"
-            onClick={() => handleGetDirections(selectedPlace, username, nearestStation)}
+          <Box display="flex" alignItems="start" style={{ width: "100%" }}>
+            {/* Image on the left */}
+            <CardMedia
+              style={{
+                width: "104px", // Fixed width as in the second code
+                height: "104px", // Ensure the image height adapts to the content
+                objectFit: "cover", // Use object-cover to ensure the image scales properly
+                borderRadius: "12px", // Rounded corners similar to the second code
+                marginLeft: "10px", // Add some space between the image and content
+                marginTop: "10px", // Add some space at the top
+                padding: 5,
+              }}
+              component="img" // Explicitly set it as an img component
+              image={
+                selectedPlace.Image
+                  ? `${
+                      process.env.REACT_APP_BASE_URL +
+                      "assets/" +
+                      selectedPlace.Image
+                    }`
+                  : "https://plus.unsplash.com/premium_photo-1686090448301-4c453ee74718?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              }
+              title={selectedPlace.Locality_Name}
+            />
+
+            {/* Content on the right */}
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="flex-start"
+              style={
+                {
+                  // width: "200px", // Match the width of the content from the second code
+                  // paddingLeft: "5px",
+                  // paddingRight: "5px",
+                }
+              }
+            >
+              <CardContent
+                style={{ flexGrow: 1, padding: 5, marginTop: "10px" }}
+              >
+                <Typography
+                  gutterBottom
+                  variant="h6" // Changed to smaller font size as in the second code
+                  style={{
+                    fontWeight: "bold",
+                    color: "#000000", // Black color for text
+                    fontSize: "16px", // Match the text size from the second code
+                    marginBottom: "8px",
+                    fontFamily: "Inter",
+                  }}
+                >
+                  {selectedPlace.Locality_Name}
+                </Typography>
+                <Typography
+                  style={{
+                    color: "#71717A", // Adapted to match the gray color from the second code
+                    marginTop: "8px",
+                    fontSize: "14px",
+                    lineHeight: "1.4",
+                    fontFamily: "Inter",
+                  }}
+                >
+                  {selectedPlace.Type_of_Locality}{" "}
+                  {selectedPlace.Sub_Type_of_Locality
+                    ? `- ${selectedPlace.Sub_Type_of_Locality}`
+                    : ""}
+                </Typography>
+                <Typography
+                  style={{
+                    color: "#65a30d", // Lime green to match the second code
+                    marginTop: "6px",
+                    fontWeight: "500", // Medium font weight for emphasis
+                    fontSize: "14px",
+                    fontFamily: "Inter",
+                  }}
+                >
+                  Nearest Gates: {selectedPlace.Nearest_Gates}
+                </Typography>
+              </CardContent>
+            </Box>
+          </Box>
+
+          {/* Directions button at the bottom, centered */}
+          <Box
+            display="flex"
+            justifyContent="center"
             style={{
-              marginTop:5,
-              backgroundColor: "rgba(0, 145, 183, 1)",
-              color: "white",
-              borderRadius: "12px", // Rounded corners as in the second code
-              textTransform: "none",
-              paddingLeft: "10px",
-              paddingRight: "10px",
-              width: "90%", // Button takes 90% of the card width
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontFamily: "Inter",
+              width: "100%",
+              // paddingTop: "10px",
+              paddingBottom: "10px",
+              backgroundColor: "white",
             }}
           >
-            Directions
-          </Button>
-        </Box>
-      </Card>
-            
+            <Button
+              endIcon={<DirectionsIcon style={{ fontSize: 23 }} />}
+              color="primary"
+              onClick={() =>
+                handleGetDirections(selectedPlace, username, nearestStation)
+              }
+              style={{
+                marginTop: 5,
+                backgroundColor: "rgba(0, 145, 183, 1)",
+                color: "white",
+                borderRadius: "12px", // Rounded corners as in the second code
+                textTransform: "none",
+                paddingLeft: "10px",
+                paddingRight: "10px",
+                width: "90%", // Button takes 90% of the card width
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontFamily: "Inter",
+              }}
+            >
+              Directions
+            </Button>
+          </Box>
+        </Card>
       )}
     </MapContainer>
   );
