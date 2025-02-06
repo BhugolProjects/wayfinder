@@ -29,6 +29,9 @@ import stationGeoJSON from "./MML3_Alignment.geojson";
 import stationsPolygonJSON from "./Station_1_Area.geojson";
 import stationsPolygonJSON2 from "./Station_2_Area.geojson";
 
+import * as turf from "@turf/turf";
+import debounce from "lodash.debounce";
+
 function createMarker(
   icon,
   position,
@@ -269,8 +272,8 @@ const handleGetDirections = async (place, username, nearestStation) => {
 };
 
 function FullMapView({
-  setCoordinates,
-  coordinates,
+  setCoordinates = { lat: 0, lng: 0 },
+  coordinates = { lat: 0, lng: 0 },
   places,
   setChildClicked,
   type,
@@ -293,6 +296,41 @@ function FullMapView({
   const isDesktop = useMediaQuery("(min-width:600px)");
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+
+  //Debounce function to avoid race condition
+  const debouncedAddBuffer = useRef(
+    debounce((lng, lat) => addBufferCircle(lng, lat, 1000), 300)
+  ).current;
+
+  const addBufferCircle = (lng, lat, radius) => {
+    // Create a point from the current coordinates
+    if (!lat || isNaN(lat) || !lng || isNaN(lng)) {
+      console.error("Invalid coordinates in addBufferCircle:", lat, lng);
+      return;
+    }
+    const point = turf.point([lng, lat]);
+    const buffer = turf.buffer(point, radius, { units: "meters" });
+
+    // Add buffer as a GeoJSON object
+    if (mapRef.current.getSource("self-marker-buffer")) {
+      mapRef.current.getSource("self-marker-buffer").setData(buffer);
+    } else {
+      mapRef.current.addSource("self-marker-buffer", {
+        type: "geojson",
+        data: buffer,
+      });
+
+      mapRef.current.addLayer({
+        id: "self-marker-buffer-layer",
+        type: "fill",
+        source: "self-marker-buffer",
+        paint: {
+          "fill-color": "#c31a26",
+          "fill-opacity": 0.2,
+        },
+      });
+    }
+  };
 
   useEffect(() => {
     const fetchStationData = async () => {
@@ -356,6 +394,7 @@ function FullMapView({
   useEffect(() => {
     if (!mapRef.current && coordinates.lat && coordinates.lng) {
       mapRef.current = initializeMap("map", coordinates, setCoordinates);
+      console.log("Map initialized, mapRef:", mapRef.current);
     }
   }, [coordinates, setCoordinates]);
 
@@ -367,21 +406,43 @@ function FullMapView({
 
   // Function to update the self-marker position without duplicating it
   const updateSelfMarker = () => {
-    if (!selfMarkerRef.current && mapRef.current) {
-      selfMarkerRef.current = createSelfMarker(
-        "current-location-pin-map.png",
-        [coordinates.lng, coordinates.lat],
-        "#c31a26",
-        "You are here",
-        true,
-        mapRef.current,
-        () => {
-          const lngLat = selfMarkerRef.current.getLngLat();
-          setCoordinates({ lat: lngLat.lat, lng: lngLat.lng });
-        }
-      );
-    } else if (selfMarkerRef.current) {
-      selfMarkerRef.current.setLngLat([coordinates.lng, coordinates.lat]); // Move the marker without recreating
+    //validation for coordinates
+    if (!coordinates || isNaN(coordinates.lat) || isNaN(coordinates.lng)) {
+      console.error("Invalid coordinates:", coordinates);
+      return;
+    }
+    const initializeSelfMarker = () => {
+      if (!selfMarkerRef.current) {
+        selfMarkerRef.current = createSelfMarker(
+          "current-location-pin-map.png",
+          [coordinates.lng, coordinates.lat],
+          "#c31a26",
+          "You are here",
+          true,
+          mapRef.current,
+          () => {
+            const lngLat = selfMarkerRef.current.getLngLat();
+            setCoordinates({ lat: lngLat.lat, lng: lngLat.lng });
+            debouncedAddBuffer(lngLat.lng, lngLat.lat); // Debounced buffer update
+          }
+        );
+
+        debouncedAddBuffer(coordinates.lng, coordinates.lat); // Initial buffer
+      } else {
+        selfMarkerRef.current.setLngLat([coordinates.lng, coordinates.lat]);
+        debouncedAddBuffer(coordinates.lng, coordinates.lat); // Move the marker without recreating
+      }
+    };
+
+    // Wait for the map style to load before adding the self-marker and buffer
+    if (mapRef.current) {
+      if (!mapRef.current.isStyleLoaded()) {
+        mapRef.current.once("style.load", () => {
+          initializeSelfMarker();
+        });
+      } else {
+        initializeSelfMarker();
+      }
     }
   };
 
@@ -428,6 +489,15 @@ function FullMapView({
     setSelectedPlace,
   ]);
   stationData.forEach((place, i) => {
+    if (
+      !place.Station_Longitude ||
+      isNaN(place.Station_Longitude) ||
+      !place.Station_Latitude ||
+      isNaN(place.Station_Latitude)
+    ) {
+      console.error("Invalid station coordinates:", place);
+      return;
+    }
     createCircleMarker(
       "metro.png",
       [place.Station_Longitude, place.Station_Latitude],
@@ -443,6 +513,12 @@ function FullMapView({
   // Update the self-marker position whenever coordinates change
   useEffect(() => {
     updateSelfMarker();
+
+    // Zoom and center the map on the updated coordinates
+    if (mapRef.current && coordinates.lat && coordinates.lng) {
+      mapRef.current.setCenter([coordinates.lng, coordinates.lat]);
+      mapRef.current.setZoom(13); // Set an appropriate zoom level
+    }
   }, [coordinates]);
 
   const navigate = useNavigate();
@@ -721,7 +797,7 @@ function FullMapView({
               }
               style={{
                 marginTop: 5,
-                backgroundColor: "rgba(0, 145, 183, 1)",
+                backgroundColor: "#212021",
                 color: "white",
                 borderRadius: "12px", // Rounded corners as in the second code
                 textTransform: "none",

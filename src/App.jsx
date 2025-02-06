@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Routes, useSearchParams } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useSearchParams,
+} from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Header from "./components/Home/Header";
 import CategorySection from "./components/Home/CategorySection";
@@ -19,13 +24,12 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [type, setType] = useState("Transportation");
   const [rating, setRating] = useState(0);
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
   const [nearestStation, setNearestStation] = useState(null);
   const [selectedStation, setSelectedStation] = useState("");
   const [StationData, setStationData] = useState([]);
   const [stationsWithinRadius, setStationsWithinRadius] = useState([]);
 
-  
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       ({ coords: { latitude, longitude } }) => {
@@ -33,17 +37,17 @@ function App() {
       }
     );
   }, []);
-  
+
   useEffect(() => {
-    if (localStorage.getItem('wayfinderUsername')){
-      setUsername(localStorage.getItem('wayfinderUsername'));
+    if (localStorage.getItem("wayfinderUsername")) {
+      setUsername(localStorage.getItem("wayfinderUsername"));
     } else {
       const timestamp = Date.now();
       const newUsername = `USER${timestamp}`;
       setUsername(newUsername);
     }
   }, []);
-  
+
   useEffect(() => {
     if (places && places.length > 0) {
       const filteredPlaces = places;
@@ -95,10 +99,13 @@ function App() {
   useEffect(() => {
     if (coordinates.lat && coordinates.lng) {
       const { lat, lng } = coordinates;
-      const filteredStations = StationData.filter(station => {
+      const filteredStations = StationData.filter((station) => {
         const distance = getDistance(
           { latitude: lat, longitude: lng },
-          { latitude: station.Station_Latitude, longitude: station.Station_Longitude }
+          {
+            latitude: station.Station_Latitude,
+            longitude: station.Station_Longitude,
+          }
         );
         return distance <= 1000;
       });
@@ -107,11 +114,17 @@ function App() {
         const nearest = filteredStations.reduce((prev, curr) => {
           const prevDistance = getDistance(
             { latitude: lat, longitude: lng },
-            { latitude: prev.Station_Latitude, longitude: prev.Station_Longitude }
+            {
+              latitude: prev.Station_Latitude,
+              longitude: prev.Station_Longitude,
+            }
           );
           const currDistance = getDistance(
             { latitude: lat, longitude: lng },
-            { latitude: curr.Station_Latitude, longitude: curr.Station_Longitude }
+            {
+              latitude: curr.Station_Latitude,
+              longitude: curr.Station_Longitude,
+            }
           );
           return currDistance < prevDistance ? curr : prev;
         });
@@ -131,7 +144,7 @@ function App() {
     <main className="flex overflow-hidden flex-col mx-auto w-full bg-white rounded max-w-[480px]">
       <Router>
         <Routes>
-          <Route path="/" element={<SplashScreenWithQuery/>} />
+          <Route path="/" element={<SplashScreenWithQuery />} />
           <Route
             path="/home"
             element={
