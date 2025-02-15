@@ -62,7 +62,12 @@ function PlaceDetails({
 
   return (
     <Card
-      style={{ backgroundColor: cardcolor, borderRadius: "5%", margin: "1vh" }}
+      style={{
+        backgroundColor: cardcolor,
+        borderRadius: "20px",
+        marginTop: "15px",
+        padding: "5px 0",
+      }}
     >
       <Box
         display="flex"
@@ -95,13 +100,11 @@ function PlaceDetails({
           display="flex"
           flexDirection="column"
           justifyContent="flex-start"
-          style={
-            {
-              // width: "200px", // Match the width of the content from the second code
-              // paddingLeft: "5px",
-              // paddingRight: "5px",
-            }
-          }
+          style={{
+            // width: "200px", // Match the width of the content from the second code
+            paddingLeft: "10px",
+            // paddingRight: "5px",
+          }}
         >
           <CardContent style={{ flexGrow: 1, padding: 5 }}>
             <Typography
@@ -110,7 +113,7 @@ function PlaceDetails({
               style={{
                 fontWeight: "bold",
                 color: "#000000", // Black color for text
-                fontSize: "16px", // Match the text size from the second code
+                fontSize: "15px", // Match the text size from the second code
                 marginBottom: "8px",
                 fontFamily: "Inter",
               }}
