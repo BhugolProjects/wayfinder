@@ -28,7 +28,7 @@ function Home({
 }) {
   // Ref for FullMapView
   const fullMapViewRef = useRef(null);
-
+  const [topPlaceId, setTopPlaceId] = useState();
   // Scroll to FullMapView when down arrow is clicked
   const handleScrollToMap = () => {
     if (fullMapViewRef.current) {
@@ -56,6 +56,8 @@ function Home({
       {/* FullMapView with ref */}
       <div ref={fullMapViewRef}>
         <FullMapView
+          topPlaceId={topPlaceId}
+          setTopPlaceId={setTopPlaceId}
           setCoordinates={setCoordinates}
           coordinates={coordinates}
           places={places}
@@ -97,6 +99,8 @@ function Home({
       </div>
 
       <PlaceList
+        topPlaceId={topPlaceId}
+        setTopPlaceId={setTopPlaceId}
         setCoordinates={setCoordinates}
         coordinates={coordinates}
         places={places}

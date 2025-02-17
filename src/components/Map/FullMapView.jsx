@@ -33,6 +33,7 @@ import * as turf from "@turf/turf";
 import debounce from "lodash.debounce";
 
 function createMarker(
+  
   icon,
   position,
   color,
@@ -42,7 +43,8 @@ function createMarker(
   setChildClicked,
   i,
   setSelectedPlace,
-  place
+  place,
+  setTopPlaceId
 ) {
   var markerElement = document.createElement("div");
   markerElement.className = "marker";
@@ -74,7 +76,11 @@ function createMarker(
 
   marker.getElement().addEventListener("click", () => {
     setChildClicked(i);
-    setSelectedPlace(place); // Set the selected place data
+    // setSelectedPlace("I am here" , place); // Set the selected place
+    // setTopPlaceId(place.id);
+    setTopPlaceId(place.id);
+    
+    console.log("Selected Place:", place);
   });
 
   return marker;
@@ -272,6 +278,8 @@ const handleGetDirections = async (place, username, nearestStation) => {
 };
 
 function FullMapView({
+  topPlaceId,
+  setTopPlaceId,
   setCoordinates = { lat: 0, lng: 0 },
   coordinates = { lat: 0, lng: 0 },
   places,
@@ -454,16 +462,15 @@ function FullMapView({
         .map((place, i) => {
           if (place.Type_of_Locality === type) {
             return createMarker(
-              `${
-                place.SVG_Icon
-                  ? process.env.REACT_APP_BASE_URL + "assets/" + place.SVG_Icon
-                  : (!place.Sub_Type_of_Locality
-                      ? `location/` + place.Type_of_Locality
-                      : place.Sub_Type_of_Locality
-                    )
-                      .replace(/ /g, "_")
-                      .replace("(", "")
-                      .replace(")", "") + ".svg"
+              `${place.SVG_Icon
+                ? process.env.REACT_APP_BASE_URL + "assets/" + place.SVG_Icon
+                : (!place.Sub_Type_of_Locality
+                  ? `location/` + place.Type_of_Locality
+                  : place.Sub_Type_of_Locality
+                )
+                  .replace(/ /g, "_")
+                  .replace("(", "")
+                  .replace(")", "") + ".svg"
               }`,
               [place.Longitude, place.Latitude],
               "#c31a26",
@@ -473,7 +480,8 @@ function FullMapView({
               setChildClicked,
               i,
               setSelectedPlace,
-              place
+              place,
+              setTopPlaceId,
             );
           }
           return null;
@@ -710,11 +718,10 @@ function FullMapView({
               component="img" // Explicitly set it as an img component
               image={
                 selectedPlace.Image
-                  ? `${
-                      process.env.REACT_APP_BASE_URL +
-                      "assets/" +
-                      selectedPlace.Image
-                    }`
+                  ? `${process.env.REACT_APP_BASE_URL +
+                  "assets/" +
+                  selectedPlace.Image
+                  }`
                   : "https://plus.unsplash.com/premium_photo-1686090448301-4c453ee74718?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               }
               title={selectedPlace.Locality_Name}

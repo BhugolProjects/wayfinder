@@ -1,93 +1,89 @@
 import axios from 'axios';
 
-const RADIUS_OF_EARTH_IN_METERS = 6371000; // approximate radius of the Earth in meters
+const RADIUS_OF_EARTH_IN_METERS = 6371000; // Earth's approximate radius in meters
+
+// Function to convert degrees to radians
+function toRadians(deg) {
+  return deg * (Math.PI / 180);
+}
+
+// Function to calculate the Haversine distance between two coordinates
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const dLat = toRadians(lat2 - lat1);
+  const dLon = toRadians(lon2 - lon1);
+  const latRad1 = toRadians(lat1);
+  const latRad2 = toRadians(lat2);
+
+  const a = Math.sin(dLat / 2) ** 2 +
+            Math.cos(latRad1) * Math.cos(latRad2) * Math.sin(dLon / 2) ** 2;
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  return RADIUS_OF_EARTH_IN_METERS * c;
+}
 
 export async function getPlacesData(type, sw, ne, coordinates) {
   try {
-    // coordinates.lat = 18.91467177;
-    // coordinates.lng = 72.817912;
-    // const data = axios.get(process.env.BASE_URL + `/Places?limit=1000000`);
-    // const response = await axios.get(`https://bytecodx.club/items/Places?limit=1000000`);
+    if (!coordinates?.lat || !coordinates?.lng) {
+      throw new Error("Coordinates (lat, lng) are required.");
+    }
+    console.log("url" , process.env.REACT_APP_BASE_URL)
+
     const response = await axios.get(`${process.env.REACT_APP_BASE_URL}items/Places?limit=1000000`);
-    const  data = response.data.data;
-    // console.log(`Data:`, data);
-    // const data = placeData;
+    const data = response.data?.data || [];
+
     const filteredData = data.filter((place) => {
-      const lat1 = coordinates.lat;
-      const lon1 = coordinates.lng;
-      const lat2 = place.Latitude;
-      const lon2 = place.Longitude;
-
-      const dLat = toRadians(lat2 - lat1);
-      const dLon = toRadians(lon2 - lon1);
-      const latRad1 = toRadians(lat1);
-      const latRad2 = toRadians(lat2);
-
-      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(latRad1) * Math.cos(latRad2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      const distance = RADIUS_OF_EARTH_IN_METERS * c;
-      // console.log(`Distance:`, c, a, distance, lat1, lon1, lat2, lon2);
-
-      return distance <= 500 || distance <= 1000; // adjust the radius here
+      const distance = calculateDistance(coordinates.lat, coordinates.lng, place.Latitude, place.Longitude);
+      return distance <= 1000; // Adjust radius if needed
     });
-    // console.log(`Filtered places:`, filteredData);
 
     return filteredData;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching places data:", error.message || error);
+    return [];
   }
-}
-
-function toRadians(deg) {
-  return deg * (Math.PI / 180);
 }
 
 export async function getStationData() {
   try {
     const response = await axios.get(`${process.env.REACT_APP_BASE_URL}items/Stations?limit=1000000&sort=Display_Order`);
-    const  data = response.data.data;
-    // const data = stationData;
-    return data;
+    return response.data?.data || [];
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching station data:", error.message || error);
+    return [];
   }
 }
 
-export async function addVisitor(station,username) {
+export async function addVisitor(station, username) {
   try {
-    // Increment the visitor count
-    
-    // const stationData = await axios.get(`${process.env.REACT_APP_BASE_URL}items/Stations/${station.id}`);
-    // const Visitors_Count = parseInt(stationData.data.data.Visitors_Count) + 1;
+    if (!username || !station?.id) {
+      throw new Error("Username and Station ID are required.");
+    }
 
-    // Make a PUT request to update only the Visitors_Count for the specific station
-    if(username != null && station != null){
     const response = await axios.post(`${process.env.REACT_APP_BASE_URL}items/Visitor_Analysis/`, {
       "Username": username,
       "Station": station.id,
     });
-    
-    // Return the updated station data
-    return response.data.data;
-  }
+
+    return response.data?.data;
   } catch (error) {
-    console.log(error);
+    console.error("Error adding visitor:", error.message || error);
   }
 }
 
-export async function addVisitorAnalysis(place,username,station) {
+export async function addVisitorAnalysis(place, username, station) {
   try {
-    // Make a PUT request to update only the Visitors_Count for the specific station
+    if (!username || !station?.id || !place?.id) {
+      throw new Error("Username, Station ID, and Place ID are required.");
+    }
+
     const response = await axios.post(`${process.env.REACT_APP_BASE_URL}items/Visitor_Analysis/`, {
       "Username": username,
       "Station": station.id,
       "Place": place.id
     });
 
-    // Return the updated station data
-    return response.data.data;
+    return response.data?.data;
   } catch (error) {
-    console.log(error);
+    console.error("Error adding visitor analysis:", error.message || error);
   }
 }

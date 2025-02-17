@@ -6,6 +6,8 @@ import PlaceDetails from "../PlaceDetails/PlaceDetails";
 
 
 function PlaceList({
+  topPlaceId,
+  setTopPlaceId,
   places,
   childClicked,
   isLoading,
@@ -51,7 +53,9 @@ function PlaceList({
   const cardcolors = ['rgba(3, 182, 187, 0.1)', 'rgba(90, 69, 149, 0.1)', 'rgba(255, 107, 131, 0.1)'];
 
 
-
+  const sortedPlaces = topPlaceId
+    ? [...places].sort((a, b) => (a.id === topPlaceId ? -1 : b.id === topPlaceId ? 1 : 0))
+    : places;
 
 
 
@@ -77,7 +81,8 @@ function PlaceList({
               "scrollbar-width": "none", // Hide scrollbar for Firefox
             }}
           >
-            {places?.map((place, i) =>
+
+            {sortedPlaces?.map((place, i) =>
               place.Type_of_Locality === type ? (
                 <Grid ref={elRefs[i]} item key={i} xs={12}>
                   <PlaceDetails
