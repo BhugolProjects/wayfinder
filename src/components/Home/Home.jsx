@@ -11,6 +11,8 @@ import PlaceList from "./PlaceList/PLaceList";
 import { getDistance } from "geolib";
 
 function Home({
+  topPlaceId,
+  setTopPlaceId,
   setCoordinates,
   coordinates,
   places,
@@ -28,7 +30,7 @@ function Home({
 }) {
   // Ref for FullMapView
   const fullMapViewRef = useRef(null);
-  const [topPlaceId, setTopPlaceId] = useState();
+  
   // Scroll to FullMapView when down arrow is clicked
   const handleScrollToMap = () => {
     if (fullMapViewRef.current) {

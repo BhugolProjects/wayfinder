@@ -26,7 +26,7 @@ export async function getPlacesData(type, sw, ne, coordinates) {
     if (!coordinates?.lat || !coordinates?.lng) {
       throw new Error("Coordinates (lat, lng) are required.");
     }
-    console.log("url" , process.env.REACT_APP_BASE_URL)
+    // console.log("url" , process.env.REACT_APP_BASE_URL)
 
     const response = await axios.get(`${process.env.REACT_APP_BASE_URL}items/Places?limit=1000000`);
     const data = response.data?.data || [];
@@ -54,6 +54,7 @@ export async function getStationData() {
 }
 
 export async function addVisitor(station, username) {
+  console.log("station", station , "username", username)
   try {
     if (!username || !station?.id) {
       throw new Error("Username and Station ID are required.");

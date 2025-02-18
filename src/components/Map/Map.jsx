@@ -4,6 +4,7 @@ import FullMapView from "./FullMapView";
 import "./Map.css";
 
 function Map({
+  setTopPlaceId,
   setCoordinates,
   coordinates,
   places,
@@ -23,6 +24,7 @@ function Map({
     <main className="relative w-full h-screen overflow-hidden">
       {/* FullMapView (Map) Component */}
       <FullMapView
+      setTopPlaceId={setTopPlaceId}
         setCoordinates={setCoordinates}
         coordinates={coordinates}
         places={places}

@@ -139,7 +139,7 @@ function App() {
       }
     }
   }, [coordinates]);
-
+const [topPlaceId, setTopPlaceId] = useState();
   return (
     <main className="flex overflow-hidden flex-col mx-auto w-full bg-white rounded max-w-[480px]">
       <Router>
@@ -149,6 +149,8 @@ function App() {
             path="/home"
             element={
               <Home
+              topPlaceId={topPlaceId}
+              setTopPlaceId={setTopPlaceId}
                 setCoordinates={setCoordinates}
                 setBounds={setBounds}
                 coordinates={coordinates}
@@ -174,6 +176,7 @@ function App() {
             path="/map"
             element={
               <Map
+              setTopPlaceId={setTopPlaceId}
                 setCoordinates={setCoordinates}
                 setBounds={setBounds}
                 coordinates={coordinates}

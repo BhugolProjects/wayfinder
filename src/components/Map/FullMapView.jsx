@@ -76,6 +76,7 @@ function createMarker(
 
   marker.getElement().addEventListener("click", () => {
     setChildClicked(i);
+    setSelectedPlace(place);
     // setSelectedPlace("I am here" , place); // Set the selected place
     // setTopPlaceId(place.id);
     setTopPlaceId(place.id);
