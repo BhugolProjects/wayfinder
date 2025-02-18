@@ -28,12 +28,13 @@ import { getDistance } from "geolib";
 import stationGeoJSON from "./MML3_Alignment.geojson";
 import stationsPolygonJSON from "./Station_1_Area.geojson";
 import stationsPolygonJSON2 from "./Station_2_Area.geojson";
+import stationBox from "./Station_Box.geojson";
+import entryExitBoxes from "./Entry_Exits_Polygon.geojson";
 
 import * as turf from "@turf/turf";
 import debounce from "lodash.debounce";
 
 function createMarker(
-  
   icon,
   position,
   color,
@@ -80,7 +81,7 @@ function createMarker(
     // setSelectedPlace("I am here" , place); // Set the selected place
     // setTopPlaceId(place.id);
     setTopPlaceId(place.id);
-    
+
     console.log("Selected Place:", place);
   });
 
@@ -219,28 +220,33 @@ function initializeMap(containerId, coordinates, setCoordinates) {
 
     // Add polygon layer for station polygons
     map.addLayer({
-      id: "station-polygon-1",
+      id: "station-box",
       type: "fill",
       source: {
         type: "geojson",
-        data: stationsPolygonJSON, // Replace with your station polygon GeoJSON
+        data: stationBox, // Replace with your station polygon GeoJSON
       },
       paint: {
-        "fill-color": "#8C1C13", // Fill color for the polygons
+        "fill-color": [
+          "case",
+          ["==", ["get", "Name"], "Aarey Depot"],
+          "rgb(102, 51, 153)", // Light green for Aarey Depot
+          "rgb(244, 27, 27)", // Default red for other stations
+        ],
         "fill-opacity": 0.8, // Transparency
       },
     });
 
     // two files for different stations
     map.addLayer({
-      id: "station-polygon-2",
+      id: "entry-exit-boxes",
       type: "fill",
       source: {
         type: "geojson",
-        data: stationsPolygonJSON2,
+        data: entryExitBoxes,
       },
       paint: {
-        "fill-color": "#8C1C13", // Fill color for the polygons
+        "fill-color": "rgb(0, 100, 255)", // Fill color for the polygons
         "fill-opacity": 0.8, // Transparency
       },
     });
@@ -463,15 +469,16 @@ function FullMapView({
         .map((place, i) => {
           if (place.Type_of_Locality === type) {
             return createMarker(
-              `${place.SVG_Icon
-                ? process.env.REACT_APP_BASE_URL + "assets/" + place.SVG_Icon
-                : (!place.Sub_Type_of_Locality
-                  ? `location/` + place.Type_of_Locality
-                  : place.Sub_Type_of_Locality
-                )
-                  .replace(/ /g, "_")
-                  .replace("(", "")
-                  .replace(")", "") + ".svg"
+              `${
+                place.SVG_Icon
+                  ? process.env.REACT_APP_BASE_URL + "assets/" + place.SVG_Icon
+                  : (!place.Sub_Type_of_Locality
+                      ? `location/` + place.Type_of_Locality
+                      : place.Sub_Type_of_Locality
+                    )
+                      .replace(/ /g, "_")
+                      .replace("(", "")
+                      .replace(")", "") + ".svg"
               }`,
               [place.Longitude, place.Latitude],
               "#c31a26",
@@ -482,7 +489,7 @@ function FullMapView({
               i,
               setSelectedPlace,
               place,
-              setTopPlaceId,
+              setTopPlaceId
             );
           }
           return null;
@@ -719,10 +726,11 @@ function FullMapView({
               component="img" // Explicitly set it as an img component
               image={
                 selectedPlace.Image
-                  ? `${process.env.REACT_APP_BASE_URL +
-                  "assets/" +
-                  selectedPlace.Image
-                  }`
+                  ? `${
+                      process.env.REACT_APP_BASE_URL +
+                      "assets/" +
+                      selectedPlace.Image
+                    }`
                   : "https://plus.unsplash.com/premium_photo-1686090448301-4c453ee74718?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               }
               title={selectedPlace.Locality_Name}
