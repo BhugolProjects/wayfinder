@@ -136,11 +136,14 @@ function PlaceDetails({
             </Typography>
             <Typography
               style={{
-                color: "#65a30d", // Lime green to match the second code
+                color: "#2563eb", // Darker shade of lime green for better contrast
                 marginTop: "6px",
-                fontWeight: "500", // Medium font weight for emphasis
-                fontSize: "14px",
+                fontWeight: "bold", // Bold for stronger emphasis
+                fontSize: "14px", // Slightly larger font size
                 fontFamily: "Inter",
+                textTransform: "uppercase", // Uppercase for better visibility
+                textShadow: "1px 1px 3px rgba(0, 0, 0, 0.2)", // Subtle shadow for better readability
+                letterSpacing: "0.8px", // Slight letter spacing for clarity
               }}
             >
               Nearest Gates: {place.Nearest_Gates}
