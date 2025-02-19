@@ -251,18 +251,56 @@ function initializeMap(containerId, coordinates, setCoordinates) {
     });
 
     // 🔹 Entry & Exit Polygons
-    map.addLayer({
-      id: "entry-exit-boxes",
-      type: "fill",
-      source: {
-        type: "geojson",
-        data: entryExitBoxes,
-      },
-      paint: {
-        "fill-color": "rgb(0, 100, 255)", // Blue
-        "fill-opacity": 0.8, // Transparency
-      },
-    });
+    // Add the Entry/Exit Box Fill Layer
+map.addLayer({
+  id: "entry-exit-boxes",
+  type: "fill",
+  source: {
+    type: "geojson",
+    data: entryExitBoxes,
+  },
+  paint: {
+    "fill-color": "rgb(0, 100, 255)", // Blue
+    "fill-opacity": 0.8, // Transparency
+  },
+});
+
+// Add the Entry/Exit Labels Layer (Initially Hidden)
+map.addLayer({
+  id: "entry-exit-labels",
+  type: "symbol",
+  source: {
+    type: "geojson",
+    data: entryExitBoxes, // Use same source
+  },
+  layout: {
+    "text-field": ["get", "descriptio"], // Fetches 'Name' property from GeoJSON
+    "text-size": 14, // Adjust label size
+    "text-anchor": "center",
+    "text-offset": [0, 1.2], // Adjusts position above the polygon
+    "text-allow-overlap": true, // Ensures text always appears
+    "visibility": "none", // 🔹 Initially hidden
+  },
+  paint: {
+    "text-color": "#FFFFFF", // White text color
+    "text-halo-color": "#000000", // Black outline for visibility
+    "text-halo-width": 1,
+  },
+});
+
+// 🔹 Handle Zoom Level Changes to Show/Hide Labels
+map.on("zoom", function () {
+  const currentZoom = map.getZoom();
+  
+  if (currentZoom > 16) {
+    map.setLayoutProperty("entry-exit-labels", "visibility", "visible"); // Show labels
+  } else {
+    map.setLayoutProperty("entry-exit-labels", "visibility", "none"); // Hide labels
+  }
+
+  console.log("Current Zoom Level:", currentZoom);
+});
+
   });
 
   // 🔹 Track zoom level and toggle marker labels
