@@ -60,9 +60,12 @@ function createMarker(
   iconElement.style.backgroundImage = `url(${icon})`;
   markerContentElement.appendChild(iconElement);
 
-  // var markerPointerElement = document.createElement("div");
-  // markerPointerElement.className = "marker-pointer";
-  // markerContentElement.appendChild(markerPointerElement);
+  // Create Label Element (Initially Hidden)
+  var labelElement = document.createElement("div");
+  labelElement.className = "marker-label";
+  labelElement.innerText = popupText;
+  labelElement.style.display = "none"; // Initially hidden
+  markerElement.appendChild(labelElement);
 
   var popup = new tt.Popup({ offset: 30 }).setText(popupText);
 
@@ -78,15 +81,13 @@ function createMarker(
   marker.getElement().addEventListener("click", () => {
     setChildClicked(i);
     setSelectedPlace(place);
-    // setSelectedPlace("I am here" , place); // Set the selected place
-    // setTopPlaceId(place.id);
     setTopPlaceId(place.id);
-
-    console.log("Selected Place:", place);
   });
 
   return marker;
 }
+
+
 
 function createSelfMarker(
   icon,
@@ -181,7 +182,7 @@ function initializeMap(containerId, coordinates, setCoordinates) {
   const map = tt.map({
     key: process.env.REACT_APP_TOMTOM_API_KEY,
     container: containerId,
-    center: [coordinates.lng, coordinates.lat], // Ensure valid coordinates are passed
+    center: [coordinates.lng, coordinates.lat], // Ensure valid coordinates
     zoom: 14,
     stylesVisibility: {
       poi: false,
@@ -189,17 +190,28 @@ function initializeMap(containerId, coordinates, setCoordinates) {
   });
 
   map.addControl(new tt.NavigationControl());
+  
   var geolocateControl = new tt.GeolocateControl({
     positionOptions: { enableHighAccuracy: false },
   });
 
   geolocateControl.on("geolocate", function (e) {
-    var coordinates = e.coords;
-    setCoordinates({ lat: coordinates.latitude, lng: coordinates.longitude });
+    var coords = e.coords;
+    setCoordinates({ lat: coords.latitude, lng: coords.longitude });
+    map.setCenter([coords.longitude, coords.latitude]);
   });
 
   map.addControl(geolocateControl);
 
+  // 🔹 Set user's current location on map load
+  navigator.geolocation.getCurrentPosition(
+    ({ coords: { latitude, longitude } }) => {
+      setCoordinates({ lat: latitude, lng: longitude });
+      map.setCenter([longitude, latitude]);
+    }
+  );
+
+  // 🔹 Load GeoJSON layers on map load
   map.on("load", function () {
     map.addLayer({
       id: "metro-line",
@@ -218,13 +230,13 @@ function initializeMap(containerId, coordinates, setCoordinates) {
       },
     });
 
-    // Add polygon layer for station polygons
+    // 🔹 Add polygon layer for station boxes
     map.addLayer({
       id: "station-box",
       type: "fill",
       source: {
         type: "geojson",
-        data: stationBox, // Replace with your station polygon GeoJSON
+        data: stationBox,
       },
       paint: {
         "fill-color": [
@@ -237,7 +249,7 @@ function initializeMap(containerId, coordinates, setCoordinates) {
       },
     });
 
-    // two files for different stations
+    // 🔹 Entry & Exit Polygons
     map.addLayer({
       id: "entry-exit-boxes",
       type: "fill",
@@ -246,22 +258,28 @@ function initializeMap(containerId, coordinates, setCoordinates) {
         data: entryExitBoxes,
       },
       paint: {
-        "fill-color": "rgb(0, 100, 255)", // Fill color for the polygons
+        "fill-color": "rgb(0, 100, 255)", // Blue
         "fill-opacity": 0.8, // Transparency
       },
     });
   });
 
-  // Set user's current location if available
-  navigator.geolocation.getCurrentPosition(
-    ({ coords: { latitude, longitude } }) => {
-      setCoordinates({ lat: latitude, lng: longitude });
-      map.setCenter([longitude, latitude]);
-    }
-  );
+  // 🔹 Track zoom level and toggle marker labels
+  map.on("zoom", function () {
+    const currentZoom = map.getZoom();
+    const labels = document.querySelectorAll(".marker-label");
+
+    labels.forEach((label) => {
+      label.style.display = currentZoom > 16 ? "block" : "none"; 
+    });
+
+    console.log("Current Zoom Level:", currentZoom);
+  });
 
   return map;
 }
+
+
 
 const handleGetDirections = async (place, username, nearestStation) => {
   const latitude = place.Latitude;

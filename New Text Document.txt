@@ -1,0 +1,59 @@
+map.on("load", function () {
+    map.addLayer({
+      id: "metro-line",
+      type: "line",
+      source: {
+        type: "geojson",
+        data: stationGeoJSON,
+      },
+      layout: {
+        "line-join": "round",
+        "line-cap": "round",
+      },
+      paint: {
+        "line-color": "#02D8E9",
+        "line-width": 5,
+      },
+    });
+
+    // Add polygon layer for station polygons
+    map.addLayer({
+      id: "station-box",
+      type: "fill",
+      source: {
+        type: "geojson",
+        data: stationBox, // Replace with your station polygon GeoJSON
+      },
+      paint: {
+        "fill-color": [
+          "case",
+          ["==", ["get", "Name"], "Aarey Depot"],
+          "rgb(102, 51, 153)", // Light green for Aarey Depot
+          "rgb(244, 27, 27)", // Default red for other stations
+        ],
+        "fill-opacity": 0.8, // Transparency
+      },
+    });
+
+    // two files for different stations
+    map.addLayer({
+      id: "entry-exit-boxes",
+      type: "fill",
+      source: {
+        type: "geojson",
+        data: entryExitBoxes,
+      },
+      paint: {
+        "fill-color": "rgb(0, 100, 255)", // Fill color for the polygons
+        "fill-opacity": 0.8, // Transparency
+      },
+    });
+  });
+
+  // Set user's current location if available
+  navigator.geolocation.getCurrentPosition(
+    ({ coords: { latitude, longitude } }) => {
+      setCoordinates({ lat: latitude, lng: longitude });
+      map.setCenter([longitude, latitude]);
+    }
+  );
