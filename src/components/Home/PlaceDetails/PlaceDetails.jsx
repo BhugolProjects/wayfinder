@@ -14,6 +14,7 @@ import {
   CardContent,
   CardActions,
 } from "@mui/material";
+import AccessibleIcon from "@mui/icons-material/Accessible";
 import { addVisitorAnalysis } from "../../../api";
 
 function PlaceDetails({
@@ -25,6 +26,66 @@ function PlaceDetails({
   selectedStation,
   username,
 }) {
+  const metroStations = {
+    27: {
+      name: "Aarey JVLR",
+      gates: ["A1", "B1"],
+      lifts: [],
+    },
+    26: {
+      name: "SEEPZ",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["A2"],
+    },
+    25: {
+      name: "MIDC-Andheri",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["B1"],
+    },
+    24: {
+      name: "Marol Naka",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["A1", "A2", "B1", "B2"],
+    },
+    23: {
+      name: "CSMIA-T2",
+      gates: ["A1", "A2", "B1"],
+      lifts: ["A1"],
+    },
+    22: {
+      name: "Sahar Road",
+      gates: ["A1", "A2", "A3", "A4", "A5", "B1"],
+      lifts: ["A1", "A3", "A5", "B1"],
+    },
+    21: {
+      name: "CSMIA-T1",
+      gates: ["A1", "B1"],
+      lifts: ["A1", "B1"],
+    },
+    20: {
+      name: "Santacruz Metro",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["A1", "A2", "B1", "B2"],
+    },
+    19: {
+      name: "Bandra Colony",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["A2", "B1"],
+    },
+    18: {
+      name: "Bandra-Kurla Complex",
+      gates: ["A1", "A2", "A3", "A4", "A5", "B1"],
+      lifts: ["A1", "A2", "A3", "A4", "B1"],
+    },
+  };
+
+  // Get station ID from selectedPlace (POI) and gate to display weather the nearest gate has lift or not
+  const stationId = place?.Station;
+  const nearestGates = place?.Nearest_Gates?.split(",").map((gate) =>
+    gate.trim()
+  ); // Convert to array
+  const hasLift = metroStations[stationId]?.lifts?.includes(nearestGates);
+
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 
@@ -146,7 +207,24 @@ function PlaceDetails({
                 letterSpacing: "0.8px", // Slight letter spacing for clarity
               }}
             >
-              Nearest Gates: {place.Nearest_Gates}
+              Nearest Gates:{" "}
+              {nearestGates.map((gate, index) => (
+                <span
+                  key={index}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1px",
+                  }}
+                >
+                  {gate}
+                  {metroStations[stationId]?.lifts?.includes(gate) && (
+                    <AccessibleIcon
+                      sx={{ fontSize: "16px", color: "rgb(232, 23, 23)" }}
+                    />
+                  )}
+                </span>
+              ))}
             </Typography>
           </CardContent>
         </Box>

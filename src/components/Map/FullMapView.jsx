@@ -11,6 +11,7 @@ import {
   CardActions,
   CardMedia,
 } from "@mui/material";
+import AccessibleIcon from "@mui/icons-material/Accessible";
 import tt from "@tomtom-international/web-sdk-maps";
 import "@tomtom-international/web-sdk-maps/dist/maps.css";
 import { MapContainer } from "./styles.js";
@@ -81,13 +82,13 @@ function createMarker(
   marker.getElement().addEventListener("click", () => {
     setChildClicked(i);
     setSelectedPlace(place);
+    // setSelectedPlace("I am here" , place); // Set the selected place
+    // setTopPlaceId(place.id);
     setTopPlaceId(place.id);
   });
 
   return marker;
 }
-
-
 
 function createSelfMarker(
   icon,
@@ -190,7 +191,7 @@ function initializeMap(containerId, coordinates, setCoordinates) {
   });
 
   map.addControl(new tt.NavigationControl());
-  
+
   var geolocateControl = new tt.GeolocateControl({
     positionOptions: { enableHighAccuracy: false },
   });
@@ -242,7 +243,7 @@ function initializeMap(containerId, coordinates, setCoordinates) {
         "fill-color": [
           "case",
           ["==", ["get", "Name"], "Aarey Depot"],
-          "rgb(102, 51, 153)", // Light green for Aarey Depot
+          "rgb(102, 51, 153)",
           "rgb(244, 27, 27)", // Default red for other stations
         ],
         "fill-opacity": 0.8, // Transparency
@@ -270,7 +271,7 @@ function initializeMap(containerId, coordinates, setCoordinates) {
     const labels = document.querySelectorAll(".marker-label");
 
     labels.forEach((label) => {
-      label.style.display = currentZoom > 16 ? "block" : "none"; 
+      label.style.display = currentZoom > 16 ? "block" : "none";
     });
 
     console.log("Current Zoom Level:", currentZoom);
@@ -278,8 +279,6 @@ function initializeMap(containerId, coordinates, setCoordinates) {
 
   return map;
 }
-
-
 
 const handleGetDirections = async (place, username, nearestStation) => {
   const latitude = place.Latitude;
@@ -329,6 +328,66 @@ function FullMapView({
   const isDesktop = useMediaQuery("(min-width:600px)");
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+
+  const metroStations = {
+    27: {
+      name: "Aarey JVLR",
+      gates: ["A1", "B1"],
+      lifts: [],
+    },
+    26: {
+      name: "SEEPZ",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["A2"],
+    },
+    25: {
+      name: "MIDC-Andheri",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["B1"],
+    },
+    24: {
+      name: "Marol Naka",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["A1", "A2", "B1", "B2"],
+    },
+    23: {
+      name: "CSMIA-T2",
+      gates: ["A1", "A2", "B1"],
+      lifts: ["A1"],
+    },
+    22: {
+      name: "Sahar Road",
+      gates: ["A1", "A2", "A3", "A4", "A5", "B1"],
+      lifts: ["A1", "A3", "A5", "B1"],
+    },
+    21: {
+      name: "CSMIA-T1",
+      gates: ["A1", "B1"],
+      lifts: ["A1", "B1"],
+    },
+    20: {
+      name: "Santacruz Metro",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["A1", "A2", "B1", "B2"],
+    },
+    19: {
+      name: "Bandra Colony",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["A2", "B1"],
+    },
+    18: {
+      name: "Bandra-Kurla Complex",
+      gates: ["A1", "A2", "A3", "A4", "A5", "B1"],
+      lifts: ["A1", "A2", "A3", "A4", "B1"],
+    },
+  };
+
+  // Get station ID from selectedPlace (POI) and gate to display weather the nearest gate has lift or not
+  const stationId = selectedPlace?.Station;
+  const nearestGates = selectedPlace?.Nearest_Gates?.split(",").map((gate) =>
+    gate.trim()
+  ); // Convert to array
+  const hasLift = metroStations[stationId]?.lifts?.includes(nearestGates);
 
   //Debounce function to avoid race condition
   const debouncedAddBuffer = useRef(
@@ -799,14 +858,34 @@ function FullMapView({
                 </Typography>
                 <Typography
                   style={{
-                    color: "#65a30d", // Lime green to match the second code
+                    color: "#2563eb", // Darker shade of lime green for better contrast
                     marginTop: "6px",
-                    fontWeight: "500", // Medium font weight for emphasis
-                    fontSize: "14px",
+                    fontWeight: "bold", // Bold for stronger emphasis
+                    fontSize: "14px", // Slightly larger font size
                     fontFamily: "Inter",
+                    textTransform: "uppercase", // Uppercase for better visibility
+                    textShadow: "1px 1px 3px rgba(0, 0, 0, 0.2)", // Subtle shadow for better readability
+                    letterSpacing: "0.8px", // Slight letter spacing for clarity
                   }}
                 >
-                  Nearest Gates: {selectedPlace.Nearest_Gates}
+                  Nearest Gates:{" "}
+                  {nearestGates.map((gate, index) => (
+                    <span
+                      key={index}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "1px",
+                      }}
+                    >
+                      {gate}
+                      {metroStations[stationId]?.lifts?.includes(gate) && (
+                        <AccessibleIcon
+                          sx={{ fontSize: "16px", color: "rgb(232, 23, 23)" }}
+                        />
+                      )}
+                    </span>
+                  ))}
                 </Typography>
               </CardContent>
             </Box>
