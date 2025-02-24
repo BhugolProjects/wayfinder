@@ -1,107 +1,785 @@
 {
-"type": "FeatureCollection",
-"name": "Entry_Exits_Polygon",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-"features": [
-{ "type": "Feature", "properties": { "Name": "11_Science Centre_E2", "descriptio": "E2", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.820957883569008, 18.991374573328571, 0.0 ], [ 72.821012614787463, 18.991400646886287, 0.0 ], [ 72.821105365401891, 18.991222477493832, 0.0 ], [ 72.821053558752396, 18.991196008853848, 0.0 ], [ 72.820957883569008, 18.991374573328571, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "11_Science Centre_Lift1", "descriptio": "Lift", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.821875362620091, 18.989819633776044, 0.0 ], [ 72.821933853998601, 18.98971099289361, 0.0 ], [ 72.821869931277817, 18.989679388259944, 0.0 ], [ 72.821809768717088, 18.989789214336103, 0.0 ], [ 72.821875362620091, 18.989819633776044, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "11_Science Centre_E1", "descriptio": "E1", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.822152778872351, 18.989155145524073, 0.0 ], [ 72.822052507937812, 18.989338847951704, 0.0 ], [ 72.822116430658582, 18.989369267473926, 0.0 ], [ 72.822215866002011, 18.98918754037549, 0.0 ], [ 72.822152778872351, 18.989155145524073, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "11_Science Centre_E4", "descriptio": "E4", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.822496624618736, 18.989320280188654, 0.0 ], [ 72.822610682806783, 18.989241268407845, 0.0 ], [ 72.822638675109346, 18.98924482393879, 0.0 ], [ 72.822647031020551, 18.989197416853322, 0.0 ], [ 72.822598148939946, 18.989189120611986, 0.0 ], [ 72.822467796725036, 18.989282749597454, 0.0 ], [ 72.822496624618736, 18.989320280188654, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "11_Science Centre_E5", "descriptio": "E5", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.822929460819523, 18.989169762713907, 0.0 ], [ 72.823013019931651, 18.989132232088767, 0.0 ], [ 72.822942412481908, 18.988983294682463, 0.0 ], [ 72.822855928800863, 18.989018059924504, 0.0 ], [ 72.822929460819523, 18.989169762713907, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "11_Science Centre_E6", "descriptio": "E6", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.822928207432838, 18.988393667170758, 0.0 ], [ 72.822847050645194, 18.988544185347095, 0.0 ], [ 72.822855093209739, 18.988548728544526, 0.0 ], [ 72.822818953893744, 18.988616876491147, 0.0 ], [ 72.822881832125603, 18.988646901084859, 0.0 ], [ 72.822932385388455, 18.988553666802467, 0.0 ], [ 72.822908153245933, 18.988542407574148, 0.0 ], [ 72.822974582740073, 18.988417568360081, 0.0 ], [ 72.822928207432838, 18.988393667170758, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "11_Science Centre_E3", "descriptio": "E3", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.821630586646037, 18.990811422990678, 0.0 ], [ 72.82165419209521, 18.990823175884607, 0.0 ], [ 72.821824757132831, 18.99050678571529, 0.0 ], [ 72.821801203908109, 18.990495082181027, 0.0 ], [ 72.821786998859039, 18.990521254640477, 0.0 ], [ 72.821776971765587, 18.990516316440893, 0.0 ], [ 72.82170793104919, 18.990639573858633, 0.0 ], [ 72.821677849768818, 18.990696066811264, 0.0 ], [ 72.821689548044517, 18.990702190172119, 0.0 ], [ 72.821630586646037, 18.990811422990678, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "18_BKC_E7", "descriptio": "E7", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.8534542871855, 19.061524861210096, 0.0 ], [ 72.853736918660033, 19.061660115342267, 0.0 ], [ 72.85379583378969, 19.061549092667594, 0.0 ], [ 72.85351320231517, 19.061413838444871, 0.0 ], [ 72.8534542871855, 19.061524861210096, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "18_BKC_E5", "descriptio": "E5", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.854656330697935, 19.059366778888407, 0.0 ], [ 72.854916227927632, 19.059614847479782, 0.0 ], [ 72.854980265093317, 19.059553270735325, 0.0 ], [ 72.854984330935011, 19.059549463454545, 0.0 ], [ 72.854723031181805, 19.059300099324023, 0.0 ], [ 72.854656330697992, 19.059366778888393, 0.0 ], [ 72.854656330697935, 19.059366778888407, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "18_BKC_E2", "descriptio": "E2", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.855470109132099, 19.058528746427893, 0.0 ], [ 72.855563329866541, 19.058533068531652, 0.0 ], [ 72.855590765498704, 19.058223359678362, 0.0 ], [ 72.855497544764262, 19.058219037566541, 0.0 ], [ 72.855470109132099, 19.058528746427893, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "18_BKC_E10", "descriptio": "E10", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.855315922232123, 19.059824127499841, 0.0 ], [ 72.855299897017943, 19.059852847007889, 0.0 ], [ 72.855355031524724, 19.059880732849813, 0.0 ], [ 72.855371056738903, 19.059852013346575, 0.0 ], [ 72.855315922232123, 19.059824127499841, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "18_BKC_E4", "descriptio": "E4", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.855344502824565, 19.058991441866421, 0.0 ], [ 72.855389880098272, 19.059003621611591, 0.0 ], [ 72.855414303851575, 19.058926721248266, 0.0 ], [ 72.855368926577967, 19.058914541497575, 0.0 ], [ 72.855344502824565, 19.058991441866421, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "18_BKC_E1", "descriptio": "E1", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.855767222552998, 19.058497129276969, 0.0 ], [ 72.855752514874112, 19.058524388647982, 0.0 ], [ 72.855706664956301, 19.058606558981381, 0.0 ], [ 72.85575620477826, 19.058631618408366, 0.0 ], [ 72.855771341073904, 19.058604491855135, 0.0 ], [ 72.855801348213021, 19.058547041860205, 0.0 ], [ 72.855798699544778, 19.058545702210392, 0.0 ], [ 72.855813194394415, 19.058520008829635, 0.0 ], [ 72.855767222552998, 19.058497129276969, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "18_BKC_E4", "descriptio": "E4", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.855354465392438, 19.059062323363989, 0.0 ], [ 72.855289435247016, 19.059178867320842, 0.0 ], [ 72.855261464492827, 19.059164736662929, 0.0 ], [ 72.855211294839691, 19.059254641166191, 0.0 ], [ 72.855352933540019, 19.059325469613171, 0.0 ], [ 72.855467107870638, 19.059119295761477, 0.0 ], [ 72.855354465392438, 19.059062323363989, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "18_BKC_E11", "descriptio": "E11", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.855538825104716, 19.059583480144632, 0.0 ], [ 72.855794796816383, 19.059613479255521, 0.0 ], [ 72.855809499831466, 19.059522633736346, 0.0 ], [ 72.855553648142219, 19.059492648675302, 0.0 ], [ 72.855538825104716, 19.059583480144632, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "18_BKC_E12", "descriptio": "E12", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.855554131693481, 19.059390793921153, 0.0 ], [ 72.855532908845191, 19.059380170117649, 0.0 ], [ 72.855512702744008, 19.059416382447502, 0.0 ], [ 72.855529083317904, 19.059424667401398, 0.0 ], [ 72.855512105955455, 19.05945494348023, 0.0 ], [ 72.855561400245577, 19.059478720132876, 0.0 ], [ 72.855598079137167, 19.059413021627471, 0.0 ], [ 72.855554131693481, 19.059390793921153, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "18_BKC_E6", "descriptio": "E6", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.854384867235026, 19.061109806216169, 0.0 ], [ 72.854384199514627, 19.061111002862212, 0.0 ], [ 72.854334241381991, 19.061199324680935, 0.0 ], [ 72.8543786444598, 19.061221735194689, 0.0 ], [ 72.854439852029515, 19.061112043108178, 0.0 ], [ 72.854396079611149, 19.061090034362699, 0.0 ], [ 72.854384867235026, 19.061109806216169, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "18_BKC_E9", "descriptio": "E9", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.854156805549778, 19.061734884122433, 0.0 ], [ 72.854207944814149, 19.061760748936749, 0.0 ], [ 72.854227086006873, 19.061726445504799, 0.0 ], [ 72.854242427832347, 19.061734204973476, 0.0 ], [ 72.854223286655468, 19.061768508375454, 0.0 ], [ 72.854264837307781, 19.061789523533097, 0.0 ], [ 72.854299113459106, 19.061728096351739, 0.0 ], [ 72.854191081677413, 19.061673456963288, 0.0 ], [ 72.854156805549778, 19.061734884122433, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "15_Dadar", "descriptio": "E7", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.838432501405805, 19.022500161420556, 0.0 ], [ 72.838335382866333, 19.022389923683409, 0.0 ], [ 72.838304309147091, 19.022414918876827, 0.0 ], [ 72.838402450669832, 19.022523075492625, 0.0 ], [ 72.838432501405805, 19.022500161420556, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "15_Dadar", "descriptio": "E1", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.838432807383697, 19.022825522966222, 0.0 ], [ 72.838452620322371, 19.022810161097038, 0.0 ], [ 72.838370636722701, 19.022716808259485, 0.0 ], [ 72.838362743043859, 19.022722889539107, 0.0 ], [ 72.838347302538523, 19.022735119933447, 0.0 ], [ 72.838428920028022, 19.022828982131699, 0.0 ], [ 72.838432807383697, 19.022825522966222, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "15_Dadar_entry Exit", "descriptio": "E2", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.838559482317024, 19.023070518554057, 0.0 ], [ 72.838596296774185, 19.023040096236965, 0.0 ], [ 72.838680511820073, 19.023134251049729, 0.0 ], [ 72.838710058187019, 19.023111795305994, 0.0 ], [ 72.838713955568764, 19.023108608681369, 0.0 ], [ 72.838625790473813, 19.023006636660824, 0.0 ], [ 72.838593294736924, 19.023032079880792, 0.0 ], [ 72.838560640998082, 19.022999416959731, 0.0 ], [ 72.838522088519284, 19.023034071522108, 0.0 ], [ 72.838559482317024, 19.023070518554057, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "18_Dadar_E3", "descriptio": "E3", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.839763878607997, 19.024374341135761, 0.0 ], [ 72.839870898603763, 19.024488660385515, 0.0 ], [ 72.839841299569485, 19.024512360707941, 0.0 ], [ 72.839878904036496, 19.024553786473469, 0.0 ], [ 72.839918088523149, 19.024521721338555, 0.0 ], [ 72.839887752146396, 19.024488759966715, 0.0 ], [ 72.839918509861718, 19.02446396424763, 0.0 ], [ 72.839891544193478, 19.02443209825784, 0.0 ], [ 72.839805591126037, 19.02434088182828, 0.0 ], [ 72.839763878607997, 19.024374341135761, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "15_Dadar_AB_E3", "descriptio": "E3", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.839925356613421, 19.024693697936947, 0.0 ], [ 72.839977602595624, 19.024747870030669, 0.0 ], [ 72.839990242752592, 19.02473751360235, 0.0 ], [ 72.840078723851462, 19.024833111377685, 0.0 ], [ 72.840121279046613, 19.024799652162567, 0.0 ], [ 72.84017563172165, 19.024859400756259, 0.0 ], [ 72.840224559662644, 19.024819867105844, 0.0 ], [ 72.840158988848273, 19.024745878409885, 0.0 ], [ 72.840032330432237, 19.024606568305114, 0.0 ], [ 72.839925356613421, 19.024693697936947, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "15_Dadar_E4", "descriptio": "E4", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.840022952698163, 19.024311146898153, 0.0 ], [ 72.839989219398248, 19.024339249941743, 0.0 ], [ 72.840077573389891, 19.024437867443989, 0.0 ], [ 72.840113660461441, 19.024480017756122, 0.0 ], [ 72.840164956191245, 19.024539330949498, 0.0 ], [ 72.840190694575412, 19.024518933065654, 0.0 ], [ 72.840176665838001, 19.024504353844751, 0.0 ], [ 72.840185149626748, 19.024497633923801, 0.0 ], [ 72.840022952698163, 19.024311146898153, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "15_Dadar_E5", "descriptio": "E5", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.839678452213732, 19.023989857437368, 0.0 ], [ 72.83969488441781, 19.023975916027808, 0.0 ], [ 72.839713423314706, 19.023961974617084, 0.0 ], [ 72.839549417277865, 19.023761616499435, 0.0 ], [ 72.83953043391007, 19.023775840448589, 0.0 ], [ 72.839510338125876, 19.023790793914301, 0.0 ], [ 72.839678452213732, 19.023989857437368, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "15_Dadar_E6", "descriptio": "E6", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.83899, 19.02313, 0.0 ], [ 72.838959016612264, 19.023154366613564, 0.0 ], [ 72.839072778025084, 19.023289399741667, 0.0 ], [ 72.8391047997561, 19.023262313459281, 0.0 ], [ 72.83899, 19.02313, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "13_Worli_E1", "descriptio": "E1", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.818836188038262, 19.008079075477479, 0.0 ], [ 72.819003465714331, 19.008367278112743, 0.0 ], [ 72.819051499867243, 19.008342072550871, 0.0 ], [ 72.819050583151665, 19.008340493143109, 0.0 ], [ 72.819006809982554, 19.008265076405223, 0.0 ], [ 72.818884222191187, 19.008053869871926, 0.0 ], [ 72.818836188038262, 19.008079075477479, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "13_Worli_E4", "descriptio": "E4", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.819618672062333, 19.008930396431083, 0.0 ], [ 72.819670248952406, 19.00901925783095, 0.0 ], [ 72.819903342321382, 19.008896944275655, 0.0 ], [ 72.819851765431309, 19.008808082810432, 0.0 ], [ 72.819618672062333, 19.008930396431083, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "13_Worli_E5", "descriptio": "E5", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.819226449140302, 19.008164657538586, 0.0 ], [ 72.819226522447892, 19.008164619070943, 0.0 ], [ 72.819243603137537, 19.00819411667937, 0.0 ], [ 72.81925177469887, 19.008190001554709, 0.0 ], [ 72.819514900217314, 19.008051928216197, 0.0 ], [ 72.81946791854368, 19.007970983408093, 0.0 ], [ 72.819195894799108, 19.008113783306058, 0.0 ], [ 72.819226449140302, 19.008164657538586, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "13_Worli_E2", "descriptio": "E2", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.819273855894608, 19.008815789008324, 0.0 ], [ 72.819264915521813, 19.008820331151178, 0.0 ], [ 72.81936638100332, 19.008994917339784, 0.0 ], [ 72.819375252416236, 19.008990484411168, 0.0 ], [ 72.81937726838305, 19.008989426552642, 0.0 ], [ 72.819386065294424, 19.008984810460852, 0.0 ], [ 72.81938808124535, 19.008983752610632, 0.0 ], [ 72.819400910074449, 19.00897702080983, 0.0 ], [ 72.819299521465567, 19.008802330762865, 0.0 ], [ 72.819273855894608, 19.008815789008324, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "13_Worli_E3", "descriptio": "E3", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.819431624224919, 19.00905300815235, 0.0 ], [ 72.81941329732993, 19.00906262501255, 0.0 ], [ 72.819407345567996, 19.009065674096018, 0.0 ], [ 72.819563276031388, 19.009334099280881, 0.0 ], [ 72.819577928162317, 19.009326515067169, 0.0 ], [ 72.819582326617123, 19.009324207024438, 0.0 ], [ 72.819590023913051, 19.009320167949568, 0.0 ], [ 72.819606518118576, 19.009311512788816, 0.0 ], [ 72.819623910843092, 19.009302901248059, 0.0 ], [ 72.819467846484827, 19.009033830517431, 0.0 ], [ 72.819431624224919, 19.00905300815235, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "24_Marol Naka_B1", "descriptio": "B1", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.878693475874243, 19.108943810356781, 0.0 ], [ 72.878702204866343, 19.108901626455804, 0.0 ], [ 72.878675197411326, 19.10889553991689, 0.0 ], [ 72.87871339877465, 19.1087288594182, 0.0 ], [ 72.878653287805918, 19.108717711990309, 0.0 ], [ 72.878622147819073, 19.108884438673361, 0.0 ], [ 72.878612839303557, 19.108926858845344, 0.0 ], [ 72.878693475874243, 19.108943810356781, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "24_Marol Naka_B2", "descriptio": "B2", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.878379703956654, 19.108924047071486, 0.0 ], [ 72.878354598575754, 19.108885672157506, 0.0 ], [ 72.878335106965451, 19.108899156191789, 0.0 ], [ 72.878268816364425, 19.108794582779819, 0.0 ], [ 72.878204772902379, 19.108838641636577, 0.0 ], [ 72.878302242557325, 19.108984752399842, 0.0 ], [ 72.878353746795071, 19.108947754279015, 0.0 ], [ 72.878350919296651, 19.108943621240101, 0.0 ], [ 72.878379703956654, 19.108924047071486, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "24_Marol Naka_A1", "descriptio": "A1", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.878688504498513, 19.108188007549277, 0.0 ], [ 72.878697177239829, 19.10826401767336, 0.0 ], [ 72.878753917500021, 19.108262956010606, 0.0 ], [ 72.878754479284794, 19.108166875503525, 0.0 ], [ 72.878690435822762, 19.10816634467184, 0.0 ], [ 72.878688504498513, 19.108188007549277, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "24_Marol Naka_A2", "descriptio": "A2", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.878355545958428, 19.108260230362969, 0.0 ], [ 72.878378056592297, 19.108311215033421, 0.0 ], [ 72.878302804342042, 19.108343642360158, 0.0 ], [ 72.878326961086501, 19.108392478815773, 0.0 ], [ 72.87845560979531, 19.108333025737462, 0.0 ], [ 72.878430202349136, 19.108285206270654, 0.0 ], [ 72.87840392559788, 19.108236945271095, 0.0 ], [ 72.878355545958428, 19.108260230362969, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "17_Daharavi_E1", "descriptio": "E1", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.849215536800017, 19.046264316001221, 0.0 ], [ 72.849293785820819, 19.0462821521667, 0.0 ], [ 72.849302542034494, 19.04624656551373, 0.0 ], [ 72.849223543664053, 19.046228465700814, 0.0 ], [ 72.849215536800017, 19.046264316001221, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "17_Dharavi_E2", "descriptio": "E2", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.849410803504512, 19.046261619005186, 0.0 ], [ 72.849398985217817, 19.046311811173283, 0.0 ], [ 72.849484945853476, 19.046330995586619, 0.0 ], [ 72.849486842266685, 19.046323072083034, 0.0 ], [ 72.849551011016814, 19.046337661523054, 0.0 ], [ 72.849592072718707, 19.046347213163582, 0.0 ], [ 72.849600561910563, 19.04631495801717, 0.0 ], [ 72.849602226457975, 19.046305045458706, 0.0 ], [ 72.849410803504512, 19.046261619005186, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "17_Dharavi_E3_Lift", "descriptio": "E3", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.850365753732831, 19.046526302619881, 0.0 ], [ 72.850419519241797, 19.046538541122729, 0.0 ], [ 72.850431138295775, 19.046496954935321, 0.0 ], [ 72.850375793746778, 19.04648435411859, 0.0 ], [ 72.850365753732831, 19.046526302619881, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "17_Dharavi_E4", "descriptio": "E4", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.850564775319739, 19.046524763903932, 0.0 ], [ 72.850552683035488, 19.046574100406609, 0.0 ], [ 72.85060593028193, 19.046586220687924, 0.0 ], [ 72.850751762907052, 19.046621775009783, 0.0 ], [ 72.85076478926284, 19.04657030294106, 0.0 ], [ 72.850564775319739, 19.046524763903932, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "17_Dharavi_E5", "descriptio": "E5", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.851081451622292, 19.046348439595295, 0.0 ], [ 72.851174264068248, 19.046368661718081, 0.0 ], [ 72.851226386449895, 19.046165141608512, 0.0 ], [ 72.851132111992783, 19.046140780118165, 0.0 ], [ 72.851081451622292, 19.046348439595295, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "17_Dharavi_E6", "descriptio": "E6", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.849525083587324, 19.04604423418964, 0.0 ], [ 72.849518390090594, 19.046069756965203, 0.0 ], [ 72.849613545380421, 19.046090902583174, 0.0 ], [ 72.849620370024851, 19.046065413111542, 0.0 ], [ 72.849525083587324, 19.04604423418964, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "17_Dharavi_E7", "descriptio": "E7", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.849171992155846, 19.04600471902712, 0.0 ], [ 72.849263823837092, 19.046025627268268, 0.0 ], [ 72.849404644679083, 19.046057703332323, 0.0 ], [ 72.849431776802064, 19.046064154372104, 0.0 ], [ 72.849441264722358, 19.0460265495269, 0.0 ], [ 72.849184631630422, 19.045968550472139, 0.0 ], [ 72.849164866623042, 19.045964005884738, 0.0 ], [ 72.849155878066981, 19.046001453401622, 0.0 ], [ 72.849171992155846, 19.04600471902712, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "10_Mahalakshmi_E2", "descriptio": "E2", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.825634460422521, 18.980004287624279, 0.0 ], [ 72.825598323031912, 18.980033532630511, 0.0 ], [ 72.825822469746029, 18.980283763374718, 0.0 ], [ 72.825776111262797, 18.980319814356076, 0.0 ], [ 72.825736767550069, 18.980351827620968, 0.0 ], [ 72.825909353778286, 18.980532875496543, 0.0 ], [ 72.825975083624598, 18.980477431347552, 0.0 ], [ 72.825995829162707, 18.980460642593812, 0.0 ], [ 72.826024983120035, 18.980437196297281, 0.0 ], [ 72.82563816099433, 18.98000840194349, 0.0 ], [ 72.825634460422521, 18.980004287624279, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "10_Mahalakshmi_E3", "descriptio": "E3", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.825745093172529, 18.979829028867378, 0.0 ], [ 72.826018197687958, 18.980132471403529, 0.0 ], [ 72.826031168321421, 18.980122167338376, 0.0 ], [ 72.826041056957067, 18.980114164739572, 0.0 ], [ 72.825915674107819, 18.979974763324154, 0.0 ], [ 72.825922257966226, 18.979969435185335, 0.0 ], [ 72.825774645881154, 18.97980506643896, 0.0 ], [ 72.825770523186961, 18.979808449024386, 0.0 ], [ 72.825745093172529, 18.979829028867378, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "10_Mahalakshmi_E1", "descriptio": "E1", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.825279573648913, 18.979609721785508, 0.0 ], [ 72.825244707759026, 18.979637937867732, 0.0 ], [ 72.82540690163151, 18.979817564477958, 0.0 ], [ 72.825442220905614, 18.979790188182161, 0.0 ], [ 72.825279573648913, 18.979609721785508, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "10_Mahalakshmi_E4", "descriptio": "E4", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.825457854026951, 18.979510949708036, 0.0 ], [ 72.825457854026951, 18.979510949708033, 0.0 ], [ 72.825605934426136, 18.979674112637987, 0.0 ], [ 72.825639371935637, 18.979647010081841, 0.0 ], [ 72.825492594296549, 18.979483573361854, 0.0 ], [ 72.825457854026951, 18.979510949708036, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "10_Mahalakshmi_E5", "descriptio": "E5", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.825078260062369, 18.979087637145632, 0.0 ], [ 72.825079493586287, 18.979089008592918, 0.0 ], [ 72.82522786348828, 18.979253968018032, 0.0 ], [ 72.825257308768187, 18.979230138643661, 0.0 ], [ 72.82510755630841, 18.97906379075015, 0.0 ], [ 72.825078260062369, 18.979087637145632, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "10_Mahalakshmi_E6", "descriptio": "E6", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.824763373919268, 18.97875039860411, 0.0 ], [ 72.82484144295961, 18.978837196890254, 0.0 ], [ 72.824877564867251, 18.978808265918101, 0.0 ], [ 72.8247995113082, 18.978721153373922, 0.0 ], [ 72.824763373919268, 18.97875039860411, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "13_Worli_E1", "descriptio": "E1", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.818836188038262, 19.008079075477479, 0.0 ], [ 72.819003465714331, 19.008367278112743, 0.0 ], [ 72.819051499867243, 19.008342072550871, 0.0 ], [ 72.819050583151665, 19.008340493143109, 0.0 ], [ 72.819006809982554, 19.008265076405223, 0.0 ], [ 72.818884222191187, 19.008053869871926, 0.0 ], [ 72.818836188038262, 19.008079075477479, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "13_Worli_E4", "descriptio": "E4", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.819618672062333, 19.008930396431083, 0.0 ], [ 72.819670248952406, 19.00901925783095, 0.0 ], [ 72.819903342321382, 19.008896944275655, 0.0 ], [ 72.819851765431309, 19.008808082810432, 0.0 ], [ 72.819618672062333, 19.008930396431083, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "13_Worli_E5", "descriptio": "E5", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.819226449140302, 19.008164657538586, 0.0 ], [ 72.819226522447892, 19.008164619070943, 0.0 ], [ 72.819243603137537, 19.00819411667937, 0.0 ], [ 72.81925177469887, 19.008190001554709, 0.0 ], [ 72.819514900217314, 19.008051928216197, 0.0 ], [ 72.81946791854368, 19.007970983408093, 0.0 ], [ 72.819195894799108, 19.008113783306058, 0.0 ], [ 72.819226449140302, 19.008164657538586, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "13_Worli_E2", "descriptio": "E2", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.819273855894608, 19.008815789008324, 0.0 ], [ 72.819264915521813, 19.008820331151178, 0.0 ], [ 72.81936638100332, 19.008994917339784, 0.0 ], [ 72.819375252416236, 19.008990484411168, 0.0 ], [ 72.81937726838305, 19.008989426552642, 0.0 ], [ 72.819386065294424, 19.008984810460852, 0.0 ], [ 72.81938808124535, 19.008983752610632, 0.0 ], [ 72.819400910074449, 19.00897702080983, 0.0 ], [ 72.819299521465567, 19.008802330762865, 0.0 ], [ 72.819273855894608, 19.008815789008324, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "13_Worli_E3", "descriptio": "E3", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.819431624224919, 19.00905300815235, 0.0 ], [ 72.81941329732993, 19.00906262501255, 0.0 ], [ 72.819407345567996, 19.009065674096018, 0.0 ], [ 72.819563276031388, 19.009334099280881, 0.0 ], [ 72.819577928162317, 19.009326515067169, 0.0 ], [ 72.819582326617123, 19.009324207024438, 0.0 ], [ 72.819590023913051, 19.009320167949568, 0.0 ], [ 72.819606518118576, 19.009311512788816, 0.0 ], [ 72.819623910843092, 19.009302901248059, 0.0 ], [ 72.819467846484827, 19.009033830517431, 0.0 ], [ 72.819431624224919, 19.00905300815235, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "09_Mumbai Central_E3", "descriptio": "E3", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.820952329585296, 18.96976710721373, 0.0 ], [ 72.820905405080893, 18.969629045537545, 0.0 ], [ 72.82069076043318, 18.969642093366382, 0.0 ], [ 72.820706573738121, 18.969782046219152, 0.0 ], [ 72.820952329585296, 18.96976710721373, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "09_Mumbai Central_E2", "descriptio": "E2", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.8206921716029, 18.969189236858451, 0.0 ], [ 72.820814411603308, 18.969152318187554, 0.0 ], [ 72.820743409926393, 18.968943496801419, 0.0 ], [ 72.82062177990602, 18.968981453857356, 0.0 ], [ 72.8206921716029, 18.969189236858451, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "09_Mumbai Central_E1", "descriptio": "E1", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.820474774715905, 18.968635802050226, 0.0 ], [ 72.820578959307085, 18.968590807269603, 0.0 ], [ 72.820403285054965, 18.968256691800743, 0.0 ], [ 72.820293976631447, 18.968302840386034, 0.0 ], [ 72.820474774715905, 18.968635802050226, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "09_Mumbai Central_E5", "descriptio": "E5", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.821661272002416, 18.970993978131112, 0.0 ], [ 72.821661272002416, 18.970993978131112, 0.0 ], [ 72.821756834213062, 18.971275143882721, 0.0 ], [ 72.821803616237432, 18.97126076499141, 0.0 ], [ 72.821718729718583, 18.971010644506997, 0.0 ], [ 72.821697331012714, 18.971017198665098, 0.0 ], [ 72.821686782991662, 18.97098616443051, 0.0 ], [ 72.821661272002416, 18.970993978131112, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "09_Mumbai Central_E6", "descriptio": "E6", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.821194276674305, 18.96891906698875, 0.0 ], [ 72.82112693487764, 18.969033515002078, 0.0 ], [ 72.821184516993625, 18.969067664797283, 0.0 ], [ 72.82125026754629, 18.9689480361851, 0.0 ], [ 72.821194276674305, 18.96891906698875, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "09_Mumbai Central_E4", "descriptio": "E4", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.821339912301553, 18.971002201350956, 0.0 ], [ 72.821407121441212, 18.971199942989202, 0.0 ], [ 72.821419458245458, 18.971196164383297, 0.0 ], [ 72.821490442317511, 18.971404601728739, 0.0 ], [ 72.82157782653897, 18.971379392556393, 0.0 ], [ 72.821439280889393, 18.970971765980472, 0.0 ], [ 72.821339912301553, 18.971002201350956, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "20_Santacruz_E1", "descriptio": "E1", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.846527747178428, 19.077494583182638, 0.0 ], [ 72.846597408827705, 19.077492711641238, 0.0 ], [ 72.846592377529404, 19.077273020408494, 0.0 ], [ 72.846522586580093, 19.077274413885984, 0.0 ], [ 72.846527747178428, 19.077494583182634, 0.0 ], [ 72.846527747178428, 19.077494583182638, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "20_Sanatcruz_E2", "descriptio": "E2", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.846539555174076, 19.077992818515526, 0.0 ], [ 72.846654748046447, 19.077990459502573, 0.0 ], [ 72.846645214709767, 19.077536953007105, 0.0 ], [ 72.846529467377906, 19.077539638888712, 0.0 ], [ 72.846539555174076, 19.077992818515526, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "20_Santacruz_E8", "descriptio": "E8", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.847201270655404, 19.077466171775992, 0.0 ], [ 72.847299325667905, 19.077464163719622, 0.0 ], [ 72.847288880090474, 19.077108472477882, 0.0 ], [ 72.847195894490739, 19.077109318977946, 0.0 ], [ 72.847201270655404, 19.077466171775992, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "20_Sanatacruz_E3", "descriptio": "E3", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.846564868167533, 19.079072787167856, 0.0 ], [ 72.846600987004805, 19.079072047501853, 0.0 ], [ 72.84659995861098, 19.079025750302193, 0.0 ], [ 72.846560533119558, 19.079026557684298, 0.0 ], [ 72.846561549609788, 19.079072834394395, 0.0 ], [ 72.846564868167533, 19.079072787167856, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "20_Sanatacruz_E4", "descriptio": "E4", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.846638396715662, 19.079576210097215, 0.0 ], [ 72.84663317303243, 19.079341045996923, 0.0 ], [ 72.846645382216863, 19.079340795969419, 0.0 ], [ 72.846642817211034, 19.079225322288291, 0.0 ], [ 72.846497474099905, 19.079228646274426, 0.0 ], [ 72.846501284663915, 19.079377946751773, 0.0 ], [ 72.846558515215946, 19.079376774747971, 0.0 ], [ 72.846563361102994, 19.07957774672256, 0.0 ], [ 72.846638396715662, 19.079576210097215, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "20_Sanatacruz_E7", "descriptio": "E7", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.847243567468908, 19.079570818614883, 0.0 ], [ 72.847245242499184, 19.079668021378733, 0.0 ], [ 72.847245415287063, 19.079685657322418, 0.0 ], [ 72.847238486571584, 19.079685765719859, 0.0 ], [ 72.847243980706494, 19.079933104713682, 0.0 ], [ 72.847351574144298, 19.079930901353908, 0.0 ], [ 72.847346150627942, 19.079569064104348, 0.0 ], [ 72.847243567468908, 19.079570818614886, 0.0 ], [ 72.847243567468908, 19.079570818614883, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "19_Bandra Colony_E1", "descriptio": "E1", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.849470810749025, 19.069644650285639, 0.0 ], [ 72.84934299728755, 19.069867911069256, 0.0 ], [ 72.849357043877831, 19.069875154814945, 0.0 ], [ 72.84937635962045, 19.069885038905106, 0.0 ], [ 72.849391142491086, 19.069858659340976, 0.0 ], [ 72.849485041952803, 19.069692804967161, 0.0 ], [ 72.84950301558365, 19.069661259131166, 0.0 ], [ 72.849470810749025, 19.069644650285639, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "19_Bandra Colony_E2", "descriptio": "E2", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.849081650768142, 19.070326581179806, 0.0 ], [ 72.848954767513135, 19.070550320077228, 0.0 ], [ 72.848986972347788, 19.07056692883199, 0.0 ], [ 72.849099778265867, 19.070370011340597, 0.0 ], [ 72.849114784649714, 19.070344089390598, 0.0 ], [ 72.849095697203481, 19.070333825237999, 0.0 ], [ 72.849081650768142, 19.070326581179806, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "19_Bandra Colony_E3", "descriptio": "E3", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.84886714946937, 19.070634315900431, 0.0 ], [ 72.848891206089505, 19.0706467224399, 0.0 ], [ 72.848903338776154, 19.070625429317417, 0.0 ], [ 72.848914437394498, 19.070606074725969, 0.0 ], [ 72.848890337235915, 19.070593620864869, 0.0 ], [ 72.84886715922535, 19.070634303828797, 0.0 ], [ 72.84886714946937, 19.070634315900431, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "19_Bandra Colony_E4", "descriptio": "E4", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.8488884255611, 19.070665699462442, 0.0 ], [ 72.848926839666547, 19.070685510439883, 0.0 ], [ 72.848928447495496, 19.070686356585799, 0.0 ], [ 72.848963278200841, 19.070626141617979, 0.0 ], [ 72.848920519492367, 19.070604072463588, 0.0 ], [ 72.848920248795778, 19.070604562650516, 0.0 ], [ 72.848895086196507, 19.070648723495722, 0.0 ], [ 72.84886714946937, 19.070634315900431, 0.0 ], [ 72.848856901312047, 19.070629303614854, 0.0 ], [ 72.848816621687831, 19.070700090423252, 0.0 ], [ 72.848848434717084, 19.070716497105298, 0.0 ], [ 72.848879869375381, 19.070661329331259, 0.0 ], [ 72.8488884255611, 19.070665699462442, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "19_Bandra Colony_E5", "descriptio": "E5", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.849103235268529, 19.070911939207257, 0.0 ], [ 72.849103239783688, 19.070911941535783, 0.0 ], [ 72.849237811581332, 19.070981341589288, 0.0 ], [ 72.849313108771213, 19.070849769951874, 0.0 ], [ 72.849123192435258, 19.070751825985546, 0.0 ], [ 72.849066232480169, 19.070721876265345, 0.0 ], [ 72.848990536437498, 19.070854776738575, 0.0 ], [ 72.849103235268529, 19.070911939207257, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "19_Bandra Colony_E6", "descriptio": "E6", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.849911704348315, 19.069408265450782, 0.0 ], [ 72.849911704348216, 19.069408265450942, 0.0 ], [ 72.849936900351963, 19.069421287124133, 0.0 ], [ 72.849949282109336, 19.069399585240792, 0.0 ], [ 72.849924099765147, 19.069386554320769, 0.0 ], [ 72.849923387567358, 19.069387760991127, 0.0 ], [ 72.849911704348315, 19.069408265450782, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "19_Bandra Colony_E7", "descriptio": "E7", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.850020167475435, 19.069198349209124, 0.0 ], [ 72.849988011914817, 19.069181640929084, 0.0 ], [ 72.849981358833261, 19.06919333091539, 0.0 ], [ 72.849885937384045, 19.069360793910334, 0.0 ], [ 72.849918141648303, 19.069377402712053, 0.0 ], [ 72.849954893800913, 19.069312953015277, 0.0 ], [ 72.850020167475435, 19.069198349209124, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "21_CSMIA T1_EntryA", "descriptio": "A", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.85348020469155, 19.093525750666199, 0.0 ], [ 72.85348189623825, 19.093526574265802, 0.0 ], [ 72.853610326343826, 19.093594683721939, 0.0 ], [ 72.853666551060385, 19.093624872685211, 0.0 ], [ 72.853691649115817, 19.093581691156771, 0.0 ], [ 72.853692810612174, 19.093579662458716, 0.0 ], [ 72.853506425037111, 19.093480847431014, 0.0 ], [ 72.85348020469155, 19.093525750666199, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "21_CSMIA T1_EntryB", "descriptio": "B", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.853916818788221, 19.093701103784941, 0.0 ], [ 72.853890992432326, 19.093745277741895, 0.0 ], [ 72.854077088580297, 19.09384365372204, 0.0 ], [ 72.854104375611584, 19.093797954302971, 0.0 ], [ 72.853917982174352, 19.093699072287585, 0.0 ], [ 72.853916818788221, 19.093701103784941, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "21_CSMIA T1_EntryC", "descriptio": "C", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.853744039533822, 19.093597469510492, 0.0 ], [ 72.853748912761759, 19.093600053895411, 0.0 ], [ 72.853946685595915, 19.09360209020916, 0.0 ], [ 72.853948123319611, 19.093519911539072, 0.0 ], [ 72.853755660430807, 19.093517929894947, 0.0 ], [ 72.853744843491029, 19.093536192315561, 0.0 ], [ 72.853744946472204, 19.093540032240941, 0.0 ], [ 72.853744039533822, 19.093597469510492, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "21_CSMIA T1_SubwayEntry", "descriptio": "Subway", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.852189626426451, 19.095294219732047, 0.0 ], [ 72.851838407195899, 19.09566394542556, 0.0 ], [ 72.851983990296645, 19.095779162100786, 0.0 ], [ 72.852000368395466, 19.095762825412912, 0.0 ], [ 72.852256958610553, 19.095811835471686, 0.0 ], [ 72.852320651217127, 19.095727572554622, 0.0 ], [ 72.852249679455511, 19.095536691094026, 0.0 ], [ 72.852337029315962, 19.095421474249996, 0.0 ], [ 72.852189626426451, 19.095294219732047, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "22_Sahar Road_A", "descriptio": "A", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.866015122103249, 19.101803752852629, 0.0 ], [ 72.866003527218069, 19.101804274588559, 0.0 ], [ 72.866004079355463, 19.101951925792534, 0.0 ], [ 72.866251436905955, 19.102346357337861, 0.0 ], [ 72.866459040564393, 19.102344270400952, 0.0 ], [ 72.866450206366153, 19.101983229917785, 0.0 ], [ 72.866262479653727, 19.101803752852629, 0.0 ], [ 72.866015122103249, 19.101803752852629, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "22_Sahar Road_B", "descriptio": "B", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.864917145141732, 19.102597074899997, 0.0 ], [ 72.865453822684074, 19.102607640001722, 0.0 ], [ 72.865459413075143, 19.102273078119296, 0.0 ], [ 72.864930189387564, 19.102255469580424, 0.0 ], [ 72.864917145141732, 19.102597074899997, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "22_Sahar Road_SubwayEntry1", "descriptio": "Subway 1", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.865095105924013, 19.102667508898783, 0.0 ], [ 72.865369966818093, 19.102668389323576, 0.0 ], [ 72.865369966818093, 19.102617324677709, 0.0 ], [ 72.86509603765586, 19.102614683402496, 0.0 ], [ 72.865095105924013, 19.102667508898783, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "22_Sahar Road_SubwayEntry2", "descriptio": "Subway 2", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.865418416873993, 19.102667508898783, 0.0 ], [ 72.86564482771216, 19.102671911022718, 0.0 ], [ 72.865645759443993, 19.102625248503102, 0.0 ], [ 72.865418533340488, 19.102620736324795, 0.0 ], [ 72.865418416873993, 19.102667508898783, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "22_Sahar Road_SubwayEntry3", "descriptio": "Subway 3", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.86515718255815, 19.10292129115199, 0.0 ], [ 72.86515531909447, 19.102973236127205, 0.0 ], [ 72.865370549150512, 19.102974446709066, 0.0 ], [ 72.865370549150498, 19.102923051998875, 0.0 ], [ 72.86515718255815, 19.10292129115199, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "22_Sahar Road_SubwayEntry4", "descriptio": "Subway 4", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.865400772202207, 19.102974886920638, 0.0 ], [ 72.865614779360172, 19.102982205438003, 0.0 ], [ 72.865614779360172, 19.102931581100698, 0.0 ], [ 72.865400946901886, 19.102924977925117, 0.0 ], [ 72.865400772202207, 19.102974886920638, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "23_CSMIA T2_EntryA", "descriptio": "A", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.874282272415371, 19.102168874734058, 0.0 ], [ 72.874547590865291, 19.102172522928516, 0.0 ], [ 72.874561167906037, 19.101377590390079, 0.0 ], [ 72.874561213760316, 19.101376686464345, 0.0 ], [ 72.874540277500827, 19.101376398563733, 0.0 ], [ 72.874540509200912, 19.101362833404966, 0.0 ], [ 72.874317002457687, 19.101359759898138, 0.0 ], [ 72.874316770747981, 19.101373325057025, 0.0 ], [ 72.874295834498199, 19.101373037156527, 0.0 ], [ 72.874282272415371, 19.102168874734058, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "23_CSMIA T2_EntryB", "descriptio": "B", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.873567337354714, 19.102053481987184, 0.0 ], [ 72.873946465886121, 19.102058695473012, 0.0 ], [ 72.873950366296299, 19.101830342090924, 0.0 ], [ 72.87368427052175, 19.101826682940164, 0.0 ], [ 72.873682978737875, 19.101903559572346, 0.0 ], [ 72.873568946823895, 19.101901991491161, 0.0 ], [ 72.873566364834588, 19.102053472112839, 0.0 ], [ 72.873567337354714, 19.102053481987184, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "23_CSMIA T2_EntryC", "descriptio": "C", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.87489112958653, 19.10184327876587, 0.0 ], [ 72.874887199792525, 19.102073352433269, 0.0 ], [ 72.875266388694399, 19.102078566748627, 0.0 ], [ 72.875267298690886, 19.102078582554075, 0.0 ], [ 72.875269005397769, 19.101925369306866, 0.0 ], [ 72.875155890959945, 19.101923813952983, 0.0 ], [ 72.875157204052428, 19.10184693762324, 0.0 ], [ 72.87489112958653, 19.10184327876587, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "12_Acharya Atre Chowk_E1", "descriptio": "E1", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.818282948531973, 18.996580859039913, 0.0 ], [ 72.818151150757629, 18.996828904701811, 0.0 ], [ 72.818197763036594, 18.996849577514453, 0.0 ], [ 72.818329560810952, 18.996601531883368, 0.0 ], [ 72.818323478101732, 18.996598834163116, 0.0 ], [ 72.818282948531973, 18.996580859039913, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "12_Acharya Atre Chowk_E2", "descriptio": "E2", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.817502966160546, 18.997739231852151, 0.0 ], [ 72.817663322800811, 18.997810350540558, 0.0 ], [ 72.817702790297162, 18.997732978206063, 0.0 ], [ 72.817543764251425, 18.997662449607951, 0.0 ], [ 72.817502966160546, 18.997739231852151, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "12_Acharya Atre Chowk_E3", "descriptio": "E3", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.817112104904339, 18.997750063841469, 0.0 ], [ 72.817192309916877, 18.997908931487707, 0.0 ], [ 72.817223815107155, 18.99789143373382, 0.0 ], [ 72.817143288962342, 18.997732048796092, 0.0 ], [ 72.817112104904339, 18.997750063841469, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "12_Acharya Atre Chowk_E4", "descriptio": "E4", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.816946868511579, 18.99805072290275, 0.0 ], [ 72.817064689848436, 18.998284099344726, 0.0 ], [ 72.817107165151285, 18.998259509428241, 0.0 ], [ 72.817012846677045, 18.998072683560785, 0.0 ], [ 72.816988997135041, 18.998026701207333, 0.0 ], [ 72.816946868511579, 18.99805072290275, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "12_Acharya Atre Chowk_E5", "descriptio": "E5", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.81796551968084, 18.997644686660621, 0.0 ], [ 72.818008621639734, 18.997663802532593, 0.0 ], [ 72.818282391908085, 18.997557148455414, 0.0 ], [ 72.818268591507248, 18.997510479097176, 0.0 ], [ 72.818128838008334, 18.997564923603033, 0.0 ], [ 72.818030965668854, 18.99752151684363, 0.0 ], [ 72.81796551968084, 18.997644686660621, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "12_Acharya Atre Chowk_E6", "descriptio": "E6", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.818796685241466, 18.996102159887133, 0.0 ], [ 72.818675359731941, 18.99632860625027, 0.0 ], [ 72.818676240062373, 18.996329051801133, 0.0 ], [ 72.818714266522079, 18.996346620385353, 0.0 ], [ 72.81878001364116, 18.996222583469162, 0.0 ], [ 72.818832708431771, 18.996117916688338, 0.0 ], [ 72.818796685241466, 18.996102159887133, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "27_Aarey JVLR", "descriptio": "E1", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.884127907539963, 19.13055423689007, 0.0 ], [ 72.884134559367993, 19.13060239098261, 0.0 ], [ 72.8843431180007, 19.130577060717069, 0.0 ], [ 72.884337155099587, 19.130528830446988, 0.0 ], [ 72.884127907539963, 19.13055423689007, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "25_MIDC Andheri_E3", "descriptio": "E3", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.872853288020053, 19.117361692210402, 0.0 ], [ 72.872881703127121, 19.117459414094398, 0.0 ], [ 72.873120520886033, 19.11739487082388, 0.0 ], [ 72.873090167041568, 19.117297303187268, 0.0 ], [ 72.872853288020053, 19.117361692210402, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "25_MIDC Andheri_E2", "descriptio": "E2", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.873348720162809, 19.117272243754943, 0.0 ], [ 72.873412155862283, 19.11726159398021, 0.0 ], [ 72.873382992364654, 19.117073206697242, 0.0 ], [ 72.873310381207304, 19.117068145543392, 0.0 ], [ 72.87332455621592, 19.11720788486663, 0.0 ], [ 72.873348720162809, 19.117272243754943, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "25_MIDC Andheri_E4", "descriptio": "E4", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.873442859818894, 19.11748631102661, 0.0 ], [ 72.873453014976434, 19.117524827604534, 0.0 ], [ 72.873475095451582, 19.117597644493451, 0.0 ], [ 72.873736178192217, 19.117526038751784, 0.0 ], [ 72.873706022738887, 19.11742331632475, 0.0 ], [ 72.873442859818894, 19.11748631102661, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "25_MIDC Andheri_E1", "descriptio": "E1", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.874425889081976, 19.117001492132513, 0.0 ], [ 72.874444302302265, 19.117071972650464, 0.0 ], [ 72.874703004349257, 19.117011426243824, 0.0 ], [ 72.874683958799793, 19.116942257101968, 0.0 ], [ 72.874425889081976, 19.117001492132513, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "26_SEEPZ_E1", "descriptio": "E1", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.873067071006204, 19.12572107074325, 0.0 ], [ 72.873238480951414, 19.125951622189405, 0.0 ], [ 72.873362277022977, 19.125872053860814, 0.0 ], [ 72.873193247771411, 19.125638971857924, 0.0 ], [ 72.873067071006204, 19.12572107074325, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "26_SEEPZ_E2B", "descriptio": "E-2B", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.873620284700934, 19.12583494070504, 0.0 ], [ 72.87370837036724, 19.125958651191855, 0.0 ], [ 72.873754198720647, 19.125930535180263, 0.0 ], [ 72.873666038657674, 19.125805840611157, 0.0 ], [ 72.873620284700934, 19.12583494070504, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "26_SEEPZ_E2A", "descriptio": "E-2A", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.874089504546617, 19.126475563212395, 0.0 ], [ 72.874193957482007, 19.1266248586867, 0.0 ], [ 72.874239934628761, 19.126595336993439, 0.0 ], [ 72.874139945494065, 19.126445619753571, 0.0 ], [ 72.874089504546617, 19.126475563212395, 0.0 ] ] ] ] } },
-{ "type": "Feature", "properties": { "Name": "26_SEEPZ_E3", "descriptio": "E3", "timestamp": null, "begin": null, "end": null, "altitudeMo": null, "tessellate": null, "extrude": null, "visibility": null, "drawOrder": null, "icon": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.872930811174655, 19.124859349585474, 0.0 ], [ 72.873021763429591, 19.124798721160605, 0.0 ], [ 72.872889634930175, 19.124626228143146, 0.0 ], [ 72.872793663216058, 19.124686115714841, 0.0 ], [ 72.872927130855686, 19.124861982613318, 0.0 ], [ 72.872930811174655, 19.124859349585474, 0.0 ] ] ] ] } }
-]
+  "type": "FeatureCollection",
+  "name": "Entry_Exits_Rectangle",
+  "crs": {
+    "type": "name",
+    "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "Station": "NULL27_Aarey JVLR",
+        "descriptio": "A1"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.884229963046337, 19.130590003109646],
+              [72.88423059049137, 19.130541394010393],
+              [72.884129844697696, 19.130542318915417],
+              [72.884131090045202, 19.130590914311846],
+              [72.884229963046337, 19.130590003109646]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 3, "Station": "SEEPZ", "descriptio": "A1" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.873067071006204, 19.12572107074325],
+              [72.873238480951414, 19.125951622189405],
+              [72.873362277022977, 19.125872053860814],
+              [72.873193247771411, 19.125638971857924],
+              [72.873067071006204, 19.12572107074325]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 6, "Station": "SEEPZ", "descriptio": "B2" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.873620284700934, 19.12583494070504],
+              [72.87370837036724, 19.125958651191855],
+              [72.873754198720647, 19.125930535180263],
+              [72.873666038657674, 19.125805840611157],
+              [72.873620284700934, 19.12583494070504]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 5, "Station": "SEEPZ", "descriptio": "B1" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.874089504546617, 19.126475563212395],
+              [72.874188629458303, 19.126629202976705],
+              [72.874239934628761, 19.126595336993439],
+              [72.874139945494065, 19.126445619753571],
+              [72.874089504546617, 19.126475563212395]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 4, "Station": "SEEPZ", "descriptio": "A2" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.872930811174655, 19.124859349585474],
+              [72.873021763429591, 19.124798721160605],
+              [72.872889634930175, 19.124626228143146],
+              [72.872793663216058, 19.124686115714841],
+              [72.872927130855686, 19.124861982613318],
+              [72.872930811174655, 19.124859349585474]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 7, "Station": "MIDC Andheri", "descriptio": "B1" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.872853288020053, 19.117361692210402],
+              [72.872881703127121, 19.117459414094398],
+              [72.873120520886033, 19.11739487082388],
+              [72.873090167041568, 19.117297303187268],
+              [72.872853288020053, 19.117361692210402]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 10, "Station": "MIDC Andheri", "descriptio": "A1" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.873442859818894, 19.11748631102661],
+              [72.873453014976434, 19.117524827604534],
+              [72.873475095451582, 19.117597644493451],
+              [72.873736178192217, 19.117526038751784],
+              [72.873706022738887, 19.11742331632475],
+              [72.873442859818894, 19.11748631102661]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 8, "Station": "MIDC Andheri", "descriptio": "A2" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.874425889081976, 19.117001492132513],
+              [72.874444302302265, 19.117071972650464],
+              [72.874703004349257, 19.117011426243824],
+              [72.874683958799793, 19.116942257101968],
+              [72.874425889081976, 19.117001492132513]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 9, "Station": "MIDC Andheri", "descriptio": "B2" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.873337166898864, 19.117274086685089],
+              [72.873416878407625, 19.117256496805521],
+              [72.873377812370848, 19.11706195203865],
+              [72.873298122092237, 19.117081101750486],
+              [72.873337166898864, 19.117274086685089]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 14, "Station": "Marol Naka", "descriptio": "B1" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.878626162004338, 19.108932559047439],
+              [72.878681661368347, 19.10893632343371],
+              [72.878700101193019, 19.108723157574772],
+              [72.878639050743516, 19.108719927044401],
+              [72.878626162004338, 19.108932559047439]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 13, "Station": "Marol Naka", "descriptio": "B2" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.878375354233555, 19.108865787294867],
+              [72.878203047975916, 19.108837225411399],
+              [72.878193010881219, 19.108914309810736],
+              [72.878366836585656, 19.108939475526675],
+              [72.878375354233555, 19.108865787294867]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 12, "Station": "Marol Naka", "descriptio": "A1" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.87869468258765, 19.108163878107451],
+              [72.878684634519729, 19.108260787852487],
+              [72.878749734358109, 19.108265529357784],
+              [72.878758449845463, 19.108169843310087],
+              [72.87869468258765, 19.108163878107451]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 11, "Station": "Marol Naka", "descriptio": "A2" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.878439762901536, 19.108286809274464],
+              [72.8782996309412, 19.108283969828111],
+              [72.87830012340882, 19.108338451982757],
+              [72.878441824032464, 19.108340920192642],
+              [72.878439762901536, 19.108286809274464]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 15, "Station": "CSMIA T2", "descriptio": "A1" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.874282272415371, 19.102168874734058],
+              [72.874547590865291, 19.102172522928516],
+              [72.874561167906037, 19.101377590390079],
+              [72.874561213760316, 19.101376686464345],
+              [72.874295834498199, 19.101373037156527],
+              [72.874282272415371, 19.102168874734058]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 17, "Station": "CSMIA T2", "descriptio": "A2" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.873567337354714, 19.102053481987184],
+              [72.873946465886121, 19.102058695473012],
+              [72.873945856039811, 19.101911954608337],
+              [72.873682978737875, 19.101903559572346],
+              [72.873568946823895, 19.101901991491161],
+              [72.873566364834588, 19.102053472112839],
+              [72.873567337354714, 19.102053481987184]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 16, "Station": "CSMIA T2", "descriptio": "B1" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.874888117985847, 19.10191651103359],
+              [72.874887199792525, 19.102073352433269],
+              [72.875266388694399, 19.102078566748627],
+              [72.875267298690886, 19.102078582554075],
+              [72.875269005397769, 19.101925369306866],
+              [72.874888117985847, 19.10191651103359]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 18, "Station": "Sahar Road", "descriptio": "B1" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.866171202234568, 19.101971188126825],
+              [72.866171202234568, 19.102350710981892],
+              [72.866459040564393, 19.102344270400952],
+              [72.866450206366153, 19.101983229917785],
+              [72.866171202234568, 19.101971188126825]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 21, "Station": "Sahar Road", "descriptio": "A1" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.864917145141732, 19.102597074899997],
+              [72.865453822684074, 19.102607640001722],
+              [72.865459413075143, 19.102273078119296],
+              [72.864930189387564, 19.102255469580424],
+              [72.864917145141732, 19.102597074899997]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 19, "Station": "Sahar Road", "descriptio": "A2" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.865095105924013, 19.102667508898783],
+              [72.865369966818093, 19.102668389323576],
+              [72.865369966818093, 19.102617324677709],
+              [72.86509603765586, 19.102614683402496],
+              [72.865095105924013, 19.102667508898783]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 23, "Station": "Sahar Road", "descriptio": "A3" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.865418416873993, 19.102667508898783],
+              [72.86564482771216, 19.102671911022718],
+              [72.865645759443993, 19.102625248503102],
+              [72.865418533340488, 19.102620736324795],
+              [72.865418416873993, 19.102667508898783]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 20, "Station": "Sahar Road", "descriptio": "A5" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.86515718255815, 19.10292129115199],
+              [72.86515531909447, 19.102973236127205],
+              [72.865370549150512, 19.102974446709066],
+              [72.865370549150498, 19.102923051998875],
+              [72.86515718255815, 19.10292129115199]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 22, "Station": "Sahar Road", "descriptio": "A4" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.865400772202207, 19.102974886920638],
+              [72.865614779360172, 19.102982205438003],
+              [72.865614779360172, 19.102931581100698],
+              [72.865400946901886, 19.102924977925117],
+              [72.865400772202207, 19.102974886920638]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "Station": "NULL27_Aarey JVLR",
+        "descriptio": "B1"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.88423059049137, 19.130541394010393],
+              [72.884229963046337, 19.130590003109646],
+              [72.884341172355676, 19.130588978217446],
+              [72.884340620133116, 19.130540383874241],
+              [72.88423059049137, 19.130541394010393]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 25, "Station": "CSMIA T1", "descriptio": "A1" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.85348020469155, 19.093525750666199],
+              [72.854077088580297, 19.09384365372204],
+              [72.854175020668592, 19.093679454999918],
+              [72.853576982971788, 19.093360937104137],
+              [72.85348020469155, 19.093525750666199]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": 24, "Station": "CSMAI T1", "descriptio": "B1" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.852189626426451, 19.095294219732047],
+              [72.851844622864647, 19.095658509280074],
+              [72.851988110330993, 19.095782383299227],
+              [72.852337029315962, 19.095421474249996],
+              [72.852189626426451, 19.095294219732047]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 26,
+        "Station": "Santacruz Metro",
+        "descriptio": "B2"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.846563361102994, 19.07957774672256],
+              [72.846638396715662, 19.07957774672256],
+              [72.846638396715662, 19.079216424489505],
+              [72.846557329059564, 19.079216424489505],
+              [72.846557329059564, 19.079577977070397],
+              [72.846563361102994, 19.07957774672256]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 28,
+        "Station": "Santacruz Metro",
+        "descriptio": "B1"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.847243980706494, 19.079933104713682],
+              [72.847351574144298, 19.079930901353908],
+              [72.847346150627942, 19.079569064104348],
+              [72.847243567468908, 19.079570818614883],
+              [72.847243980706494, 19.079933104713682]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 27,
+        "Station": "Santacruz Metro",
+        "descriptio": "A2"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.846530512704078, 19.07779670173808],
+              [72.846651012171677, 19.07779670173808],
+              [72.846651012171677, 19.077561862920035],
+              [72.846521631962986, 19.077561862920035],
+              [72.846530512704078, 19.07779670173808]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 29,
+        "Station": "Santacruz Metro",
+        "descriptio": "A1"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.847200747459624, 19.077478097626884],
+              [72.847299654537082, 19.077478097626884],
+              [72.847299654537082, 19.077243752063108],
+              [72.847193259775935, 19.077243752063108],
+              [72.847193259775935, 19.077478426763673],
+              [72.847200747459624, 19.077478097626884]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 30,
+        "Station": "Bandra colony",
+        "descriptio": "A1"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.849490063212016, 19.069684613314354],
+              [72.849457326362412, 19.069666509938227],
+              [72.84935197639436, 19.069851164281921],
+              [72.849386979568592, 19.069869002740315],
+              [72.849490063212016, 19.069684613314354]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 32,
+        "Station": "Bandra colony",
+        "descriptio": "A2"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.849820391954864, 19.069507200143072],
+              [72.849876984912925, 19.069537975910887],
+              [72.849956936713298, 19.069397426317867],
+              [72.849899358297378, 19.069368168940638],
+              [72.849820391954864, 19.069507200143072]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 31,
+        "Station": "Bandra colony",
+        "descriptio": "B1"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.848818087134674, 19.0707010324235],
+              [72.848848734398103, 19.070716502484839],
+              [72.848890041112227, 19.070643406977148],
+              [72.848857795744706, 19.070627130220963],
+              [72.848818087134674, 19.0707010324235]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 33,
+        "Station": "Bandra colony",
+        "descriptio": "B2"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.849009632531164, 19.070864290870368],
+              [72.849080650038957, 19.070900850964559],
+              [72.849158198033692, 19.070769972749993],
+              [72.849087643747183, 19.070732630845118],
+              [72.849009632531164, 19.070864290870368]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 34,
+        "Station": "Bandra-Kurla-Complex",
+        "descriptio": "B1"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.853452789201015, 19.061526702594104],
+              [72.853735579859105, 19.061659686603754],
+              [72.853792748838671, 19.061551083033738],
+              [72.853509644641065, 19.061417951492984],
+              [72.853452789201015, 19.061526702594104]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 35,
+        "Station": "Bandra-Kurla-Complex",
+        "descriptio": "A3"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.854809627136873, 19.059580647164463],
+              [72.854994903774923, 19.059687298966907],
+              [72.855066431213388, 19.059576291175983],
+              [72.854881834559677, 19.059470030725642],
+              [72.854809627136873, 19.059580647164463]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 37,
+        "Station": "Bandra-Kurla-Complex",
+        "descriptio": "A4"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.855259236422086, 19.059260362172612],
+              [72.855470284622541, 19.058862720746507],
+              [72.855318441362812, 19.058789644155556],
+              [72.855110875805877, 19.059176752216814],
+              [72.855259236422086, 19.059260362172612]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 36,
+        "Station": "Bandra-Kurla-Complex",
+        "descriptio": "A5"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.855585211860458, 19.058670483158899],
+              [72.855635361927895, 19.058588847951551],
+              [72.855458556379929, 19.058491813998621],
+              [72.8554090697764, 19.05857236925452],
+              [72.855585371221892, 19.058669126500334],
+              [72.855585211860458, 19.058670483158899]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 38,
+        "Station": "Bandra-Kurla-Complex",
+        "descriptio": "A1"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.855555261125687, 19.059391372963475],
+              [72.85593600173317, 19.05957912425287],
+              [72.856031446054246, 19.059404670038525],
+              [72.85564998903088, 19.059218228026932],
+              [72.855555261125687, 19.059391372963475]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 39,
+        "Station": "Bandra-Kurla-Complex",
+        "descriptio": "A1"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [72.855360233085662, 19.059888423012687],
+              [72.85584781856997, 19.060147100839202],
+              [72.855978242636752, 19.059907637893971],
+              [72.855481429081962, 19.059665902777489],
+              [72.855360233085662, 19.059888423012687]
+            ]
+          ]
+        ]
+      }
+    }
+  ]
 }
