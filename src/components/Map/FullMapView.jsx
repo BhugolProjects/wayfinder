@@ -662,7 +662,7 @@ function FullMapView({
     const value = event.target.value;
     setInputValue(value);
 
-    // Filter suggestions based on input
+    // Filter suggestions based on input search box
     if (value) {
       const filteredSuggestions = places.filter(
         (place) =>
