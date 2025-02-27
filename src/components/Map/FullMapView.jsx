@@ -166,6 +166,13 @@ function createCircleMarker(
   iconElement.style.borderRadius = "50%";
   markerElement.appendChild(iconElement);
 
+  // Add label element
+  var labelElement = document.createElement("div");
+  labelElement.className = "station-label";
+  labelElement.innerText = popupText;
+  labelElement.style.display = "none"; // Initially hidden
+  markerElement.appendChild(labelElement);
+
   var popup = new tt.Popup({ offset: 30 }).setText(popupText);
 
   const marker = new tt.Marker({
@@ -286,7 +293,7 @@ function initializeMap(containerId, coordinates, setCoordinates) {
       paint: {
         "text-color": "#FFFFFF", // White text color
         "text-halo-color": "#000000", // Black outline for visibility
-        "text-halo-width": 1,
+        "text-halo-width": 2,
       },
     });
 
@@ -307,14 +314,17 @@ function initializeMap(containerId, coordinates, setCoordinates) {
   // 🔹 Track zoom level and toggle marker labels
   map.on("zoom", function () {
     const currentZoom = map.getZoom();
-    const labels = document.querySelectorAll(".marker-label");
 
-    labels.forEach((label) => {
-      label.style.display = currentZoom > 16 ? "block" : "none";
+    // For POI markers (createMarker) - keep the existing threshold
+    document.querySelectorAll(".marker-label").forEach(label => {
+        label.style.display = currentZoom > 16 ? "block" : "none"; // Example: zoom > 16
     });
 
-    console.log("Current Zoom Level:", currentZoom);
-  });
+    // For station markers (createCircleMarker) - set a different threshold
+    document.querySelectorAll(".station-label").forEach(label => {
+        label.style.display = currentZoom > 12 ? "block" : "none"; // Example: zoom > 14
+    });
+});
 
   return map;
 }

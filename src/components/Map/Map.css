@@ -107,4 +107,23 @@
     display: none; /* Hidden by default */
   }
   
-  
+  .station-label {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translate(-50%, 48%);
+    color: rgba(0, 0, 0, 0.3); /* Primary transparent color */
+    color: #000000; /* Fallback color if rgba fails */
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 300; /* Lighter bold for "slim bold" */
+    letter-spacing: -0.8px; /* Further slimming effect */
+    border-radius: 4px;
+    white-space: nowrap;
+    background-color: rgba(255, 255, 255, 0.7); /* Test background to see transparency */
+    display: none; /* Hidden by default */
+    border: #00000038 0.4px solid;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); /* Add shadow */
+}
+
+/* Optional: Show on hover for testing */
