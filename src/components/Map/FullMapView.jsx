@@ -25,7 +25,6 @@ import {
 } from "../../api/index.js";
 import { getDistance } from "geolib";
 // layers
-
 import stationGeoJSON from "./MML3_Alignment.geojson";
 import stationsPolygonJSON from "./Station_1_Area.geojson";
 import stationsPolygonJSON2 from "./Station_2_Area.geojson";
@@ -83,14 +82,13 @@ function createMarker(
   marker.getElement().addEventListener("click", () => {
     setChildClicked(i);
     setSelectedPlace(place);
-    // setSelectedPlace("I am here" , place); // Set the selected place
-    // setTopPlaceId(place.id);
     setTopPlaceId(place.id);
   });
 
   return marker;
 }
 
+// Marker for self location
 function createSelfMarker(
   icon,
   position,
@@ -188,11 +186,12 @@ function createCircleMarker(
   return marker;
 }
 
-function initializeMap(containerId, coordinates, setCoordinates) {
+// Initialize the TomTom map
+function initializeMap(containerId, coordinates, setCoordinates, setLocationSource) {
   const map = tt.map({
     key: process.env.REACT_APP_TOMTOM_API_KEY,
     container: containerId,
-    center: [coordinates.lng, coordinates.lat], // Ensure valid coordinates
+    center: [coordinates.lng, coordinates.lat],
     zoom: 14,
     stylesVisibility: {
       poi: false,
@@ -208,20 +207,20 @@ function initializeMap(containerId, coordinates, setCoordinates) {
   geolocateControl.on("geolocate", function (e) {
     var coords = e.coords;
     setCoordinates({ lat: coords.latitude, lng: coords.longitude });
+    setLocationSource('geolocation');
     map.setCenter([coords.longitude, coords.latitude]);
   });
 
   map.addControl(geolocateControl);
 
-  // 🔹 Set user's current location on map load
   navigator.geolocation.getCurrentPosition(
     ({ coords: { latitude, longitude } }) => {
       setCoordinates({ lat: latitude, lng: longitude });
+      setLocationSource('geolocation');
       map.setCenter([longitude, latitude]);
     }
   );
 
-  // 🔹 Load GeoJSON layers on map load
   map.on("load", function () {
     map.addLayer({
       id: "metro-line",
@@ -240,7 +239,6 @@ function initializeMap(containerId, coordinates, setCoordinates) {
       },
     });
 
-    // 🔹 Add polygon layer for station boxes
     map.addLayer({
       id: "station-box",
       type: "fill",
@@ -255,12 +253,10 @@ function initializeMap(containerId, coordinates, setCoordinates) {
           "rgb(102, 51, 153)",
           "rgb(244, 27, 27)", // Default red for other stations
         ],
-        "fill-opacity": 0.8, // Transparency
+        "fill-opacity": 0.8,
       },
     });
 
-    // 🔹 Entry & Exit Polygons
-    // Add the Entry/Exit Box Fill Layer
     map.addLayer({
       id: "entry-exit-boxes",
       type: "fill",
@@ -270,65 +266,56 @@ function initializeMap(containerId, coordinates, setCoordinates) {
       },
       paint: {
         "fill-color": "rgb(0, 100, 255)", // Blue
-        "fill-opacity": 0.8, // Transparency
+        "fill-opacity": 0.8,
       },
     });
 
-    // Add the Entry/Exit Labels Layer (Initially Hidden)
     map.addLayer({
       id: "entry-exit-labels",
       type: "symbol",
       source: {
         type: "geojson",
-        data: entryExitBoxes, // Use same source
+        data: entryExitBoxes,
       },
       layout: {
-        "text-field": ["get", "descriptio"], // Fetches 'Name' property from GeoJSON
-        "text-size": 14, // Adjust label size
+        "text-field": ["get", "descriptio"],
+        "text-size": 14,
         "text-anchor": "center",
-        "text-offset": [0, 1.2], // Adjusts position above the polygon
-        "text-allow-overlap": true, // Ensures text always appears
-        visibility: "none", // 🔹 Initially hidden
+        "text-offset": [0, 1.2],
+        "text-allow-overlap": true,
+        visibility: "none",
       },
       paint: {
-        "text-color": "#FFFFFF", // White text color
-        "text-halo-color": "#000000", // Black outline for visibility
+        "text-color": "#FFFFFF",
+        "text-halo-color": "#000000",
         "text-halo-width": 2,
       },
     });
 
-    // 🔹 Handle Zoom Level Changes to Show/Hide Labels
     map.on("zoom", function () {
       const currentZoom = map.getZoom();
-
       if (currentZoom > 16) {
-        map.setLayoutProperty("entry-exit-labels", "visibility", "visible"); // Show labels
+        map.setLayoutProperty("entry-exit-labels", "visibility", "visible");
       } else {
-        map.setLayoutProperty("entry-exit-labels", "visibility", "none"); // Hide labels
+        map.setLayoutProperty("entry-exit-labels", "visibility", "none");
       }
-
-      console.log("Current Zoom Level:", currentZoom);
     });
   });
 
-  // 🔹 Track zoom level and toggle marker labels
   map.on("zoom", function () {
     const currentZoom = map.getZoom();
-
-    // For POI markers (createMarker) - keep the existing threshold
     document.querySelectorAll(".marker-label").forEach(label => {
-        label.style.display = currentZoom > 16 ? "block" : "none"; // Example: zoom > 16
+      label.style.display = currentZoom > 16 ? "block" : "none";
     });
-
-    // For station markers (createCircleMarker) - set a different threshold
     document.querySelectorAll(".station-label").forEach(label => {
-        label.style.display = currentZoom > 12 ? "block" : "none"; // Example: zoom > 14
+      label.style.display = currentZoom > 12 ? "block" : "none";
     });
-});
+  });
 
   return map;
 }
 
+// Handle directions to a place
 const handleGetDirections = async (place, username, nearestStation) => {
   const latitude = place.Latitude;
   const longitude = place.Longitude;
@@ -350,6 +337,7 @@ const handleGetDirections = async (place, username, nearestStation) => {
   }
 };
 
+// Main FullMapView Component
 function FullMapView({
   topPlaceId,
   setTopPlaceId,
@@ -369,82 +357,40 @@ function FullMapView({
   setStationsWithinRadius,
   setSelectedStation,
 }) {
-  const [selectedPlace, setSelectedPlace] = useState(null); // State for selected place
-  const mapRef = useRef(null); // UseRef to hold the map instance
-  const markersRef = useRef([]); // To hold the current markers
-  const selfMarkerRef = useRef(null); // UseRef to hold the self-marker instance
+  const [selectedPlace, setSelectedPlace] = useState(null);
+  const [locationSource, setLocationSource] = useState('geolocation'); // Track location source
+  const mapRef = useRef(null);
+  const markersRef = useRef([]);
+  const selfMarkerRef = useRef(null);
   const [stationData, setStationData] = useState([]);
   const isDesktop = useMediaQuery("(min-width:600px)");
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
   const metroStations = {
-    27: {
-      name: "Aarey JVLR",
-      gates: ["A1", "B1"],
-      lifts: [],
-    },
-    26: {
-      name: "SEEPZ",
-      gates: ["A1", "A2", "B1", "B2"],
-      lifts: ["A2"],
-    },
-    25: {
-      name: "MIDC-Andheri",
-      gates: ["A1", "A2", "B1", "B2"],
-      lifts: ["B1"],
-    },
-    24: {
-      name: "Marol Naka",
-      gates: ["A1", "A2", "B1", "B2"],
-      lifts: ["A1", "A2", "B1", "B2"],
-    },
-    23: {
-      name: "CSMIA-T2",
-      gates: ["A1", "A2", "B1"],
-      lifts: ["A1"],
-    },
-    22: {
-      name: "Sahar Road",
-      gates: ["A1", "A2", "A3", "A4", "A5", "B1"],
-      lifts: ["A1", "A3", "A5", "B1"],
-    },
-    21: {
-      name: "CSMIA-T1",
-      gates: ["A1", "B1"],
-      lifts: ["A1", "B1"],
-    },
-    20: {
-      name: "Santacruz Metro",
-      gates: ["A1", "A2", "B1", "B2"],
-      lifts: ["A1", "A2", "B1", "B2"],
-    },
-    19: {
-      name: "Bandra Colony",
-      gates: ["A1", "A2", "B1", "B2"],
-      lifts: ["A2", "B1"],
-    },
-    18: {
-      name: "Bandra-Kurla Complex",
-      gates: ["A1", "A2", "A3", "A4", "A5", "B1"],
-      lifts: ["A1", "A2", "A3", "A4", "B1"],
-    },
+    27: { name: "Aarey JVLR", gates: ["A1", "B1"], lifts: [] },
+    26: { name: "SEEPZ", gates: ["A1", "A2", "B1", "B2"], lifts: ["A2"] },
+    25: { name: "MIDC-Andheri", gates: ["A1", "A2", "B1", "B2"], lifts: ["B1"] },
+    24: { name: "Marol Naka", gates: ["A1", "A2", "B1", "B2"], lifts: ["A1", "A2", "B1", "B2"] },
+    23: { name: "CSMIA-T2", gates: ["A1", "A2", "B1"], lifts: ["A1"] },
+    22: { name: "Sahar Road", gates: ["A1", "A2", "A3", "A4", "A5", "B1"], lifts: ["A1", "A3", "A5", "B1"] },
+    21: { name: "CSMIA-T1", gates: ["A1", "B1"], lifts: ["A1", "B1"] },
+    20: { name: "Santacruz Metro", gates: ["A1", "A2", "B1", "B2"], lifts: ["A1", "A2", "B1", "B2"] },
+    19: { name: "Bandra Colony", gates: ["A1", "A2", "B1", "B2"], lifts: ["A2", "B1"] },
+    18: { name: "Bandra-Kurla Complex", gates: ["A1", "A2", "A3", "A4", "A5", "B1"], lifts: ["A1", "A2", "A3", "A4", "B1"] },
   };
 
-  // Get station ID from selectedPlace (POI) and gate to display weather the nearest gate has lift or not
   const stationId = selectedPlace?.Station;
   const nearestGates = selectedPlace?.Nearest_Gates?.split(",").map((gate) =>
     gate.trim()
-  ); // Convert to array
+  );
   const hasLift = metroStations[stationId]?.lifts?.includes(nearestGates);
 
-  //Debounce function to avoid race condition
   const debouncedAddBuffer = useRef(
     debounce((lng, lat) => addBufferCircle(lng, lat, 1000), 300)
   ).current;
 
   const addBufferCircle = (lng, lat, radius) => {
-    // Create a point from the current coordinates
     if (!lat || isNaN(lat) || !lng || isNaN(lng)) {
       console.error("Invalid coordinates in addBufferCircle:", lat, lng);
       return;
@@ -452,7 +398,6 @@ function FullMapView({
     const point = turf.point([lng, lat]);
     const buffer = turf.buffer(point, radius, { units: "meters" });
 
-    // Add buffer as a GeoJSON object
     if (mapRef.current.getSource("self-marker-buffer")) {
       mapRef.current.getSource("self-marker-buffer").setData(buffer);
     } else {
@@ -475,8 +420,8 @@ function FullMapView({
 
   useEffect(() => {
     const fetchStationData = async () => {
-      const data = await getStationData(); // Fetch station data
-      setStationData(data); // Update state with fetched station data
+      const data = await getStationData();
+      setStationData(data);
     };
 
     fetchStationData();
@@ -486,7 +431,6 @@ function FullMapView({
     if (coordinates.lat && coordinates.lng) {
       const { lat, lng } = coordinates;
 
-      // Find stations within the radius
       const filteredStations = stationData.filter((station) => {
         const distance = getDistance(
           { latitude: lat, longitude: lng },
@@ -495,10 +439,9 @@ function FullMapView({
             longitude: station.Station_Longitude,
           }
         );
-        return distance <= 1000; // Filter stations within 1000 meters
+        return distance <= 1000;
       });
 
-      // If there are any stations within the radius, find the closest one
       if (filteredStations.length > 0) {
         const nearest = filteredStations.reduce((prev, curr) => {
           const prevDistance = getDistance(
@@ -517,37 +460,30 @@ function FullMapView({
           );
           return currDistance < prevDistance ? curr : prev;
         });
-        // console.log(nearest);
-        addVisitor(nearest); // Increment visitor count for the nearest station
+        addVisitor(nearest);
         setNearestStation(nearest);
         setStationsWithinRadius(filteredStations);
-        setSelectedStation(nearest.Station_Code); // Set selected station to nearest one
+        setSelectedStation(nearest.Station_Code);
       } else {
-        // No station within the radius
         setNearestStation(null);
         setStationsWithinRadius([]);
-        setSelectedStation("no-station"); // Use a unique value to indicate no station
+        setSelectedStation("no-station");
       }
     }
   }, [coordinates]);
 
-  // Initialize the map only once
   useEffect(() => {
     if (!mapRef.current && coordinates.lat && coordinates.lng) {
-      mapRef.current = initializeMap("map", coordinates, setCoordinates);
-      console.log("Map initialized, mapRef:", mapRef.current);
+      mapRef.current = initializeMap("map", coordinates, setCoordinates, setLocationSource);
     }
-  }, [coordinates, setCoordinates]);
+  }, [coordinates, setCoordinates, setLocationSource]);
 
-  // Function to remove previous markers
   const removeMarkers = () => {
     markersRef.current.forEach((marker) => marker.remove());
     markersRef.current = [];
   };
 
-  // Function to update the self-marker position without duplicating it
   const updateSelfMarker = () => {
-    //validation for coordinates
     if (!coordinates || isNaN(coordinates.lat) || isNaN(coordinates.lng)) {
       console.error("Invalid coordinates:", coordinates);
       return;
@@ -564,18 +500,17 @@ function FullMapView({
           () => {
             const lngLat = selfMarkerRef.current.getLngLat();
             setCoordinates({ lat: lngLat.lat, lng: lngLat.lng });
-            debouncedAddBuffer(lngLat.lng, lngLat.lat); // Debounced buffer update
+            setLocationSource('drag');
+            debouncedAddBuffer(lngLat.lng, lngLat.lat);
           }
         );
-
-        debouncedAddBuffer(coordinates.lng, coordinates.lat); // Initial buffer
+        debouncedAddBuffer(coordinates.lng, coordinates.lat);
       } else {
         selfMarkerRef.current.setLngLat([coordinates.lng, coordinates.lat]);
-        debouncedAddBuffer(coordinates.lng, coordinates.lat); // Move the marker without recreating
+        debouncedAddBuffer(coordinates.lng, coordinates.lat);
       }
     };
 
-    // Wait for the map style to load before adding the self-marker and buffer
     if (mapRef.current) {
       if (!mapRef.current.isStyleLoaded()) {
         mapRef.current.once("style.load", () => {
@@ -587,10 +522,9 @@ function FullMapView({
     }
   };
 
-  // Update markers based on `places` and `type`
   useEffect(() => {
     if (mapRef.current) {
-      removeMarkers(); // Remove existing markers before adding new ones
+      removeMarkers();
       markersRef.current = places
         .map((place, i) => {
           if (place.Type_of_Locality === type) {
@@ -622,14 +556,8 @@ function FullMapView({
         })
         .filter((marker) => marker !== null);
     }
-  }, [
-    places,
-    type,
-    setChildClicked,
-    coordinates,
-    setCoordinates,
-    setSelectedPlace,
-  ]);
+  }, [places, type, setChildClicked, coordinates, setCoordinates, setSelectedPlace]);
+
   stationData.forEach((place, i) => {
     if (
       !place.Station_Longitude ||
@@ -652,33 +580,38 @@ function FullMapView({
     );
   });
 
-  // Update the self-marker position whenever coordinates change
   useEffect(() => {
     updateSelfMarker();
 
-    // Zoom and center the map on the updated coordinates
+    if (selfMarkerRef.current) {
+      if (locationSource === 'geolocation') {
+        const popup = new tt.Popup({ offset: 30 }).setText('You are here');
+        selfMarkerRef.current.setPopup(popup);
+      } else {
+        selfMarkerRef.current.setPopup(null);
+      }
+    }
+
     if (mapRef.current && coordinates.lat && coordinates.lng) {
       mapRef.current.setCenter([coordinates.lng, coordinates.lat]);
-      mapRef.current.setZoom(13); // Set an appropriate zoom level
+      mapRef.current.setZoom(13);
     }
-  }, [coordinates]);
+  }, [coordinates, locationSource]);
 
   const navigate = useNavigate();
   const handleViewMap = () => {
     navigate("/map");
   };
 
-  // Handle input change
   const handleInputChange = (event) => {
     const value = event.target.value;
     setInputValue(value);
 
-    // Filter suggestions based on input search box
     if (value) {
       const filteredSuggestions = places.filter(
         (place) =>
           place.Locality_Name &&
-          place.Locality_Name.toLowerCase().includes(value.toLowerCase()) // Guard against undefined
+          place.Locality_Name.toLowerCase().includes(value.toLowerCase())
       );
       setSuggestions(filteredSuggestions);
     } else {
@@ -686,18 +619,16 @@ function FullMapView({
     }
   };
 
-  // Handle suggestion click
   const handleSuggestionClick = (suggestion) => {
-    setInputValue(suggestion.Locality_Name); // Set input value to the selected suggestion
-    setSelectedPlace(suggestion); // Set the selected place data
-    setSuggestions([]); // Clear suggestions
+    setInputValue(suggestion.Locality_Name);
+    setSelectedPlace(suggestion);
+    setSuggestions([]);
   };
 
-  // Handle reset button click
   const handleReset = () => {
-    setInputValue(""); // Clear input value
-    setSelectedPlace(null); // Clear selected place
-    setSuggestions([]); // Clear suggestions
+    setInputValue("");
+    setSelectedPlace(null);
+    setSuggestions([]);
   };
 
   return (
@@ -714,23 +645,19 @@ function FullMapView({
     >
       {isFullView && (
         <div className="relative">
-          {/* Back Arrow */}
           <div
             className="absolute top-2 left-2 z-50 bg-black bg-opacity-50 rounded-full flex items-center justify-center w-8 h-8 cursor-pointer"
-            onClick={() => navigate(-1)} // Go back to the previous page
+            onClick={() => navigate(-1)}
           >
             <ArrowBack className="text-white text-lg" />
           </div>
 
-          {/* Search Form */}
           <form className="absolute top-2 left-14 right-4 z-40 flex flex-col">
-            {/* Search Input */}
             <div className="relative w-full">
-              {/* Search Icon */}
               <button
                 className="absolute left-2 top-1/2 transform -translate-y-1/2 p-0.5 bg-transparent"
                 type="button"
-                onClick={(e) => e.preventDefault()} // Prevent form submission
+                onClick={(e) => e.preventDefault()}
               >
                 <svg
                   width="17"
@@ -760,11 +687,10 @@ function FullMapView({
                 type="text"
               />
 
-              {/* Reset Button */}
               <button
-                type="button" // Change to type button to prevent form submission
+                type="button"
                 className="absolute right-3 -translate-y-1/2 top-1/2 p-0.5"
-                onClick={handleReset} // Call handleReset on click
+                onClick={handleReset}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -782,7 +708,6 @@ function FullMapView({
               </button>
             </div>
 
-            {/* Suggestions List */}
             {suggestions.length > 0 && (
               <ul className="absolute top-7 left-0 right-0 bg-white bg-opacity-90 border border-gray-300 rounded-lg mt-1 z-50">
                 {suggestions.map((suggestion, index) => (
@@ -826,30 +751,28 @@ function FullMapView({
           style={{
             position: "absolute",
             bottom: "7vh",
-            left: "50%", // Center horizontally
-            transform: "translateX(-50%)", // Shift it back by 50% of its own width
-            width: "90vw", // Card takes 90% of the viewport width
-            backgroundColor: "#ffffff", // Updated to match the white background
-            borderRadius: "20px", // Match the rounded corners from the second code
-            // padding: "20px", // Added padding to mimic the second code's padding
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "90vw",
+            backgroundColor: "#ffffff",
+            borderRadius: "20px",
             margin: "1vh",
             zIndex: 5000,
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)", // Added subtle shadow for depth
+            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
           }}
         >
           <Box display="flex" alignItems="start" style={{ width: "100%" }}>
-            {/* Image on the left */}
             <CardMedia
               style={{
-                width: "104px", // Fixed width as in the second code
-                height: "104px", // Ensure the image height adapts to the content
-                objectFit: "cover", // Use object-cover to ensure the image scales properly
-                borderRadius: "12px", // Rounded corners similar to the second code
-                marginLeft: "10px", // Add some space between the image and content
-                marginTop: "10px", // Add some space at the top
+                width: "104px",
+                height: "104px",
+                objectFit: "cover",
+                borderRadius: "12px",
+                marginLeft: "10px",
+                marginTop: "10px",
                 padding: 5,
               }}
-              component="img" // Explicitly set it as an img component
+              component="img"
               image={
                 selectedPlace.Image
                   ? `${
@@ -862,29 +785,19 @@ function FullMapView({
               title={selectedPlace.Locality_Name}
             />
 
-            {/* Content on the right */}
             <Box
               display="flex"
               flexDirection="column"
               justifyContent="flex-start"
-              style={
-                {
-                  // width: "200px", // Match the width of the content from the second code
-                  // paddingLeft: "5px",
-                  // paddingRight: "5px",
-                }
-              }
             >
-              <CardContent
-                style={{ flexGrow: 1, padding: 5, marginTop: "10px" }}
-              >
+              <CardContent style={{ flexGrow: 1, padding: 5, marginTop: "10px" }}>
                 <Typography
                   gutterBottom
-                  variant="h6" // Changed to smaller font size as in the second code
+                  variant="h6"
                   style={{
                     fontWeight: "bold",
-                    color: "#000000", // Black color for text
-                    fontSize: "16px", // Match the text size from the second code
+                    color: "#000000",
+                    fontSize: "16px",
                     marginBottom: "8px",
                     fontFamily: "Inter",
                   }}
@@ -893,7 +806,7 @@ function FullMapView({
                 </Typography>
                 <Typography
                   style={{
-                    color: "#71717A", // Adapted to match the gray color from the second code
+                    color: "#71717A",
                     marginTop: "8px",
                     fontSize: "14px",
                     lineHeight: "1.4",
@@ -907,14 +820,14 @@ function FullMapView({
                 </Typography>
                 <Typography
                   style={{
-                    color: "#2563eb", // Darker shade of lime green for better contrast
+                    color: "#2563eb",
                     marginTop: "6px",
-                    fontWeight: "bold", // Bold for stronger emphasis
-                    fontSize: "14px", // Slightly larger font size
+                    fontWeight: "bold",
+                    fontSize: "14px",
                     fontFamily: "Inter",
-                    textTransform: "uppercase", // Uppercase for better visibility
-                    textShadow: "1px 1px 3px rgba(0, 0, 0, 0.2)", // Subtle shadow for better readability
-                    letterSpacing: "0.8px", // Slight letter spacing for clarity
+                    textTransform: "uppercase",
+                    textShadow: "1px 1px 3px rgba(0, 0, 0, 0.2)",
+                    letterSpacing: "0.8px",
                   }}
                 >
                   Nearest Gates:{" "}
@@ -940,13 +853,11 @@ function FullMapView({
             </Box>
           </Box>
 
-          {/* Directions button at the bottom, centered */}
           <Box
             display="flex"
             justifyContent="center"
             style={{
               width: "100%",
-              // paddingTop: "10px",
               paddingBottom: "10px",
               backgroundColor: "white",
             }}
@@ -961,11 +872,11 @@ function FullMapView({
                 marginTop: 5,
                 backgroundColor: "#212021",
                 color: "white",
-                borderRadius: "12px", // Rounded corners as in the second code
+                borderRadius: "12px",
                 textTransform: "none",
                 paddingLeft: "10px",
                 paddingRight: "10px",
-                width: "90%", // Button takes 90% of the card width
+                width: "90%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
