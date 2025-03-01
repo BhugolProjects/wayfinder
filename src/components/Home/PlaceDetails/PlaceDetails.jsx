@@ -110,17 +110,6 @@ function PlaceDetails({
     }
   };
 
-  const handleCopyPhoneNumber = () => {
-    navigator.clipboard
-      .writeText(place.phone)
-      .then(() => {
-        console.log("Phone number copied to clipboard:", place.phone);
-      })
-      .catch((err) => {
-        console.error("Failed to copy the phone number:", err);
-      });
-  };
-
   return (
     <Card
       style={{
@@ -128,6 +117,8 @@ function PlaceDetails({
         borderRadius: "20px",
         marginTop: "15px",
         padding: "5px 0",
+        border: "2px solid rgba(95, 197, 255, 1)",
+        boxShadow: "0px 2px 10px 0px rgba(35, 35, 35, 0.1)",
       }}
     >
       <Box

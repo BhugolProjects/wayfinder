@@ -33,10 +33,13 @@ img {
   font-weight: 700;
   margin-bottom: 5px;
   display: inline-block;
-  word-wrap: break-word; /* Ensures text wraps inside the box */
-  max-width: 100%; /* Prevents the text from overflowing */
+  word-wrap: break-word;
+  max-width: 100%;
   overflow: hidden;
+  min-height: 32px; /* Adjust this based on the tallest text label */
+  line-height: 16px; /* Ensures vertical alignment */
 }
+
 .slide-icon img {
   display: block;
   margin: 0 auto;

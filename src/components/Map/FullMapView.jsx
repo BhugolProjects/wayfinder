@@ -187,7 +187,12 @@ function createCircleMarker(
 }
 
 // Initialize the TomTom map
-function initializeMap(containerId, coordinates, setCoordinates, setLocationSource) {
+function initializeMap(
+  containerId,
+  coordinates,
+  setCoordinates,
+  setLocationSource
+) {
   const map = tt.map({
     key: process.env.REACT_APP_TOMTOM_API_KEY,
     container: containerId,
@@ -207,7 +212,7 @@ function initializeMap(containerId, coordinates, setCoordinates, setLocationSour
   geolocateControl.on("geolocate", function (e) {
     var coords = e.coords;
     setCoordinates({ lat: coords.latitude, lng: coords.longitude });
-    setLocationSource('geolocation');
+    setLocationSource("geolocation");
     map.setCenter([coords.longitude, coords.latitude]);
   });
 
@@ -216,7 +221,7 @@ function initializeMap(containerId, coordinates, setCoordinates, setLocationSour
   navigator.geolocation.getCurrentPosition(
     ({ coords: { latitude, longitude } }) => {
       setCoordinates({ lat: latitude, lng: longitude });
-      setLocationSource('geolocation');
+      setLocationSource("geolocation");
       map.setCenter([longitude, latitude]);
     }
   );
@@ -250,10 +255,10 @@ function initializeMap(containerId, coordinates, setCoordinates, setLocationSour
         "fill-color": [
           "case",
           ["==", ["get", "Name"], "Aarey Depot"],
-          "rgb(102, 51, 153)",
-          "rgb(244, 27, 27)", // Default red for other stations
+          "rgb(178, 181, 186)",
+          "rgb(38, 135, 129)", // Default red for other stations
         ],
-        "fill-opacity": 0.8,
+        "fill-opacity": 0.9, // Transparency
       },
     });
 
@@ -265,8 +270,8 @@ function initializeMap(containerId, coordinates, setCoordinates, setLocationSour
         data: entryExitBoxes,
       },
       paint: {
-        "fill-color": "rgb(0, 100, 255)", // Blue
-        "fill-opacity": 0.8,
+        "fill-color": "rgb(50, 91, 84)", // Blue
+        "fill-opacity": 0.9, // Transparency
       },
     });
 
@@ -304,10 +309,10 @@ function initializeMap(containerId, coordinates, setCoordinates, setLocationSour
 
   map.on("zoom", function () {
     const currentZoom = map.getZoom();
-    document.querySelectorAll(".marker-label").forEach(label => {
+    document.querySelectorAll(".marker-label").forEach((label) => {
       label.style.display = currentZoom > 16 ? "block" : "none";
     });
-    document.querySelectorAll(".station-label").forEach(label => {
+    document.querySelectorAll(".station-label").forEach((label) => {
       label.style.display = currentZoom > 12 ? "block" : "none";
     });
   });
@@ -358,7 +363,7 @@ function FullMapView({
   setSelectedStation,
 }) {
   const [selectedPlace, setSelectedPlace] = useState(null);
-  const [locationSource, setLocationSource] = useState('geolocation'); // Track location source
+  const [locationSource, setLocationSource] = useState("geolocation"); // Track location source
   const mapRef = useRef(null);
   const markersRef = useRef([]);
   const selfMarkerRef = useRef(null);
@@ -370,14 +375,38 @@ function FullMapView({
   const metroStations = {
     27: { name: "Aarey JVLR", gates: ["A1", "B1"], lifts: [] },
     26: { name: "SEEPZ", gates: ["A1", "A2", "B1", "B2"], lifts: ["A2"] },
-    25: { name: "MIDC-Andheri", gates: ["A1", "A2", "B1", "B2"], lifts: ["B1"] },
-    24: { name: "Marol Naka", gates: ["A1", "A2", "B1", "B2"], lifts: ["A1", "A2", "B1", "B2"] },
+    25: {
+      name: "MIDC-Andheri",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["B1"],
+    },
+    24: {
+      name: "Marol Naka",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["A1", "A2", "B1", "B2"],
+    },
     23: { name: "CSMIA-T2", gates: ["A1", "A2", "B1"], lifts: ["A1"] },
-    22: { name: "Sahar Road", gates: ["A1", "A2", "A3", "A4", "A5", "B1"], lifts: ["A1", "A3", "A5", "B1"] },
+    22: {
+      name: "Sahar Road",
+      gates: ["A1", "A2", "A3", "A4", "A5", "B1"],
+      lifts: ["A1", "A3", "A5", "B1"],
+    },
     21: { name: "CSMIA-T1", gates: ["A1", "B1"], lifts: ["A1", "B1"] },
-    20: { name: "Santacruz Metro", gates: ["A1", "A2", "B1", "B2"], lifts: ["A1", "A2", "B1", "B2"] },
-    19: { name: "Bandra Colony", gates: ["A1", "A2", "B1", "B2"], lifts: ["A2", "B1"] },
-    18: { name: "Bandra-Kurla Complex", gates: ["A1", "A2", "A3", "A4", "A5", "B1"], lifts: ["A1", "A2", "A3", "A4", "B1"] },
+    20: {
+      name: "Santacruz Metro",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["A1", "A2", "B1", "B2"],
+    },
+    19: {
+      name: "Bandra Colony",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["A2", "B1"],
+    },
+    18: {
+      name: "Bandra-Kurla Complex",
+      gates: ["A1", "A2", "A3", "A4", "A5", "B1"],
+      lifts: ["A1", "A2", "A3", "A4", "B1"],
+    },
   };
 
   const stationId = selectedPlace?.Station;
@@ -474,7 +503,12 @@ function FullMapView({
 
   useEffect(() => {
     if (!mapRef.current && coordinates.lat && coordinates.lng) {
-      mapRef.current = initializeMap("map", coordinates, setCoordinates, setLocationSource);
+      mapRef.current = initializeMap(
+        "map",
+        coordinates,
+        setCoordinates,
+        setLocationSource
+      );
     }
   }, [coordinates, setCoordinates, setLocationSource]);
 
@@ -500,7 +534,7 @@ function FullMapView({
           () => {
             const lngLat = selfMarkerRef.current.getLngLat();
             setCoordinates({ lat: lngLat.lat, lng: lngLat.lng });
-            setLocationSource('drag');
+            setLocationSource("drag");
             debouncedAddBuffer(lngLat.lng, lngLat.lat);
           }
         );
@@ -556,7 +590,14 @@ function FullMapView({
         })
         .filter((marker) => marker !== null);
     }
-  }, [places, type, setChildClicked, coordinates, setCoordinates, setSelectedPlace]);
+  }, [
+    places,
+    type,
+    setChildClicked,
+    coordinates,
+    setCoordinates,
+    setSelectedPlace,
+  ]);
 
   stationData.forEach((place, i) => {
     if (
@@ -584,8 +625,8 @@ function FullMapView({
     updateSelfMarker();
 
     if (selfMarkerRef.current) {
-      if (locationSource === 'geolocation') {
-        const popup = new tt.Popup({ offset: 30 }).setText('You are here');
+      if (locationSource === "geolocation") {
+        const popup = new tt.Popup({ offset: 30 }).setText("You are here");
         selfMarkerRef.current.setPopup(popup);
       } else {
         selfMarkerRef.current.setPopup(null);
@@ -790,7 +831,9 @@ function FullMapView({
               flexDirection="column"
               justifyContent="flex-start"
             >
-              <CardContent style={{ flexGrow: 1, padding: 5, marginTop: "10px" }}>
+              <CardContent
+                style={{ flexGrow: 1, padding: 5, marginTop: "10px" }}
+              >
                 <Typography
                   gutterBottom
                   variant="h6"

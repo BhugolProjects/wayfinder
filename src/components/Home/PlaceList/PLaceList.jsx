@@ -3,8 +3,6 @@ import { CircularProgress, Grid, Box } from "@mui/material";
 import { Container, ListContainer, LoadingContainer } from "./styles.jsx";
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
 
-
-
 function PlaceList({
   topPlaceId,
   setTopPlaceId,
@@ -18,10 +16,9 @@ function PlaceList({
   setCoordinates,
   nearestStation,
   selectedStation,
-  username
+  username,
 }) {
   const [elRefs, setElRefs] = useState([]);
-
 
   const options = [
     { value: "Transportation", label: "Transport" },
@@ -50,15 +47,11 @@ function PlaceList({
     setElRefs(refs);
   }, [places]);
 
-  const cardcolors = ['rgba(3, 182, 187, 0.1)', 'rgba(90, 69, 149, 0.1)', 'rgba(255, 107, 131, 0.1)'];
-
-
   const sortedPlaces = topPlaceId
-    ? [...places].sort((a, b) => (a.id === topPlaceId ? -1 : b.id === topPlaceId ? 1 : 0))
+    ? [...places].sort((a, b) =>
+        a.id === topPlaceId ? -1 : b.id === topPlaceId ? 1 : 0
+      )
     : places;
-
-
-
 
   return (
     <Container>
@@ -75,13 +68,11 @@ function PlaceList({
               width: "100%",
               overflowX: "scroll",
               scrollBehavior: "smooth",
-              // marginTop: "10px",
               "::-webkit-scrollbar": { display: "none" }, // Hide scrollbar for Webkit browsers
               "-ms-overflow-style": "none", // Hide scrollbar for IE and Edge
               "scrollbar-width": "none", // Hide scrollbar for Firefox
             }}
           >
-
             {sortedPlaces?.map((place, i) =>
               place.Type_of_Locality === type ? (
                 <Grid ref={elRefs[i]} item key={i} xs={12}>
@@ -89,7 +80,7 @@ function PlaceList({
                     place={place}
                     selected={Number(childClicked) === i}
                     refProp={elRefs[i]}
-                    cardcolor={cardcolors[i % cardcolors.length]}
+                    cardcolor="rgba(230, 241, 247, 1)" // Single color applied
                     nearestStation={nearestStation}
                     selectedStation={selectedStation}
                     username={username}
