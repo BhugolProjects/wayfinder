@@ -39,7 +39,7 @@ function createMarker(
   icon,
   position,
   color,
-  popupText,
+  placeDetails,
   draggable = false,
   map,
   setChildClicked,
@@ -61,14 +61,18 @@ function createMarker(
   iconElement.style.backgroundImage = `url(${icon})`;
   markerContentElement.appendChild(iconElement);
 
+  const popupText = place.Bus_Stops
+    ? `${place.Locality_Name}<br>Buses: ${place.Bus_Stops}`
+    : place.Locality_Name;
+
   // Create Label Element (Initially Hidden)
   var labelElement = document.createElement("div");
   labelElement.className = "marker-label";
-  labelElement.innerText = popupText;
+  labelElement.innerText = place.Locality_Name;
   labelElement.style.display = "none"; // Initially hidden
   markerElement.appendChild(labelElement);
 
-  var popup = new tt.Popup({ offset: 30 }).setText(popupText);
+  var popup = new tt.Popup({ offset: 30 }).setHTML(popupText);
 
   const marker = new tt.Marker({
     element: markerElement,
@@ -100,7 +104,7 @@ function createSelfMarker(
 ) {
   var markerElement = document.createElement("div");
   markerElement.className = "marker-circle";
-  markerElement.style.zIndex = "9999";
+  markerElement.style.zIndex = "100";
 
   var markerContentElement = document.createElement("div");
   markerContentElement.className = "marker-circle-content";
@@ -576,7 +580,7 @@ function FullMapView({
               }`,
               [place.Longitude, place.Latitude],
               "#c31a26",
-              place.Locality_Name,
+              place,
               false,
               mapRef.current,
               setChildClicked,
