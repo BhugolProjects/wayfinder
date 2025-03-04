@@ -17,9 +17,10 @@ function PlaceList({
   nearestStation,
   selectedStation,
   username,
+  filteredPlacesInBuffer,
+  setFilteredPlacesInBuffer,
 }) {
   const [elRefs, setElRefs] = useState([]);
-
   const options = [
     { value: "Transportation", label: "Transport" },
     { value: "Hotels", label: "Hotels" },
@@ -39,7 +40,7 @@ function PlaceList({
     { value: "Nature", label: "Nature" },
     { value: "Other", label: "Other" },
   ];
-
+  // console.log("places", places);
   useEffect(() => {
     const refs = Array(places?.length)
       .fill()
@@ -52,6 +53,15 @@ function PlaceList({
         a.id === topPlaceId ? -1 : b.id === topPlaceId ? 1 : 0
       )
     : places;
+
+  // Log only the places that match the current type
+  useEffect(() => {
+    const filteredPlaces = sortedPlaces?.filter(
+      (place) => place.Type_of_Locality === type
+    );
+    setFilteredPlacesInBuffer(filteredPlaces);
+    // console.log("Filtered Places being rendered:", filteredPlaces);
+  }, [sortedPlaces, type]); // Dependencies: sortedPlaces and type
 
   return (
     <Container>

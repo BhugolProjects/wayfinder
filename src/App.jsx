@@ -6,7 +6,6 @@ import {
 } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Header from "./components/Home/Header";
-import CategorySection from "./components/Home/CategorySection";
 import MapView from "./components/Home/MapView";
 import Home from "./components/Home/Home";
 import Map from "./components/Map/Map";

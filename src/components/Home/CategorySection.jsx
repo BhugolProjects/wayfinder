@@ -1,43 +1,22 @@
-import React, { useState, useEffect, createRef } from "react";
-import CategoryItem from "./CategoryItem";
+import React, { useState, useEffect, useMemo } from "react";
 import Slider from "react-slick";
 import "./style.css";
 
-function CategorySection({ setType }) {
+function CategorySection({ setType, places }) {
   const [selectedSlide, setSelectedSlide] = useState(0);
 
   const options = [
-    {
-      value: "Transportation",
-      label: "Transport",
-      image: "Transportation.svg",
-    },
+    { value: "Transportation", label: "Transport", image: "Transportation.svg" },
     { value: "Hotels", label: "Hotels", image: "Hotels.svg" },
     { value: "Health", label: "Hospitals", image: "Health.svg" },
     { value: "Restaurants", label: "Restaurants", image: "Restaurants.svg" },
-    {
-      value: "Tourist place",
-      label: "Tourist place",
-      image: "Tourist_place.svg",
-    },
+    { value: "Tourist place", label: "Tourist place", image: "Tourist_place.svg" },
     { value: "Industry", label: "Industry", image: "Industry.svg" },
-    {
-      value: "Institutional",
-      label: "Institutional",
-      image: "Institutional.svg",
-    },
+    { value: "Institutional", label: "Institutional", image: "Institutional.svg" },
     { value: "Commercial", label: "Commercial", image: "Commercial.svg" },
     { value: "Residential", label: "Residential", image: "Residential.svg" },
-    {
-      value: "Government Offices",
-      label: "Government Offices",
-      image: "Government_Offices.svg",
-    },
-    {
-      value: "Private Offices",
-      label: "Private Offices",
-      image: "Private_Offices.svg",
-    },
+    { value: "Government Offices", label: "Government Offices", image: "Government_Offices.svg" },
+    { value: "Private Offices", label: "Private Offices", image: "Private_Offices.svg" },
     { value: "Recreation", label: "Recreation", image: "Recreation.svg" },
     { value: "Sports", label: "Sports", image: "Sports.svg" },
     { value: "Heritage", label: "Heritage", image: "Heritage.svg" },
@@ -46,30 +25,63 @@ function CategorySection({ setType }) {
     { value: "Other", label: "Other", image: "Other.svg" },
   ];
 
+  // Normalize Type_of_Locality to match options (title case)
+  const availableTypes = useMemo(() => {
+    return new Set(
+      places.map(place =>
+        place.Type_of_Locality.toLowerCase()
+          .split(" ")
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ")
+      )
+    );
+  }, [places]);
+
+  // Reorder options: available first, disabled last
+  const sliderOptions = useMemo(() => {
+    const availableOptions = options.filter(opt => availableTypes.has(opt.value));
+    const disabledOptions = options.filter(opt => !availableTypes.has(opt.value));
+    return [...availableOptions, ...disabledOptions];
+  }, [availableTypes]);
+
+  // Set initial slide based on saved type or first available
   useEffect(() => {
-    const savedSlide = localStorage.getItem("selectedSlide");
-    if (savedSlide) {
-      setSelectedSlide(parseInt(savedSlide, 10));
-      setType(options[parseInt(savedSlide, 10)].value);
+    const savedType = localStorage.getItem("selectedType");
+    let initialSlide = 0;
+
+    if (savedType) {
+      const index = sliderOptions.findIndex(opt => opt.value === savedType);
+      if (index !== -1 && availableTypes.has(savedType)) {
+        initialSlide = index;
+      } else {
+        initialSlide = sliderOptions.findIndex(opt => availableTypes.has(opt.value));
+      }
+    } else {
+      initialSlide = sliderOptions.findIndex(opt => availableTypes.has(opt.value));
     }
-  }, []);
+
+    if (initialSlide !== -1) {
+      setSelectedSlide(initialSlide);
+      setType(sliderOptions[initialSlide].value);
+    }
+  }, [sliderOptions, availableTypes, setType]);
 
   const handleSlideChange = (currentSlide) => {
     setSelectedSlide(currentSlide);
-    setType(options[currentSlide].value);
-    localStorage.setItem("selectedSlide", currentSlide);
+    const selectedValue = sliderOptions[currentSlide].value;
+    setType(selectedValue);
+    localStorage.setItem("selectedType", selectedValue);
   };
 
   const settings = {
     dots: false,
-    infinite: true, // Disable infinite scroll if you don't need it
-    // centerPadding: "2vw", // Keep padding if you want space on both sides
-    slidesToShow: 3, // Show three slides at a time
-    slidesToScroll: 1, // Scroll only one slide at a time
-    swipeToSlide: true, // Allows smooth swiping between slides
-    focusOnSelect: false, // Prevent auto selection when sliding
-    speed: 500, // Set a smooth scroll speed
-    initialSlide: selectedSlide, // Set the initial slide to the saved slide
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    swipeToSlide: true,
+    focusOnSelect: false,
+    speed: 500,
+    initialSlide: selectedSlide,
   };
 
   return (
@@ -77,27 +89,32 @@ function CategorySection({ setType }) {
       <div className="row d-flex text-center">
         <div className="slides slider-nav style-2 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
           <Slider {...settings}>
-            {options.map((option, index) => (
-              <div
-                className={`single-nav ${
-                  selectedSlide === index ? "highlight" : ""
-                }`}
-                key={index}
-                style={{ width: "80vw", padding: "0" }}
-                onClick={() => handleSlideChange(index)}
-              >
-                <div className="slide-icon">
-                  <img
-                    src={`${option.value
-                      .replace(/ /g, "_")
-                      .replace("(", "")
-                      .replace(")", "")}.svg`}
-                    alt={`${option.value}`}
-                  />
-                  <span>{option.label}</span>
+            {sliderOptions.map((option, index) => {
+              const isAvailable = availableTypes.has(option.value);
+              return (
+                <div
+                  className={`single-nav ${selectedSlide === index ? "highlight" : ""} ${!isAvailable ? "disabled" : ""}`}
+                  key={option.value}
+                  style={{ width: "80vw", padding: "0" }}
+                  onClick={() => {
+                    if (isAvailable) {
+                      handleSlideChange(index);
+                    }
+                  }}
+                >
+                  <div className="slide-icon">
+  <img
+    src={`${option.value.replace(/ /g, "_").replace("(", "").replace(")", "")}.svg`}
+    alt={`${option.value}`}
+    className={!isAvailable ? "grayscale blur" : ""}
+  />
+  <span className={!isAvailable ? "unavailable-text" : ""}>
+    {option.label}
+  </span>
+</div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </Slider>
         </div>
       </div>

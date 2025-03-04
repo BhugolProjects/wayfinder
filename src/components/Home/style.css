@@ -58,3 +58,26 @@ img {
   filter: brightness(110%); /* Highlighted image */
   transition: filter 0.3s ease;
 }
+.single-nav.unavailable {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.grayscale {
+  filter: grayscale(100%);
+}
+
+.blur {
+  filter: blur(1px); /* Adjust the pixel value as needed */
+}
+
+/* If you want both effects combined for unavailable items */
+.grayscale.blur {
+  filter: grayscale(100%) blur(1px);
+}
+.unavailable-text {
+  /* font-size: 4px; Adjust this value as needed */
+  /* Optional: you can add more styling if desired */
+  opacity: 0.6;
+  /* color: #666; */
+}

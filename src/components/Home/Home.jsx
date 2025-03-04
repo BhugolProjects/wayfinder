@@ -28,6 +28,9 @@ function Home({
   setSelectedStation,
   setStationsWithinRadius,
 }) {
+
+
+  const [filteredPlacesInBuffer, setFilteredPlacesInBuffer] = useState();
   // Ref for FullMapView
   const fullMapViewRef = useRef(null);
   
@@ -51,7 +54,11 @@ function Home({
         setSelectedStation={setSelectedStation}
         setStationsWithinRadius={setStationsWithinRadius}
       />
-      <CategorySection setType={setType} />
+      <CategorySection setType={setType}
+      filteredPlacesInBuffer={filteredPlacesInBuffer}
+      setFilteredPlacesInBuffer={setFilteredPlacesInBuffer} 
+      places={places}
+      />
 
       <br />
 
@@ -117,6 +124,8 @@ function Home({
         setNearestStation={setNearestStation}
         setSelectedStation={setSelectedStation}
         setStationsWithinRadius={setStationsWithinRadius}
+        filteredPlacesInBuffer={filteredPlacesInBuffer}
+        setFilteredPlacesInBuffer={setFilteredPlacesInBuffer}
       />
     </main>
   );
