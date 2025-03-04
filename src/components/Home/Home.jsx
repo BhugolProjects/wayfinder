@@ -7,6 +7,8 @@ import CategorySection from "./CategorySection";
 import { addVisitor, getPlacesData, getStationData } from "../../api";
 import FullMapView from "../Map/FullMapView";
 import Map from "../Map/Map";
+
+import KnowYourStation from "./KnowYourStation";
 import PlaceList from "./PlaceList/PLaceList";
 import { getDistance } from "geolib";
 
@@ -28,12 +30,10 @@ function Home({
   setSelectedStation,
   setStationsWithinRadius,
 }) {
-
-
   const [filteredPlacesInBuffer, setFilteredPlacesInBuffer] = useState();
   // Ref for FullMapView
   const fullMapViewRef = useRef(null);
-  
+
   // Scroll to FullMapView when down arrow is clicked
   const handleScrollToMap = () => {
     if (fullMapViewRef.current) {
@@ -54,10 +54,11 @@ function Home({
         setSelectedStation={setSelectedStation}
         setStationsWithinRadius={setStationsWithinRadius}
       />
-      <CategorySection setType={setType}
-      filteredPlacesInBuffer={filteredPlacesInBuffer}
-      setFilteredPlacesInBuffer={setFilteredPlacesInBuffer} 
-      places={places}
+      <CategorySection
+        setType={setType}
+        filteredPlacesInBuffer={filteredPlacesInBuffer}
+        setFilteredPlacesInBuffer={setFilteredPlacesInBuffer}
+        places={places}
       />
 
       <br />
@@ -84,6 +85,11 @@ function Home({
         />
       </div>
 
+      <KnowYourStation
+        selectedStation={selectedStation} // Pass selected station name or ID
+        StationData={StationData} // Pass the full station data array
+      />
+
       {/* Bouncing arrow */}
       <div className="relative rounded-xl overflow-auto pt-4">
         <div className="flex justify-center">
@@ -101,7 +107,12 @@ function Home({
               stroke="currentColor"
               style={{ transform: "translateY(2px)" }}
             >
-              <path d="M2 7 L12 17 L22   7" stroke="black" stroke-width="4" fill="none" />
+              <path
+                d="M2 7 L12 17 L22   7"
+                stroke="black"
+                stroke-width="4"
+                fill="none"
+              />
             </svg>
           </div>
         </div>

@@ -72,7 +72,10 @@ function createMarker(
   labelElement.style.display = "none"; // Initially hidden
   markerElement.appendChild(labelElement);
 
-  var popup = new tt.Popup({ offset: 30 }).setHTML(popupText);
+  var popup = new tt.Popup({
+    offset: 30,
+    className: "custom-popup", // Custom class for styling
+  }).setHTML(popupText);
 
   const marker = new tt.Marker({
     element: markerElement,

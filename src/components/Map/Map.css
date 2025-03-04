@@ -136,3 +136,17 @@
 .mapboxgl-popup-anchor-top {
   z-index: 1000;
 }
+
+/* styling for POI popup */
+.custom-popup .tt-popup-content {
+  border: 2px solid black !important; /* Black border */
+  border-radius: 10px !important; /* Rounded corners */
+  box-shadow: 0px 0px 5px black !important; /* Dark outline */
+  padding: 10px;
+  background-color: white !important; /* Ensure visibility */
+}
+
+.custom-popup .tt-popup-tip {
+  border-top-color: black !important; /* Makes the arrow tip black */
+  border-width: 2px !important;
+}
