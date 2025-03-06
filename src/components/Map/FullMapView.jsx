@@ -15,7 +15,11 @@ import tt from "@tomtom-international/web-sdk-maps";
 import "@tomtom-international/web-sdk-maps/dist/maps.css";
 import { MapContainer } from "./styles.js";
 import "./Map.css";
-import { addVisitor, addVisitorAnalysis, getStationData } from "../../api/index.js";
+import {
+  addVisitor,
+  addVisitorAnalysis,
+  getStationData,
+} from "../../api/index.js";
 import { getDistance } from "geolib";
 import stationGeoJSON from "./MML3_Alignment.geojson";
 import stationBox from "./Station_Box.geojson";
@@ -82,7 +86,15 @@ const createMarker = (
   return marker;
 };
 
-const createSelfMarker = (icon, position, color, popupText, draggable, map, onDragEnd) => {
+const createSelfMarker = (
+  icon,
+  position,
+  color,
+  popupText,
+  draggable,
+  map,
+  onDragEnd
+) => {
   const markerElement = document.createElement("div");
   markerElement.className = "marker-circle";
   markerElement.style.zIndex = "100";
@@ -98,7 +110,11 @@ const createSelfMarker = (icon, position, color, popupText, draggable, map, onDr
   markerContentElement.appendChild(iconElement);
 
   const popup = new tt.Popup({ offset: 30 }).setText(popupText);
-  const marker = new tt.Marker({ element: markerElement, anchor: "bottom", draggable })
+  const marker = new tt.Marker({
+    element: markerElement,
+    anchor: "bottom",
+    draggable,
+  })
     .setLngLat(position)
     .setPopup(popup)
     .addTo(map);
@@ -150,7 +166,11 @@ const createCircleMarker = (
   markerElement.appendChild(labelElement);
 
   const popup = new tt.Popup({ offset: 30 }).setText(popupText);
-  const marker = new tt.Marker({ element: markerElement, anchor: "bottom", draggable })
+  const marker = new tt.Marker({
+    element: markerElement,
+    anchor: "bottom",
+    draggable,
+  })
     .setLngLat(position)
     .setPopup(popup)
     .addTo(map);
@@ -160,7 +180,12 @@ const createCircleMarker = (
 };
 
 // Map initialization (modified)
-const initializeMap = (containerId, coordinates, setCoordinates, setLocationSource) => {
+const initializeMap = (
+  containerId,
+  coordinates,
+  setCoordinates,
+  setLocationSource
+) => {
   const map = tt.map({
     key: process.env.REACT_APP_TOMTOM_API_KEY,
     container: containerId,
@@ -170,7 +195,9 @@ const initializeMap = (containerId, coordinates, setCoordinates, setLocationSour
   });
 
   map.addControl(new tt.NavigationControl());
-  const geolocateControl = new tt.GeolocateControl({ positionOptions: { enableHighAccuracy: false } });
+  const geolocateControl = new tt.GeolocateControl({
+    positionOptions: { enableHighAccuracy: false },
+  });
   geolocateControl.on("geolocate", (e) => {
     const { latitude, longitude } = e.coords;
     setCoordinates({ lat: latitude, lng: longitude });
@@ -179,11 +206,13 @@ const initializeMap = (containerId, coordinates, setCoordinates, setLocationSour
   });
   map.addControl(geolocateControl);
 
-  navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
-    setCoordinates({ lat: latitude, lng: longitude });
-    setLocationSource("geolocation");
-    map.setCenter([longitude, latitude]);
-  });
+  navigator.geolocation.getCurrentPosition(
+    ({ coords: { latitude, longitude } }) => {
+      setCoordinates({ lat: latitude, lng: longitude });
+      setLocationSource("geolocation");
+      map.setCenter([longitude, latitude]);
+    }
+  );
 
   return map;
 };
@@ -192,11 +221,14 @@ const initializeMap = (containerId, coordinates, setCoordinates, setLocationSour
 const handleGetDirections = async (place, username, nearestStation) => {
   const { Latitude: latitude, Longitude: longitude, address } = place;
   await addVisitorAnalysis(place, username, nearestStation);
-  const url = latitude && longitude
-    ? `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`
-    : address
-    ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`
-    : null;
+  const url =
+    latitude && longitude
+      ? `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`
+      : address
+      ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+          address
+        )}`
+      : null;
   if (url) window.open(url, "_blank");
   else alert("Location information is not available.");
 };
@@ -237,21 +269,51 @@ function FullMapView({
   const metroStations = {
     27: { name: "Aarey JVLR", gates: ["A1", "B1"], lifts: [] },
     26: { name: "SEEPZ", gates: ["A1", "A2", "B1", "B2"], lifts: ["A2"] },
-    25: { name: "MIDC-Andheri", gates: ["A1", "A2", "B1", "B2"], lifts: ["B1"] },
-    24: { name: "Marol Naka", gates: ["A1", "A2", "B1", "B2"], lifts: ["A1", "A2", "B1", "B2"] },
+    25: {
+      name: "MIDC-Andheri",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["B1"],
+    },
+    24: {
+      name: "Marol Naka",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["A1", "A2", "B1", "B2"],
+    },
     23: { name: "CSMIA-T2", gates: ["A1", "A2", "B1"], lifts: ["A1"] },
-    22: { name: "Sahar Road", gates: ["A1", "A2", "A3", "A4", "A5", "B1"], lifts: ["A1", "A3", "A5", "B1"] },
+    22: {
+      name: "Sahar Road",
+      gates: ["A1", "A2", "A3", "A4", "A5", "B1"],
+      lifts: ["A1", "A3", "A5", "B1"],
+    },
     21: { name: "CSMIA-T1", gates: ["A1", "B1"], lifts: ["A1", "B1"] },
-    20: { name: "Santacruz Metro", gates: ["A1", "A2", "B1", "B2"], lifts: ["A1", "A2", "B1", "B2"] },
-    19: { name: "Bandra Colony", gates: ["A1", "A2", "B1", "B2"], lifts: ["A2", "B1"] },
-    18: { name: "Bandra-Kurla Complex", gates: ["A1", "A2", "A3", "A4", "A5", "B1"], lifts: ["A1", "A2", "A3", "A4", "B1"] },
+    20: {
+      name: "Santacruz Metro",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["A1", "A2", "B1", "B2"],
+    },
+    19: {
+      name: "Bandra Colony",
+      gates: ["A1", "A2", "B1", "B2"],
+      lifts: ["A2", "B1"],
+    },
+    18: {
+      name: "Bandra-Kurla Complex",
+      gates: ["A1", "A2", "A3", "A4", "A5", "B1"],
+      lifts: ["A1", "A2", "A3", "A4", "B1"],
+    },
   };
 
   const stationId = selectedPlace?.Station;
-  const nearestGates = selectedPlace?.Nearest_Gates?.split(",").map((gate) => gate.trim());
-  const hasLift = nearestGates && metroStations[stationId]?.lifts.some((lift) => nearestGates.includes(lift));
+  const nearestGates = selectedPlace?.Nearest_Gates?.split(",").map((gate) =>
+    gate.trim()
+  );
+  const hasLift =
+    nearestGates &&
+    metroStations[stationId]?.lifts.some((lift) => nearestGates.includes(lift));
 
-  const debouncedAddBuffer = useRef(debounce((lng, lat) => addBufferCircle(lng, lat, 1000), 300)).current;
+  const debouncedAddBuffer = useRef(
+    debounce((lng, lat) => addBufferCircle(lng, lat, 1000), 300)
+  ).current;
 
   const addBufferCircle = (lng, lat, radius) => {
     if (!lat || isNaN(lat) || !lng || isNaN(lng)) return;
@@ -261,7 +323,10 @@ function FullMapView({
     const source = mapRef.current.getSource("self-marker-buffer");
     if (source) source.setData(buffer);
     else {
-      mapRef.current.addSource("self-marker-buffer", { type: "geojson", data: buffer });
+      mapRef.current.addSource("self-marker-buffer", {
+        type: "geojson",
+        data: buffer,
+      });
       mapRef.current.addLayer({
         id: "self-marker-buffer-layer",
         type: "fill",
@@ -274,7 +339,12 @@ function FullMapView({
   // Map initialization effect
   useEffect(() => {
     if (!mapRef.current && coordinates.lat && coordinates.lng) {
-      mapRef.current = initializeMap("map", coordinates, setCoordinates, setLocationSource);
+      mapRef.current = initializeMap(
+        "map",
+        coordinates,
+        setCoordinates,
+        setLocationSource
+      );
       mapRef.current.on("load", () => {
         mapRef.current.addLayer({
           id: "metro-line",
@@ -289,7 +359,12 @@ function FullMapView({
           type: "fill",
           source: { type: "geojson", data: stationBox },
           paint: {
-            "fill-color": ["case", ["==", ["get", "Name"], "Aarey Depot"], "rgb(178, 181, 186)", "rgb(38, 135, 129)"],
+            "fill-color": [
+              "case",
+              ["==", ["get", "Name"], "Aarey Depot"],
+              "rgb(178, 181, 186)",
+              "rgb(38, 135, 129)",
+            ],
             "fill-opacity": 0.9,
           },
         });
@@ -313,12 +388,20 @@ function FullMapView({
             "text-allow-overlap": true,
             visibility: "none",
           },
-          paint: { "text-color": "#FFFFFF", "text-halo-color": "#000000", "text-halo-width": 2 },
+          paint: {
+            "text-color": "#FFFFFF",
+            "text-halo-color": "#000000",
+            "text-halo-width": 2,
+          },
         });
 
         mapRef.current.on("zoom", () => {
           const zoom = mapRef.current.getZoom();
-          mapRef.current.setLayoutProperty("entry-exit-labels", "visibility", zoom > 16 ? "visible" : "none");
+          mapRef.current.setLayoutProperty(
+            "entry-exit-labels",
+            "visibility",
+            zoom > 16 ? "visible" : "none"
+          );
         });
 
         mapRef.current.on("zoom", () => {
@@ -338,7 +421,8 @@ function FullMapView({
 
   // Update self marker and buffer effect (modified)
   useEffect(() => {
-    if (!mapRef.current || !mapLoaded || !coordinates.lat || !coordinates.lng) return;
+    if (!mapRef.current || !mapLoaded || !coordinates.lat || !coordinates.lng)
+      return;
 
     updateSelfMarker();
     if (selfMarkerRef.current) {
@@ -386,7 +470,10 @@ function FullMapView({
         ...station,
         distance: getDistance(
           { latitude: lat, longitude: lng },
-          { latitude: station.Station_Latitude, longitude: station.Station_Longitude }
+          {
+            latitude: station.Station_Latitude,
+            longitude: station.Station_Longitude,
+          }
         ),
       }))
       .filter((station) => station.distance <= 1000);
@@ -404,7 +491,13 @@ function FullMapView({
       setStationsWithinRadius([]);
       setSelectedStation("no-station");
     }
-  }, [coordinates, stationData, setNearestStation, setStationsWithinRadius, setSelectedStation]);
+  }, [
+    coordinates,
+    stationData,
+    setNearestStation,
+    setStationsWithinRadius,
+    setSelectedStation,
+  ]);
 
   // Update markers effect (unchanged)
   const removeMarkers = () => {
@@ -413,7 +506,8 @@ function FullMapView({
   };
 
   const updateSelfMarker = () => {
-    if (!coordinates || isNaN(coordinates.lat) || isNaN(coordinates.lng)) return;
+    if (!coordinates || isNaN(coordinates.lat) || isNaN(coordinates.lng))
+      return;
 
     const { lng, lat } = coordinates;
     if (!selfMarkerRef.current) {
@@ -446,7 +540,17 @@ function FullMapView({
       .filter((place) => place.Type_of_Locality === type)
       .map((place, i) =>
         createMarker(
-          `${place.SVG_Icon ? process.env.REACT_APP_BASE_URL + "assets/" + place.SVG_Icon : (!place.Sub_Type_of_Locality ? `location/` + place.Type_of_Locality : place.Sub_Type_of_Locality).replace(/ /g, "_").replace("(", "").replace(")", "") + ".svg"}`,
+          `${
+            place.SVG_Icon
+              ? process.env.REACT_APP_BASE_URL + "assets/" + place.SVG_Icon
+              : (!place.Sub_Type_of_Locality
+                  ? `location/` + place.Type_of_Locality
+                  : place.Sub_Type_of_Locality
+                )
+                  .replace(/ /g, "_")
+                  .replace("(", "")
+                  .replace(")", "") + ".svg"
+          }`,
           [place.Longitude, place.Latitude],
           "#c31a26",
           place,
@@ -473,7 +577,14 @@ function FullMapView({
         i
       );
     });
-  }, [places, type, stationData, setChildClicked, setSelectedPlace, setTopPlaceId]);
+  }, [
+    places,
+    type,
+    stationData,
+    setChildClicked,
+    setSelectedPlace,
+    setTopPlaceId,
+  ]);
 
   // Input and suggestion handlers (unchanged)
   const handleInputChange = (event) => {
@@ -528,8 +639,20 @@ function FullMapView({
                 type="button"
                 onClick={(e) => e.preventDefault()}
               >
-                <svg width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-gray-700">
-                  <path d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9" stroke="currentColor" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round" />
+                <svg
+                  width="17"
+                  height="16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-4 h-4 text-gray-700"
+                >
+                  <path
+                    d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9"
+                    stroke="currentColor"
+                    strokeWidth="1.333"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </button>
               <input
@@ -540,9 +663,23 @@ function FullMapView({
                 required
                 type="text"
               />
-              <button type="button" className="absolute right-3 -translate-y-1/2 top-1/2 p-0.5" onClick={handleReset}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              <button
+                type="button"
+                className="absolute right-3 -translate-y-1/2 top-1/2 p-0.5"
+                onClick={handleReset}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-4 h-4 text-gray-700"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
@@ -610,27 +747,77 @@ function FullMapView({
               component="img"
               image={
                 selectedPlace.Image
-                  ? `${process.env.REACT_APP_BASE_URL + "assets/" + selectedPlace.Image}`
+                  ? `${
+                      process.env.REACT_APP_BASE_URL +
+                      "assets/" +
+                      selectedPlace.Image
+                    }`
                   : "https://plus.unsplash.com/premium_photo-1686090448301-4c453ee74718?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               }
               title={selectedPlace.Locality_Name}
             />
-            <Box display="flex" flexDirection="column" justifyContent="flex-start">
-              <CardContent style={{ flexGrow: 1, padding: 5, marginTop: "10px" }}>
-                <Typography gutterBottom variant="h6" style={{ fontWeight: "bold", color: "#000000", fontSize: "16px", marginBottom: "8px", fontFamily: "Inter" }}>
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="flex-start"
+            >
+              <CardContent
+                style={{ flexGrow: 1, padding: 5, marginTop: "10px" }}
+              >
+                <Typography
+                  gutterBottom
+                  variant="h6"
+                  style={{
+                    fontWeight: "bold",
+                    color: "#000000",
+                    fontSize: "16px",
+                    marginBottom: "8px",
+                    fontFamily: "Inter",
+                  }}
+                >
                   {selectedPlace.Locality_Name}
                 </Typography>
-                <Typography style={{ color: "#71717A", marginTop: "8px", fontSize: "14px", lineHeight: "1.4", fontFamily: "Inter" }}>
+                <Typography
+                  style={{
+                    color: "#71717A",
+                    marginTop: "8px",
+                    fontSize: "14px",
+                    lineHeight: "1.4",
+                    fontFamily: "Inter",
+                  }}
+                >
                   {selectedPlace.Type_of_Locality}{" "}
-                  {selectedPlace.Sub_Type_of_Locality ? `- ${selectedPlace.Sub_Type_of_Locality}` : ""}
+                  {selectedPlace.Sub_Type_of_Locality
+                    ? `- ${selectedPlace.Sub_Type_of_Locality}`
+                    : ""}
                 </Typography>
-                <Typography style={{ color: "#2563eb", marginTop: "6px", fontWeight: "bold", fontSize: "14px", fontFamily: "Inter", textTransform: "uppercase", textShadow: "1px 1px 3px rgba(0, 0, 0, 0.2)", letterSpacing: "0.8px" }}>
+                <Typography
+                  style={{
+                    color: "#2563eb",
+                    marginTop: "6px",
+                    fontWeight: "bold",
+                    fontSize: "14px",
+                    fontFamily: "Inter",
+                    textTransform: "uppercase",
+                    textShadow: "1px 1px 3px rgba(0, 0, 0, 0.2)",
+                    letterSpacing: "0.8px",
+                  }}
+                >
                   Nearest Gates:{" "}
                   {nearestGates.map((gate, index) => (
-                    <span key={index} style={{ display: "flex", alignItems: "center", gap: "1px" }}>
+                    <span
+                      key={index}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "1px",
+                      }}
+                    >
                       {gate}
                       {metroStations[stationId]?.lifts?.includes(gate) && (
-                        <AccessibleIcon sx={{ fontSize: "16px", color: "rgb(232, 23, 23)" }} />
+                        <AccessibleIcon
+                          sx={{ fontSize: "16px", color: "rgb(232, 23, 23)" }}
+                        />
                       )}
                     </span>
                   ))}
@@ -638,11 +825,21 @@ function FullMapView({
               </CardContent>
             </Box>
           </Box>
-          <Box display="flex" justifyContent="center" style={{ width: "100%", paddingBottom: "10px", backgroundColor: "white" }}>
+          <Box
+            display="flex"
+            justifyContent="center"
+            style={{
+              width: "100%",
+              paddingBottom: "10px",
+              backgroundColor: "white",
+            }}
+          >
             <Button
               endIcon={<Directions style={{ fontSize: 23 }} />}
               color="primary"
-              onClick={() => handleGetDirections(selectedPlace, username, nearestStation)}
+              onClick={() =>
+                handleGetDirections(selectedPlace, username, nearestStation)
+              }
               style={{
                 marginTop: 5,
                 backgroundColor: "#212021",
