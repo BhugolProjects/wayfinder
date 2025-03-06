@@ -31,6 +31,7 @@ function Home({
   setStationsWithinRadius,
 }) {
   const [filteredPlacesInBuffer, setFilteredPlacesInBuffer] = useState();
+  const [centerThisStation, setCenterThisStation] = useState();
   // Ref for FullMapView
   const fullMapViewRef = useRef(null);
 
@@ -82,12 +83,16 @@ function Home({
           setNearestStation={setNearestStation}
           setSelectedStation={setSelectedStation}
           setStationsWithinRadius={setStationsWithinRadius}
+          centerThisStation={centerThisStation}
+          setCenterThisStation={setCenterThisStation}
         />
       </div>
 
       <KnowYourStation
         selectedStation={selectedStation} // Pass selected station name or ID
         StationData={StationData} // Pass the full station data array
+        centerThisStation={centerThisStation}
+        setCenterThisStation={setCenterThisStation}
       />
 
       {/* Bouncing arrow */}

@@ -21,16 +21,10 @@ export const LoadingContainer = styled('div')(({ theme }) => ({
 }));
 
 export const ListContainer = styled('div')(({ theme }) => ({
-  height: '74vh',
+  height: 'auto',
   width: '100%',
-  overflow: 'auto',
-  '&::-webkit-scrollbar': {
-    width: '8px',
-  },
-  '&::-webkit-scrollbar-thumb': {
-    backgroundColor: '#888',
-    borderRadius: '4px',
-  },
+  
+  
   '&::-webkit-scrollbar-thumb:hover': {
     backgroundColor: '#555',
   },

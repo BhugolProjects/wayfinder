@@ -275,7 +275,10 @@ function FullMapView({
   setNearestStation,
   setStationsWithinRadius,
   setSelectedStation,
+  centerThisStation,
+  setCenterThisStation,
 }) {
+  
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [locationSource, setLocationSource] = useState("geolocation");
   const [stationData, setStationData] = useState([]);
@@ -323,6 +326,21 @@ function FullMapView({
       });
     }
   };
+
+
+  useEffect(() => {
+    if (centerThisStation && mapRef.current) {
+      const lat = parseFloat(centerThisStation.Station_Latitude);
+      const lng = parseFloat(centerThisStation.Station_Longitude);
+      if (!isNaN(lat) && !isNaN(lng)) {
+        mapRef.current.flyTo({
+          center: [lng, lat],
+          zoom: 17,
+          speed: 0.8,
+        });
+      }
+    }
+  }, [centerThisStation]);
 
   useEffect(() => {
     getStationData().then(setStationData);
@@ -422,7 +440,7 @@ function FullMapView({
         "metro.png",
         [place.Station_Longitude, place.Station_Latitude],
         "#c31a26",
-        `${place.Station_Code} - ${place.Station_Commercial_Name}`,
+        `${place.Station_Name}`,
         false,
         mapRef.current,
         setChildClicked,
@@ -434,6 +452,7 @@ function FullMapView({
   useEffect(() => {
     if (!mapRef.current) return;
     updateSelfMarker();
+  
     if (selfMarkerRef.current) {
       selfMarkerRef.current.setPopup(
         locationSource === "geolocation"
@@ -441,11 +460,16 @@ function FullMapView({
           : null
       );
     }
+  
     if (coordinates.lat && coordinates.lng) {
-      mapRef.current.setCenter([coordinates.lng, coordinates.lat]);
-      mapRef.current.setZoom(13);
+      mapRef.current.easeTo({
+        center: [coordinates.lng, coordinates.lat],
+        zoom: 13,
+        speed: 0.8,
+      });
     }
   }, [coordinates, locationSource]);
+  
 
   const handleInputChange = (event) => {
     const value = event.target.value;

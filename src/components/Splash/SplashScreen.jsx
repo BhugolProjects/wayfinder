@@ -43,15 +43,16 @@ function SplashScreen() {
         </a>
       </div>
 
-      <div className="flex gap-3 self-end mt-20 mb-5 text-xs font-semibold tracking-tight text-center text-neutral-600">
-        <p className="grow my-auto">Developed by</p>
+      <div className="flex flex-col items-center mt-20 mb-5 text-xs font-semibold tracking-tight text-center text-neutral-600">
+        <p className="mb-2">Developed by</p>
         <img
           loading="lazy"
           src="bhugol.png"
           alt="Developer logo"
-          className="object-contain shrink-0 max-w-full rounded-lg aspect-[4.74] w-[152px]"
+          className="object-contain max-w-full rounded-lg aspect-[4.74] w-[152px]"
         />
       </div>
+
     </main>
   );
 }
