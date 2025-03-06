@@ -10,7 +10,7 @@ import {
   CardMedia,
 } from "@mui/material";
 import AccessibleIcon from "@mui/icons-material/Accessible";
-import { ArrowBack, Directions } from "@mui/icons-material"; // Corrected import
+import { ArrowBack, Directions } from "@mui/icons-material";
 import tt from "@tomtom-international/web-sdk-maps";
 import "@tomtom-international/web-sdk-maps/dist/maps.css";
 import { MapContainer } from "./styles.js";
@@ -23,7 +23,7 @@ import entryExitBoxes from "./Entry_Exits_Polygon.geojson";
 import * as turf from "@turf/turf";
 import debounce from "lodash.debounce";
 
-// Marker creation functions
+// Marker creation functions (unchanged)
 const createMarker = (
   icon,
   position,
@@ -61,7 +61,7 @@ const createMarker = (
 
   var popup = new tt.Popup({
     offset: 30,
-    className: "custom-popup", // Custom class for styling
+    className: "custom-popup",
   }).setHTML(popupText);
 
   const marker = new tt.Marker({
@@ -159,7 +159,7 @@ const createCircleMarker = (
   return marker;
 };
 
-// Map initialization
+// Map initialization (modified)
 const initializeMap = (containerId, coordinates, setCoordinates, setLocationSource) => {
   const map = tt.map({
     key: process.env.REACT_APP_TOMTOM_API_KEY,
@@ -185,66 +185,10 @@ const initializeMap = (containerId, coordinates, setCoordinates, setLocationSour
     map.setCenter([longitude, latitude]);
   });
 
-  map.on("load", () => {
-    map.addLayer({
-      id: "metro-line",
-      type: "line",
-      source: { type: "geojson", data: stationGeoJSON },
-      layout: { "line-join": "round", "line-cap": "round" },
-      paint: { "line-color": "#02D8E9", "line-width": 5 },
-    });
-
-    map.addLayer({
-      id: "station-box",
-      type: "fill",
-      source: { type: "geojson", data: stationBox },
-      paint: {
-        "fill-color": ["case", ["==", ["get", "Name"], "Aarey Depot"], "rgb(178, 181, 186)", "rgb(38, 135, 129)"],
-        "fill-opacity": 0.9,
-      },
-    });
-
-    map.addLayer({
-      id: "entry-exit-boxes",
-      type: "fill",
-      source: { type: "geojson", data: entryExitBoxes },
-      paint: { "fill-color": "rgb(50, 91, 84)", "fill-opacity": 0.9 },
-    });
-
-    map.addLayer({
-      id: "entry-exit-labels",
-      type: "symbol",
-      source: { type: "geojson", data: entryExitBoxes },
-      layout: {
-        "text-field": ["get", "descriptio"],
-        "text-size": 14,
-        "text-anchor": "center",
-        "text-offset": [0, 1.2],
-        "text-allow-overlap": true,
-        visibility: "none",
-      },
-      paint: { "text-color": "#FFFFFF", "text-halo-color": "#000000", "text-halo-width": 2 },
-    });
-
-    map.on("zoom", () => {
-      const zoom = map.getZoom();
-      map.setLayoutProperty("entry-exit-labels", "visibility", zoom > 16 ? "visible" : "none");
-    });
-  });
-
-  map.on("zoom", () => {
-    const zoom = map.getZoom();
-    document.querySelectorAll(".marker-label").forEach((label) => {
-      label.style.display = zoom > 16 ? "block" : "none";
-    });
-    document.querySelectorAll(".station-label").forEach((label) => {
-      label.style.display = zoom > 12 ? "block" : "none";
-    });
-  });
-
   return map;
 };
 
+// Handle directions (unchanged)
 const handleGetDirections = async (place, username, nearestStation) => {
   const { Latitude: latitude, Longitude: longitude, address } = place;
   await addVisitorAnalysis(place, username, nearestStation);
@@ -257,7 +201,7 @@ const handleGetDirections = async (place, username, nearestStation) => {
   else alert("Location information is not available.");
 };
 
-// Main Component
+// Main Component (modified)
 function FullMapView({
   topPlaceId,
   setTopPlaceId,
@@ -278,12 +222,12 @@ function FullMapView({
   centerThisStation,
   setCenterThisStation,
 }) {
-  
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [locationSource, setLocationSource] = useState("geolocation");
   const [stationData, setStationData] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [mapLoaded, setMapLoaded] = useState(false); // New state to track map load
   const mapRef = useRef(null);
   const markersRef = useRef([]);
   const selfMarkerRef = useRef(null);
@@ -327,7 +271,92 @@ function FullMapView({
     }
   };
 
+  // Map initialization effect
+  useEffect(() => {
+    if (!mapRef.current && coordinates.lat && coordinates.lng) {
+      mapRef.current = initializeMap("map", coordinates, setCoordinates, setLocationSource);
+      mapRef.current.on("load", () => {
+        mapRef.current.addLayer({
+          id: "metro-line",
+          type: "line",
+          source: { type: "geojson", data: stationGeoJSON },
+          layout: { "line-join": "round", "line-cap": "round" },
+          paint: { "line-color": "#02D8E9", "line-width": 5 },
+        });
 
+        mapRef.current.addLayer({
+          id: "station-box",
+          type: "fill",
+          source: { type: "geojson", data: stationBox },
+          paint: {
+            "fill-color": ["case", ["==", ["get", "Name"], "Aarey Depot"], "rgb(178, 181, 186)", "rgb(38, 135, 129)"],
+            "fill-opacity": 0.9,
+          },
+        });
+
+        mapRef.current.addLayer({
+          id: "entry-exit-boxes",
+          type: "fill",
+          source: { type: "geojson", data: entryExitBoxes },
+          paint: { "fill-color": "rgb(50, 91, 84)", "fill-opacity": 0.9 },
+        });
+
+        mapRef.current.addLayer({
+          id: "entry-exit-labels",
+          type: "symbol",
+          source: { type: "geojson", data: entryExitBoxes },
+          layout: {
+            "text-field": ["get", "descriptio"],
+            "text-size": 14,
+            "text-anchor": "center",
+            "text-offset": [0, 1.2],
+            "text-allow-overlap": true,
+            visibility: "none",
+          },
+          paint: { "text-color": "#FFFFFF", "text-halo-color": "#000000", "text-halo-width": 2 },
+        });
+
+        mapRef.current.on("zoom", () => {
+          const zoom = mapRef.current.getZoom();
+          mapRef.current.setLayoutProperty("entry-exit-labels", "visibility", zoom > 16 ? "visible" : "none");
+        });
+
+        mapRef.current.on("zoom", () => {
+          const zoom = mapRef.current.getZoom();
+          document.querySelectorAll(".marker-label").forEach((label) => {
+            label.style.display = zoom > 16 ? "block" : "none";
+          });
+          document.querySelectorAll(".station-label").forEach((label) => {
+            label.style.display = zoom > 12 ? "block" : "none";
+          });
+        });
+
+        setMapLoaded(true); // Set map as loaded
+      });
+    }
+  }, [coordinates, setCoordinates, setLocationSource]);
+
+  // Update self marker and buffer effect (modified)
+  useEffect(() => {
+    if (!mapRef.current || !mapLoaded || !coordinates.lat || !coordinates.lng) return;
+
+    updateSelfMarker();
+    if (selfMarkerRef.current) {
+      selfMarkerRef.current.setPopup(
+        locationSource === "geolocation"
+          ? new tt.Popup({ offset: 30 }).setText("You are here")
+          : null
+      );
+    }
+
+    mapRef.current.easeTo({
+      center: [coordinates.lng, coordinates.lat],
+      zoom: 13,
+      speed: 0.8,
+    });
+  }, [coordinates, locationSource, mapLoaded]);
+
+  // Center on selected station effect (unchanged)
   useEffect(() => {
     if (centerThisStation && mapRef.current) {
       const lat = parseFloat(centerThisStation.Station_Latitude);
@@ -342,10 +371,12 @@ function FullMapView({
     }
   }, [centerThisStation]);
 
+  // Fetch station data effect (unchanged)
   useEffect(() => {
     getStationData().then(setStationData);
   }, []);
 
+  // Calculate nearest station effect (unchanged)
   useEffect(() => {
     if (!coordinates.lat || !coordinates.lng) return;
 
@@ -373,14 +404,9 @@ function FullMapView({
       setStationsWithinRadius([]);
       setSelectedStation("no-station");
     }
-  }, [coordinates, stationData]);
+  }, [coordinates, stationData, setNearestStation, setStationsWithinRadius, setSelectedStation]);
 
-  useEffect(() => {
-    if (!mapRef.current && coordinates.lat && coordinates.lng) {
-      mapRef.current = initializeMap("map", coordinates, setCoordinates, setLocationSource);
-    }
-  }, [coordinates]);
-
+  // Update markers effect (unchanged)
   const removeMarkers = () => {
     markersRef.current.forEach((marker) => marker.remove());
     markersRef.current = [];
@@ -447,30 +473,9 @@ function FullMapView({
         i
       );
     });
-  }, [places, type, stationData]);
+  }, [places, type, stationData, setChildClicked, setSelectedPlace, setTopPlaceId]);
 
-  useEffect(() => {
-    if (!mapRef.current) return;
-    updateSelfMarker();
-  
-    if (selfMarkerRef.current) {
-      selfMarkerRef.current.setPopup(
-        locationSource === "geolocation"
-          ? new tt.Popup({ offset: 30 }).setText("You are here")
-          : null
-      );
-    }
-  
-    if (coordinates.lat && coordinates.lng) {
-      mapRef.current.easeTo({
-        center: [coordinates.lng, coordinates.lat],
-        zoom: 13,
-        speed: 0.8,
-      });
-    }
-  }, [coordinates, locationSource]);
-  
-
+  // Input and suggestion handlers (unchanged)
   const handleInputChange = (event) => {
     const value = event.target.value;
     setInputValue(value);
@@ -495,6 +500,7 @@ function FullMapView({
     setSuggestions([]);
   };
 
+  // Render (unchanged)
   return (
     <MapContainer
       isDesktop={isDesktop}
@@ -634,7 +640,7 @@ function FullMapView({
           </Box>
           <Box display="flex" justifyContent="center" style={{ width: "100%", paddingBottom: "10px", backgroundColor: "white" }}>
             <Button
-              endIcon={<Directions style={{ fontSize: 23 }} />} // Corrected to Directions
+              endIcon={<Directions style={{ fontSize: 23 }} />}
               color="primary"
               onClick={() => handleGetDirections(selectedPlace, username, nearestStation)}
               style={{
