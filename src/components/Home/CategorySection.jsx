@@ -15,7 +15,7 @@ function CategorySection({ setType, places }) {
     { value: "Institutional", label: "Institutional", image: "Institutional.svg" },
     { value: "Commercial", label: "Commercial", image: "Commercial.svg" },
     { value: "Residential", label: "Residential", image: "Residential.svg" },
-    { value: "Government Offices", label: "Government Offices", image: "Government_Offices.svg" },
+    { value: "Government Offices", label: "Govt Offices", image: "Government_Offices.svg" },
     { value: "Private Offices", label: "Private Offices", image: "Private_Offices.svg" },
     { value: "Recreation", label: "Recreation", image: "Recreation.svg" },
     { value: "Sports", label: "Sports", image: "Sports.svg" },
@@ -103,15 +103,15 @@ function CategorySection({ setType, places }) {
                   }}
                 >
                   <div className="slide-icon">
-  <img
-    src={`${option.value.replace(/ /g, "_").replace("(", "").replace(")", "")}.svg`}
-    alt={`${option.value}`}
-    className={!isAvailable ? "grayscale blur" : ""}
-  />
-  <span className={!isAvailable ? "unavailable-text" : ""}>
-    {option.label}
-  </span>
-</div>
+                    <img
+                      src={`${option.value.replace(/ /g, "_").replace("(", "").replace(")", "")}.svg`}
+                      alt={`${option.value}`}
+                      className={!isAvailable ? "grayscale blur" : ""}
+                    />
+                    <span className={!isAvailable ? "unavailable-text" : ""}>
+                      {option.label}
+                    </span>
+                  </div>
                 </div>
               );
             })}

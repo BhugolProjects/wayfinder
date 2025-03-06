@@ -36,7 +36,7 @@ img {
   word-wrap: break-word;
   max-width: 100%;
   overflow: hidden;
-  min-height: 32px; /* Adjust this based on the tallest text label */
+  min-height: auto; /* Adjust this based on the tallest text label */
   line-height: 16px; /* Ensures vertical alignment */
 }
 
@@ -44,12 +44,14 @@ img {
   display: block;
   margin: 0 auto;
   padding-bottom: 5px;
+  padding-top: 12px;
   width: 50px;
 }
 
 .highlight .slide-icon {
   background: #dedede; /* Add the highlight background for selected */
   border-radius: 5%;
+  margin-bottom: 8px;
   color: #000;
   transition: background 0.3s ease; /* Smooth transition for color change */
 }
