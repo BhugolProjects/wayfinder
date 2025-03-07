@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react"; // Ensure useRef is imported
 import { CssBaseline, Grid } from "@mui/material";
+import Joyride from "react-joyride";
 import "../../App.css";
 import Header from "./Header";
 import CategorySection from "./CategorySection";
-
 import { addVisitor, getPlacesData, getStationData } from "../../api";
 import FullMapView from "../Map/FullMapView";
 import Map from "../Map/Map";
-
 import KnowYourStation from "./KnowYourStation";
 import PlaceList from "./PlaceList/PLaceList";
 import { getDistance } from "geolib";
@@ -32,10 +31,55 @@ function Home({
 }) {
   const [filteredPlacesInBuffer, setFilteredPlacesInBuffer] = useState();
   const [centerThisStation, setCenterThisStation] = useState();
-  // Ref for FullMapView
-  const fullMapViewRef = useRef(null);
+  const fullMapViewRef = useRef(null); // Define useRef for scrolling
 
-  // Scroll to FullMapView when down arrow is clicked
+  const [runTour, setRunTour] = useState(() => {
+    const hasVisited = localStorage.getItem("hasVisited");
+    return !hasVisited; // true on first visit, false otherwise
+  });
+
+  const steps = [
+    {
+      target: ".header",
+      content: "Find and search for stations with ease.",
+      disableBeacon: true, // No beacon, starts directly
+    },
+    {
+      target: ".category-section",
+      content: "Filter places by categories like Transport or Hotels here.",
+      disableBeacon: true,
+    },
+    {
+      target: ".full-map-view",
+      content: "View stations and places on this interactive map. You can drag your location pin to find a better place of interest.",
+      disableBeacon: true,
+    },
+    {
+      target: ".know-your-station",
+      content: "Learn more about your selected station here. Click on this card to zoom in on your station on the map for a closer view.",
+      disableBeacon: true,
+    },
+    {
+      target: ".place-list",
+      content: "Browse nearby places in this list. You can also view the nearest gate of the metro station and check the lift status.",
+      disableBeacon: true,
+    },
+  ];
+
+  // Set localStorage on first visit, no auto-progression
+  useEffect(() => {
+    if (runTour) {
+      localStorage.setItem("hasVisited", "true");
+    }
+  }, [runTour]);
+
+  const handleJoyrideCallback = (data) => {
+    const { status } = data;
+    if (status === "finished" || status === "skipped") {
+      setRunTour(false); // End tour when finished or skipped
+    }
+  };
+
   const handleScrollToMap = () => {
     if (fullMapViewRef.current) {
       fullMapViewRef.current.scrollIntoView({ behavior: "smooth" });
@@ -44,28 +88,51 @@ function Home({
 
   return (
     <main className="flex overflow-hidden flex-col px-5 pt-5 pb-5 mx-auto w-full bg-white rounded max-w-[480px]">
-      <Header
-        coordinates={coordinates}
-        setCoordinates={setCoordinates}
-        StationData={StationData}
-        nearestStation={nearestStation}
-        selectedStation={selectedStation}
-        stationsWithinRadius={stationsWithinRadius}
-        setNearestStation={setNearestStation}
-        setSelectedStation={setSelectedStation}
-        setStationsWithinRadius={setStationsWithinRadius}
+      <Joyride
+        steps={steps}
+        run={runTour} // Starts immediately on first visit
+        continuous={true} // Allows manual progression with "Next" button
+        showSkipButton={true} // Show skip button
+        showProgress={true} // Optional: Show step progress
+        disableOverlayClose={true} // No closing by clicking outside
+        spotlightClicks={false} // No clicking on spotlighted area to proceed
+        disableCloseOnEsc={false} // Allow ESC key to close
+        hideCloseButton={false} // Show close button
+        hideFooter={false} // Show footer with "Next" button
+        callback={handleJoyrideCallback}
+        styles={{
+          options: {
+            zIndex: 10000,
+            beaconSize: 0, // Fallback to hide beacon globally
+          },
+        }}
       />
-      <CategorySection
-        setType={setType}
-        filteredPlacesInBuffer={filteredPlacesInBuffer}
-        setFilteredPlacesInBuffer={setFilteredPlacesInBuffer}
-        places={places}
-      />
+
+      <div className="header">
+        <Header
+          coordinates={coordinates}
+          setCoordinates={setCoordinates}
+          StationData={StationData}
+          nearestStation={nearestStation}
+          selectedStation={selectedStation}
+          stationsWithinRadius={stationsWithinRadius}
+          setNearestStation={setNearestStation}
+          setSelectedStation={setSelectedStation}
+          setStationsWithinRadius={setStationsWithinRadius}
+        />
+      </div>
+      <div className="category-section">
+        <CategorySection
+          setType={setType}
+          filteredPlacesInBuffer={filteredPlacesInBuffer}
+          setFilteredPlacesInBuffer={setFilteredPlacesInBuffer}
+          places={places}
+        />
+      </div>
 
       <br />
 
-      {/* FullMapView with ref */}
-      <div ref={fullMapViewRef}>
+      <div className="full-map-view" ref={fullMapViewRef}>
         <FullMapView
           topPlaceId={topPlaceId}
           setTopPlaceId={setTopPlaceId}
@@ -88,18 +155,19 @@ function Home({
         />
       </div>
 
-      <KnowYourStation
-        selectedStation={selectedStation} // Pass selected station name or ID
-        StationData={StationData} // Pass the full station data array
-        centerThisStation={centerThisStation}
-        setCenterThisStation={setCenterThisStation}
-      />
+      <div className="know-your-station">
+        <KnowYourStation
+          selectedStation={selectedStation}
+          StationData={StationData}
+          centerThisStation={centerThisStation}
+          setCenterThisStation={setCenterThisStation}
+        />
+      </div>
 
-      {/* Bouncing arrow */}
       <div className="relative rounded-xl overflow-auto pt-4">
         <div className="flex justify-center">
           <div
-            onClick={handleScrollToMap} // Scroll on arrow click
+            onClick={handleScrollToMap}
             className="cursor-pointer animate-bounce bg-gradient-to-t from-mmwhite to-mmblue shadow-md w-10 h-10 ring-1 ring-slate-900/5 dark:ring-slate-200/20 shadow-lg rounded-full flex items-center justify-center"
           >
             <svg
@@ -123,26 +191,28 @@ function Home({
         </div>
       </div>
 
-      <PlaceList
-        topPlaceId={topPlaceId}
-        setTopPlaceId={setTopPlaceId}
-        setCoordinates={setCoordinates}
-        coordinates={coordinates}
-        places={places}
-        setChildClicked={setChildClicked}
-        type={type}
-        setType={setType}
-        username={username}
-        StationData={StationData}
-        nearestStation={nearestStation}
-        selectedStation={selectedStation}
-        stationsWithinRadius={stationsWithinRadius}
-        setNearestStation={setNearestStation}
-        setSelectedStation={setSelectedStation}
-        setStationsWithinRadius={setStationsWithinRadius}
-        filteredPlacesInBuffer={filteredPlacesInBuffer}
-        setFilteredPlacesInBuffer={setFilteredPlacesInBuffer}
-      />
+      <div className="place-list">
+        <PlaceList
+          topPlaceId={topPlaceId}
+          setTopPlaceId={setTopPlaceId}
+          setCoordinates={setCoordinates}
+          coordinates={coordinates}
+          places={places}
+          setChildClicked={setChildClicked}
+          type={type}
+          setType={setType}
+          username={username}
+          StationData={StationData}
+          nearestStation={nearestStation}
+          selectedStation={selectedStation}
+          stationsWithinRadius={stationsWithinRadius}
+          setNearestStation={setNearestStation}
+          setSelectedStation={setSelectedStation}
+          setStationsWithinRadius={setStationsWithinRadius}
+          filteredPlacesInBuffer={filteredPlacesInBuffer}
+          setFilteredPlacesInBuffer={setFilteredPlacesInBuffer}
+        />
+      </div>
     </main>
   );
 }
