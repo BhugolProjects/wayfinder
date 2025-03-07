@@ -1,11 +1,15 @@
 import React from "react";
 
-const KnowYourStation = ({ selectedStation, StationData, setCenterThisStation }) => {
+const KnowYourStation = ({
+  selectedStation,
+  StationData,
+  setCenterThisStation,
+}) => {
   // Early returns to handle missing data
   if (!selectedStation || !StationData) return null;
 
   const stationInfo = StationData.find(
-    (station) => station.Station_Code === selectedStation
+    (station) => station.id === selectedStation
   );
 
   if (!stationInfo) return null;
@@ -15,7 +19,7 @@ const KnowYourStation = ({ selectedStation, StationData, setCenterThisStation })
     // Create a new object with all existing stationInfo properties plus the count
     const updatedStationInfo = {
       ...stationInfo,
-      clickCount: stationInfo.clickCount ? stationInfo.clickCount + 1 : 0
+      clickCount: stationInfo.clickCount ? stationInfo.clickCount + 1 : 0,
     };
     setCenterThisStation(updatedStationInfo);
   };

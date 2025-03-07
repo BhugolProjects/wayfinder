@@ -19,7 +19,7 @@ function Header({
   };
 
   const handleStationChange = (station) => {
-    setSelectedStation(station.Station_Code);
+    setSelectedStation(station.id);
     setCoordinates({
       lat: station.Station_Latitude,
       lng: station.Station_Longitude,
@@ -83,7 +83,7 @@ function Header({
                 : selectedStation
                 ? `${
                     StationData.find(
-                      (station) => station.Station_Code === selectedStation
+                      (station) => station.id === selectedStation
                     )?.Station_Name || "Station Name Not Found"
                   }`
                 : "Select a station"}
@@ -122,7 +122,7 @@ function Header({
                     )
                 ).map((station) => (
                   <li
-                    key={station.Station_Code}
+                    key={station.id}
                     className={`px-3 py-3 cursor-pointer hover:bg-gray-100 ${
                       station.Functional_Status === "Non-functional"
                         ? "text-gray-400 pointer-events-none"
@@ -130,7 +130,7 @@ function Header({
                     }`}
                     onClick={() => {
                       if (station.Functional_Status !== "Non-functional") {
-                        setSelectedStation(station.Station_Code);
+                        setSelectedStation(station.id);
                         setCoordinates({
                           lat: Number(station.Station_Latitude),
                           lng: Number(station.Station_Longitude),

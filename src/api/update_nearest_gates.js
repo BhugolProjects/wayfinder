@@ -3,7 +3,7 @@ const poisWithNearestGates = require("../components/Map/pois_with_nearest_gates.
 
 // Directus API configuration
 const DIRECTUS_URL = "https://adminwayfinder.bhugolapps.com";
-const API_TOKEN = "-Q60A773RpSuFmHxki1AyHisBVzzOy30";
+const API_TOKEN = "-Q60A773RpSuFmHxki1AyHisBVzzOy30"; // direct us API token
 const COLLECTION_NAME = "Test_Places"; // Collection name
 
 // Function to update Nearest_Gates for a specific ID

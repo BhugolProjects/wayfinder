@@ -485,7 +485,7 @@ function FullMapView({
       addVisitor(nearest);
       setNearestStation(nearest);
       setStationsWithinRadius(filteredStations);
-      setSelectedStation(nearest.Station_Code);
+      setSelectedStation(nearest.id);
     } else {
       setNearestStation(null);
       setStationsWithinRadius([]);
@@ -536,6 +536,7 @@ function FullMapView({
     if (!mapRef.current) return;
 
     removeMarkers();
+    console.log("places before filter", places);
     markersRef.current = places
       .filter((place) => place.Type_of_Locality === type)
       .map((place, i) =>

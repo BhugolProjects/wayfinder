@@ -130,7 +130,7 @@ function App() {
         addVisitor(nearest, username);
         setNearestStation(nearest);
         setStationsWithinRadius(filteredStations);
-        setSelectedStation(nearest.Station_Code);
+        setSelectedStation(nearest.id);
       } else {
         setNearestStation(null);
         setStationsWithinRadius([]);
@@ -138,7 +138,7 @@ function App() {
       }
     }
   }, [coordinates]);
-const [topPlaceId, setTopPlaceId] = useState();
+  const [topPlaceId, setTopPlaceId] = useState();
   return (
     <main className="flex overflow-hidden flex-col mx-auto w-full bg-white rounded max-w-[480px]">
       <Router>
@@ -148,8 +148,8 @@ const [topPlaceId, setTopPlaceId] = useState();
             path="/home"
             element={
               <Home
-              topPlaceId={topPlaceId}
-              setTopPlaceId={setTopPlaceId}
+                topPlaceId={topPlaceId}
+                setTopPlaceId={setTopPlaceId}
                 setCoordinates={setCoordinates}
                 setBounds={setBounds}
                 coordinates={coordinates}
@@ -175,7 +175,7 @@ const [topPlaceId, setTopPlaceId] = useState();
             path="/map"
             element={
               <Map
-              setTopPlaceId={setTopPlaceId}
+                setTopPlaceId={setTopPlaceId}
                 setCoordinates={setCoordinates}
                 setBounds={setBounds}
                 coordinates={coordinates}
