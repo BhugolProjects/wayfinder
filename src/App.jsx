@@ -74,11 +74,17 @@ function App() {
       getPlacesData(type, bounds.sw, bounds.ne, coordinates)
         .then((data) => {
           if (data && Array.isArray(data)) {
-            setPlaces(data);
+            // Filter places based on the selected station
+            const filteredData = data.filter(
+              (place) => Number(place.Station) === Number(selectedStation)
+            );
+
+            setPlaces(filteredData); // Set only filtered places
             setFilteredPlaces([]);
           }
           setIsLoading(false);
         })
+
         .catch((error) => {
           console.error("Error fetching places data:", error);
           setIsLoading(false);
