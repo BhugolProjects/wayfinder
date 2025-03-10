@@ -1,13 +1,22 @@
 import React from "react";
 
-const KnowYourStation = ({
-  selectedStation,
-  StationData,
-  setCenterThisStation,
-}) => {
-  // Early returns to handle missing data
-  if (!selectedStation || !StationData) return null;
+const KnowYourStation = ({ selectedStation, StationData, setCenterThisStation, fullMapViewRef }) => {
+  // Early return if StationData is missing
+  if (!StationData) return null;
 
+  // Check if no station is selected
+  if (!selectedStation || selectedStation === "no-station") {
+    return (
+      <div className="p-2">
+        <h3 className="text-xl font-bold mt-2 mb-4">Know Your Station</h3>
+        <div className="border shadow-lg rounded-lg p-6 text-center">
+          <p className="text-gray-700">Please select a Station</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Find station info if a valid station is selected
   const stationInfo = StationData.find(
     (station) => station.id === selectedStation
   );
@@ -16,15 +25,17 @@ const KnowYourStation = ({
 
   // Function to handle the click and update count
   const handleStationClick = () => {
-    // Create a new object with all existing stationInfo properties plus the count
     const updatedStationInfo = {
       ...stationInfo,
       clickCount: stationInfo.clickCount ? stationInfo.clickCount + 1 : 0,
     };
+    if (fullMapViewRef.current) {
+      fullMapViewRef.current.scrollIntoView({ behavior: "smooth" });
+    }
     setCenterThisStation(updatedStationInfo);
   };
 
-  // JSX rendering with onClick handler
+  // JSX rendering with station details
   return (
     <div className="p-2">
       <h3 className="text-xl font-bold mt-2 mb-4">Know Your Station</h3>

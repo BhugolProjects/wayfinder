@@ -40,7 +40,7 @@ function PlaceList({
     { value: "Nature", label: "Nature" },
     { value: "Other", label: "Other" },
   ];
-  // console.log("places", places);
+
   useEffect(() => {
     const refs = Array(places?.length)
       .fill()
@@ -54,14 +54,15 @@ function PlaceList({
       )
     : places;
 
-  // Log only the places that match the current type
   useEffect(() => {
     const filteredPlaces = sortedPlaces?.filter(
       (place) => place.Type_of_Locality === type
     );
     setFilteredPlacesInBuffer(filteredPlaces);
-    // console.log("Filtered Places being rendered:", filteredPlaces);
-  }, [sortedPlaces, type]); // Dependencies: sortedPlaces and type
+  }, [sortedPlaces, type]);
+
+  // Check if there are any places matching the type
+  const hasPlaces = sortedPlaces?.some((place) => place.Type_of_Locality === type);
 
   return (
     <Container>
@@ -71,50 +72,53 @@ function PlaceList({
         </LoadingContainer>
       ) : (
         <>
-          <ListContainer
-            container
-            spacing={3}
-            sx={{
-              width: "100%",
-              overflowX: "scroll",
-              scrollBehavior: "smooth",
-              "::-webkit-scrollbar": { display: "none" }, // Hide scrollbar for Webkit browsers
-              "-ms-overflow-style": "none", // Hide scrollbar for IE and Edge
-              "scrollbar-width": "none", // Hide scrollbar for Firefox
-            }}
-          >
-            {sortedPlaces?.map((place, i) =>
-              place.Type_of_Locality === type ? (
-                <Grid ref={elRefs[i]} item key={i} xs={12}>
-                  <PlaceDetails
-                    place={place}
-                    selected={Number(childClicked) === i}
-                    refProp={elRefs[i]}
-                    cardcolor="rgba(230, 241, 247, 1)" // Single color applied
-                    nearestStation={nearestStation}
-                    selectedStation={selectedStation}
-                    username={username}
-                  />
-                </Grid>
-              ) : null
-            )}
-          </ListContainer>
-
+          {hasPlaces ? (
+            <ListContainer
+              container
+              spacing={3}
+              sx={{
+                width: "100%",
+                overflowX: "scroll",
+                scrollBehavior: "smooth",
+                "::-webkit-scrollbar": { display: "none" },
+                "-ms-overflow-style": "none",
+                "scrollbar-width": "none",
+              }}
+            >
+              {sortedPlaces?.map((place, i) =>
+                place.Type_of_Locality === type ? (
+                  <Grid ref={elRefs[i]} item key={i} xs={12}>
+                    <PlaceDetails
+                      place={place}
+                      selected={Number(childClicked) === i}
+                      refProp={elRefs[i]}
+                      cardcolor="rgba(230, 241, 247, 1)"
+                      nearestStation={nearestStation}
+                      selectedStation={selectedStation}
+                      username={username}
+                    />
+                  </Grid>
+                ) : null
+              )}
+            </ListContainer>
+          ) : (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+                textAlign: "center",
+                color: "text.secondary",
+                fontSize: "1.2rem",
+                padding: "20px",
+              }}
+            >
+              Please select a Station to view places
+            </Box>
+          )}
         </>
       )}
-
-
-
-<div className="flex flex-col items-center mt-5 mb-5 text-xs font-semibold tracking-tight text-center text-neutral-600">
-  <p className="mb-2">Developed by</p>
-  <img
-    loading="lazy"
-    src="bhugol.png"
-    alt="Developer logo"
-    className="object-contain max-w-full rounded-lg aspect-[4.74] w-[152px]"
-  />
-</div>
-
     </Container>
   );
 }

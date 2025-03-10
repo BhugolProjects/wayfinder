@@ -32,7 +32,8 @@ function Home({
   const [filteredPlacesInBuffer, setFilteredPlacesInBuffer] = useState();
   const [centerThisStation, setCenterThisStation] = useState();
   const fullMapViewRef = useRef(null); // Define useRef for scrolling
-
+  const placeListViewRef = useRef(null); // Define useRef for scrolling
+  
   const [runTour, setRunTour] = useState(() => {
     const hasVisited = localStorage.getItem("hasVisited");
     return !hasVisited; // true on first visit, false otherwise
@@ -51,7 +52,7 @@ function Home({
     },
     {
       target: ".full-map-view",
-      content: "View stations and places on this interactive map. You can drag your location pin to find a better place of interest.",
+      content: "Explore stations and nearby places on the interactive map. Drag the pin to find points of interest.",
       disableBeacon: true,
     },
     {
@@ -85,7 +86,11 @@ function Home({
       fullMapViewRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
-
+  const handleScrollToPlaceList = () => {
+    if (placeListViewRef.current) {
+      placeListViewRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   return (
     <main className="flex overflow-hidden flex-col px-5 pt-5 pb-5 mx-auto w-full bg-white rounded max-w-[480px]">
       <Joyride
@@ -161,13 +166,14 @@ function Home({
           StationData={StationData}
           centerThisStation={centerThisStation}
           setCenterThisStation={setCenterThisStation}
+          fullMapViewRef={fullMapViewRef}
         />
       </div>
 
       <div className="relative rounded-xl overflow-auto pt-4">
         <div className="flex justify-center">
           <div
-            onClick={handleScrollToMap}
+            onClick={handleScrollToPlaceList}
             className="cursor-pointer animate-bounce bg-gradient-to-t from-mmwhite to-mmblue shadow-md w-10 h-10 ring-1 ring-slate-900/5 dark:ring-slate-200/20 shadow-lg rounded-full flex items-center justify-center"
           >
             <svg
@@ -191,7 +197,7 @@ function Home({
         </div>
       </div>
 
-      <div className="place-list">
+      <div className="place-list" ref={placeListViewRef}>
         <PlaceList
           topPlaceId={topPlaceId}
           setTopPlaceId={setTopPlaceId}

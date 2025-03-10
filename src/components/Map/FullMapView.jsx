@@ -533,8 +533,8 @@ function FullMapView({
   };
 
   useEffect(() => {
-    if (!mapRef.current) return;
-
+    if (!mapRef.current || !coordinates.lat || !coordinates.lng) return;
+  
     removeMarkers();
     console.log("places before filter", places);
     markersRef.current = places
@@ -564,7 +564,7 @@ function FullMapView({
           setTopPlaceId
         )
       );
-
+  
     stationData.forEach((place, i) => {
       if (!place.Station_Longitude || !place.Station_Latitude) return;
       createCircleMarker(
@@ -578,6 +578,19 @@ function FullMapView({
         i
       );
     });
+  
+    // Fly to self marker position after updating markers
+    if (selfMarkerRef.current) {
+      const { lng, lat } = coordinates;
+      mapRef.current.flyTo({
+        center: [lng, lat],
+        zoom: 13, // You can adjust this zoom level as needed
+        speed: 2,
+        curve: 1, // Controls the flight curve (1 is default)
+        easing: (t) => t // Linear easing, you can modify this for different animation effects
+      });
+    }
+  
   }, [
     places,
     type,
@@ -585,6 +598,7 @@ function FullMapView({
     setChildClicked,
     setSelectedPlace,
     setTopPlaceId,
+    coordinates // Add coordinates to dependency array
   ]);
 
   // Input and suggestion handlers (unchanged)
