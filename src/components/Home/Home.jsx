@@ -10,6 +10,7 @@ import Map from "../Map/Map";
 import KnowYourStation from "./KnowYourStation";
 import PlaceList from "./PlaceList/PLaceList";
 import { getDistance } from "geolib";
+import { maxWidth, width } from "@mui/system";
 
 function Home({
   topPlaceId,
@@ -33,7 +34,7 @@ function Home({
   const [centerThisStation, setCenterThisStation] = useState();
   const fullMapViewRef = useRef(null); // Define useRef for scrolling
   const placeListViewRef = useRef(null); // Define useRef for scrolling
-  
+
   const [runTour, setRunTour] = useState(() => {
     const hasVisited = localStorage.getItem("hasVisited");
     return !hasVisited; // true on first visit, false otherwise
@@ -47,22 +48,37 @@ function Home({
     },
     {
       target: ".category-section",
-      content: "Filter places by categories like Transport or Hotels here.",
+      content: "Filter places by categories like Transport and Hotels here.",
       disableBeacon: true,
+      spotlightPadding: 2,
+      styles: {
+        spotlight: {
+          transform: "translate(1px, 11px) scaleX(1.06) ", // Moves right and down
+          width: "90%",
+        },
+      },
     },
     {
       target: ".full-map-view",
-      content: "Explore stations and nearby places on the interactive map. Drag the pin to find points of interest.",
+      content:
+        "Explore stations and nearby places on the interactive map. Drag the pin to find points of interest.",
       disableBeacon: true,
     },
     {
       target: ".know-your-station",
-      content: "Learn more about your selected station here. Click on this card to zoom in on your station on the map for a closer view.",
+      content: "Click these buttons to view available gates and lifts.",
       disableBeacon: true,
+      spotlightPadding: 2,
+      styles: {
+        spotlight: {
+          transform: "translateY(8px)", // Move the highlight 5px up
+        },
+      },
     },
     {
       target: ".place-list",
-      content: "Browse nearby places in this list. You can also view the nearest gate of the metro station and check the lift status.",
+      content:
+        "Browse nearby places in this list. You can also view the nearest gate of the metro station and check the lift status.",
       disableBeacon: true,
     },
   ];
@@ -105,10 +121,24 @@ function Home({
         hideCloseButton={false} // Show close button
         hideFooter={false} // Show footer with "Next" button
         callback={handleJoyrideCallback}
+        locale={{
+          last: "OK", // Change last step's button text to OK
+        }}
         styles={{
           options: {
             zIndex: 10000,
             beaconSize: 0, // Fallback to hide beacon globally
+          },
+          buttonNext: {
+            backgroundColor: "#0090B3", // Change Next button color
+            fontSize: 14,
+          },
+          buttonBack: {
+            color: "#0090B3", // Change Back button text color (optional)
+            fontSize: 14,
+          },
+          buttonSkip: {
+            textDecoration: "underline", // Add underline effect to Skip button
           },
         }}
       />
