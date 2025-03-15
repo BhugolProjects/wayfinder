@@ -42,7 +42,7 @@ function Header({
           alt="MMRC"
           className="object-contain w-[4rem]"
         />
-        <img
+        {/* <img
           loading="lazy"
           src="bhugol.png"
           alt="Developer logo"
@@ -50,7 +50,7 @@ function Header({
           style={{
             marginLeft: "-60px",
           }}
-        />
+        /> */}
         <button
           className="flex items-center gap-2 bg-cyan-500 rounded-full px-4 py-2 hover:opacity-90 transition"
           style={{ backgroundColor: "#2DA2C3" }}
@@ -90,14 +90,12 @@ function Header({
               {selectedStation === "no station"
                 ? "No station within 1000 meters"
                 : selectedStation
-
                 ? `${
                     StationData.find(
                       (station) => station.id === selectedStation
                     )?.Station_Name || "Station Name Not Found"
-
                   }`
-                  : "Select a station"}
+                : "Select a station"}
             </span>
           </button>
 
@@ -138,7 +136,7 @@ function Header({
                       station.Functional_Status === "Non-functional"
                         ? "text-gray-400 pointer-events-none"
                         : "text-black"
-                      }`}
+                    }`}
                     onClick={() => {
                       if (station.Functional_Status !== "Non-functional") {
                         setSelectedStation(station.id);
@@ -160,10 +158,10 @@ function Header({
                       searchQuery.toLowerCase()
                     )
                 ).length === 0 && (
-                    <li className="px-3 py-3 text-gray-400 text-sm">
-                      No stations found
-                    </li>
-                  )}
+                  <li className="px-3 py-3 text-gray-400 text-sm">
+                    No stations found
+                  </li>
+                )}
               </ul>
             </div>
           )}

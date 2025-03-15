@@ -111,6 +111,15 @@ function PlaceList({
               Please select a Station to view places
             </Box>
           )}
+          <div className="flex flex-col items-center mt-20 mb-5 text-xs font-semibold tracking-tight text-center text-neutral-600">
+            <p className="mb-2">Developed by</p>
+            <img
+              loading="lazy"
+              src="bhugol.png"
+              alt="Developer logo"
+              className="object-contain max-w-full rounded-lg aspect-[4.74] w-[152px]"
+            />
+          </div>
         </>
       )}
     </Container>
