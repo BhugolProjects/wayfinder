@@ -81,10 +81,9 @@ function PlaceDetails({
 
   // Get station ID from selectedPlace (POI) and gate to display weather the nearest gate has lift or not
   const stationId = place?.Station;
-  const nearestGates = place?.Nearest_Gates?.split(",").map((gate) =>
-    gate.trim()
-  ); // Convert to array
-  const hasLift = metroStations[stationId]?.lifts?.includes(nearestGates);
+  const nearestGates = place?.Nearest_Gates
+    ? place.Nearest_Gates.split(",").map((gate) => gate.trim())
+    : []; // Ensure it's always an array
 
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -199,23 +198,25 @@ function PlaceDetails({
               }}
             >
               Nearest Gates:{" "}
-              {nearestGates.map((gate, index) => (
-                <span
-                  key={index}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "1px",
-                  }}
-                >
-                  {gate}
-                  {metroStations[stationId]?.lifts?.includes(gate) && (
-                    <AccessibleIcon
-                      sx={{ fontSize: "16px", color: "rgb(232, 23, 23)" }}
-                    />
-                  )}
-                </span>
-              ))}
+              {nearestGates.length > 0
+                ? nearestGates.map((gate, index) => (
+                    <span
+                      key={index}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "1px",
+                      }}
+                    >
+                      {gate}
+                      {metroStations[stationId]?.lifts?.includes(gate) && (
+                        <AccessibleIcon
+                          sx={{ fontSize: "16px", color: "rgb(232, 23, 23)" }}
+                        />
+                      )}
+                    </span>
+                  ))
+                : "No nearest gates available"}
             </Typography>
           </CardContent>
         </Box>
