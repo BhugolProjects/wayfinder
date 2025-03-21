@@ -90,18 +90,16 @@ function Header({
               {selectedStation === "no station"
                 ? "No station within 1000 meters"
                 : selectedStation
-                ? `${
-                    StationData.find(
-                      (station) => station.id === selectedStation
-                    )?.Station_Name || "Station Name Not Found"
+                  ? `${StationData.find(
+                    (station) => station.id === selectedStation
+                  )?.Station_Name || "Station Name Not Found"
                   }`
-                : "Select a station"}
+                  : "Select a station"}
             </span>
           </button>
 
-          {/* Dropdown List */}
           {isDropdownOpen && (
-            <div className="absolute left-0 right-0 top-full mt-1 z-10 bg-white border rounded shadow-lg max-h-60 overflow-auto w-full max-w-full">
+            <div className="absolute left-0 right-0 top-full mt-1 z-[2000] bg-white border rounded shadow-lg max-h-60 overflow-auto w-full max-w-full">
               {/* Search Input with Clear Button */}
               <div className="sticky top-0 bg-white z-20 p-3 flex items-center">
                 <input
@@ -132,11 +130,10 @@ function Header({
                 ).map((station) => (
                   <li
                     key={station.id}
-                    className={`px-3 py-3 cursor-pointer hover:bg-gray-100 ${
-                      station.Functional_Status === "Non-functional"
+                    className={`px-3 py-3 cursor-pointer hover:bg-gray-100 ${station.Functional_Status === "Non-functional"
                         ? "text-gray-400 pointer-events-none"
                         : "text-black"
-                    }`}
+                      }`}
                     onClick={() => {
                       if (station.Functional_Status !== "Non-functional") {
                         setSelectedStation(station.id);
@@ -158,10 +155,10 @@ function Header({
                       searchQuery.toLowerCase()
                     )
                 ).length === 0 && (
-                  <li className="px-3 py-3 text-gray-400 text-sm">
-                    No stations found
-                  </li>
-                )}
+                    <li className="px-3 py-3 text-gray-400 text-sm">
+                      No stations found
+                    </li>
+                  )}
               </ul>
             </div>
           )}
