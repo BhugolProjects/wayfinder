@@ -34,6 +34,28 @@ function Home({
   const [centerThisStation, setCenterThisStation] = useState();
   const fullMapViewRef = useRef(null); // Define useRef for scrolling
   const placeListViewRef = useRef(null); // Define useRef for scrolling
+  const [userInteractionOut, setUserInteractionOut] = useState(false);
+  const [showLift, setShowLift] = useState(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (fullMapViewRef.current && !fullMapViewRef.current.contains(event.target)) {
+        setUserInteractionOut(true);
+        console.log("Clicked outside FullMapView");
+        setShowLift(false)
+      } else {
+        setUserInteractionOut(false);
+        console.log("Clicked inside FullMapView");
+      }
+    };
+  
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+
 
   const [runTour, setRunTour] = useState(() => {
     const hasVisited = localStorage.getItem("hasVisited");
@@ -187,6 +209,8 @@ function Home({
           setStationsWithinRadius={setStationsWithinRadius}
           centerThisStation={centerThisStation}
           setCenterThisStation={setCenterThisStation}
+          showLift={showLift}
+          setShowLift={setShowLift}
         />
       </div>
 
@@ -197,6 +221,8 @@ function Home({
           centerThisStation={centerThisStation}
           setCenterThisStation={setCenterThisStation}
           fullMapViewRef={fullMapViewRef}
+          showLift={showLift}
+          setShowLift={setShowLift}
         />
       </div>
 

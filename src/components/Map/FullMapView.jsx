@@ -225,10 +225,10 @@ const handleGetDirections = async (place, username, nearestStation) => {
     latitude && longitude
       ? `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`
       : address
-      ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+        ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
           address
         )}`
-      : null;
+        : null;
   if (url) window.open(url, "_blank");
   else alert("Location information is not available.");
 };
@@ -253,7 +253,10 @@ function FullMapView({
   setSelectedStation,
   centerThisStation,
   setCenterThisStation,
+  showLift,
+  setShowLift,
 }) {
+  console.log("showLift", showLift)
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [locationSource, setLocationSource] = useState("geolocation");
   const [stationData, setStationData] = useState([]);
@@ -439,22 +442,97 @@ function FullMapView({
       speed: 0.8,
     });
   }, [coordinates, locationSource, mapLoaded]);
-
+  const layerRef = useRef(null);
   // Center on selected station effect (unchanged)
   useEffect(() => {
+    console.log("entryExitBoxes:", entryExitBoxes);
     if (centerThisStation && mapRef.current) {
+      console.log("Centerthis:", centerThisStation);
+  
+      // Remove existing markers first (cleanup before adding new ones)
+      markersRef.current.forEach((marker) => marker.remove());
+      markersRef.current = [];
+  
+      // Only add lift markers if showLift is true
+      if (showLift) {
+        fetch(entryExitBoxes)
+          .then((response) => {
+            if (!response.ok) throw new Error("Failed to fetch GeoJSON");
+            return response.json();
+          })
+          .then((geojsonData) => {
+            const liftGates = centerThisStation.Lift_Status.split(", ").map(
+              (gate) => gate.trim()
+            );
+            console.log("Lift Gates:", liftGates);
+  
+            const matchingFeatures = geojsonData.features.filter(
+              (feature) =>
+                feature.properties.id === centerThisStation.id &&
+                liftGates.includes(feature.properties.descriptio)
+            );
+            console.log("Matching Features:", matchingFeatures);
+  
+            matchingFeatures.forEach((feature) => {
+              const coordinates = feature.geometry.coordinates[0][0];
+              const uniqueCoordinates = coordinates.slice(0, -1);
+  
+              const topmostCoord = uniqueCoordinates.reduce(
+                (max, current) => (current[1] > max[1] ? current : max)
+              );
+  
+              console.log(
+                `Gate: ${feature.properties.descriptio}, Topmost Coordinate: [${topmostCoord[0]}, ${topmostCoord[1]}]`
+              );
+  
+              const liftMarker = createMarker(
+                `${process.env.PUBLIC_URL}/Lift_Status.svg`,
+                [topmostCoord[0], topmostCoord[1]],
+                "#c31a26",
+                { Locality_Name: `Lift at ${feature.properties.descriptio}` },
+                false,
+                mapRef.current,
+                setChildClicked,
+                feature.properties.descriptio,
+                setSelectedPlace,
+                { Locality_Name: `` },
+                setTopPlaceId
+              );
+  
+              markersRef.current.push(liftMarker);
+            });
+          })
+          .catch((error) => console.error("Error fetching GeoJSON:", error));
+      } else {
+        console.log("showLift is false, lift icons not added");
+      }
+  
+      // Center the map on the station regardless of showLift
       const lat = parseFloat(centerThisStation.Station_Latitude);
       const lng = parseFloat(centerThisStation.Station_Longitude);
       if (!isNaN(lat) && !isNaN(lng)) {
-        mapRef.current.flyTo({
-          center: [lng, lat],
-          zoom: 17,
-          speed: 0.8,
-        });
+        mapRef.current.setCenter([lng, lat]);
+        mapRef.current.zoomTo(17);
       }
     }
-  }, [centerThisStation]);
+  
+    // Cleanup function to remove markers when centerThisStation or showLift changes
+    return () => {
+      markersRef.current.forEach((marker) => marker.remove());
+      markersRef.current = [];
+    };
+  }, [
+    centerThisStation,
+    setChildClicked,
+    setSelectedPlace,
+    setTopPlaceId,
+    showLift,
+    mapRef,
+    entryExitBoxes,
+  ]);
 
+
+  
   // Fetch station data effect (unchanged)
   useEffect(() => {
     getStationData().then(setStationData);
@@ -534,23 +612,22 @@ function FullMapView({
 
   useEffect(() => {
     if (!mapRef.current || !coordinates.lat || !coordinates.lng) return;
-  
+
     removeMarkers();
-    console.log("places before filter", places);
+    // console.log("places before filter", places);
     markersRef.current = places
       .filter((place) => place.Type_of_Locality === type)
       .map((place, i) =>
         createMarker(
-          `${
-            place.SVG_Icon
-              ? process.env.REACT_APP_BASE_URL + "assets/" + place.SVG_Icon
-              : (!place.Sub_Type_of_Locality
-                  ? `location/` + place.Type_of_Locality
-                  : place.Sub_Type_of_Locality
-                )
-                  .replace(/ /g, "_")
-                  .replace("(", "")
-                  .replace(")", "") + ".svg"
+          `${place.SVG_Icon
+            ? process.env.REACT_APP_BASE_URL + "assets/" + place.SVG_Icon
+            : (!place.Sub_Type_of_Locality
+              ? `location/` + place.Type_of_Locality
+              : place.Sub_Type_of_Locality
+            )
+              .replace(/ /g, "_")
+              .replace("(", "")
+              .replace(")", "") + ".svg"
           }`,
           [place.Longitude, place.Latitude],
           "#c31a26",
@@ -564,7 +641,7 @@ function FullMapView({
           setTopPlaceId
         )
       );
-  
+
     stationData.forEach((place, i) => {
       if (!place.Station_Longitude || !place.Station_Latitude) return;
       createCircleMarker(
@@ -578,7 +655,7 @@ function FullMapView({
         i
       );
     });
-  
+
     // Fly to self marker position after updating markers
     if (selfMarkerRef.current) {
       const { lng, lat } = coordinates;
@@ -590,7 +667,7 @@ function FullMapView({
         easing: (t) => t // Linear easing, you can modify this for different animation effects
       });
     }
-  
+
   }, [
     places,
     type,
@@ -608,8 +685,8 @@ function FullMapView({
     setSuggestions(
       value
         ? places.filter((place) =>
-            place.Locality_Name?.toLowerCase().includes(value.toLowerCase())
-          )
+          place.Locality_Name?.toLowerCase().includes(value.toLowerCase())
+        )
         : []
     );
   };
@@ -762,11 +839,10 @@ function FullMapView({
               component="img"
               image={
                 selectedPlace.Image
-                  ? `${
-                      process.env.REACT_APP_BASE_URL +
-                      "assets/" +
-                      selectedPlace.Image
-                    }`
+                  ? `${process.env.REACT_APP_BASE_URL +
+                  "assets/" +
+                  selectedPlace.Image
+                  }`
                   : "https://plus.unsplash.com/premium_photo-1686090448301-4c453ee74718?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               }
               title={selectedPlace.Locality_Name}

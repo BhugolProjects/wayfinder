@@ -1,6 +1,6 @@
 import React from "react";
 
-const KnowYourStation = ({ selectedStation, StationData, setCenterThisStation, fullMapViewRef }) => {
+const KnowYourStation = ({ selectedStation, StationData, setCenterThisStation, fullMapViewRef, showLift, setShowLift }) => {
   // Early return if StationData is missing
   if (!StationData) return null;
 
@@ -33,6 +33,7 @@ const KnowYourStation = ({ selectedStation, StationData, setCenterThisStation, f
       fullMapViewRef.current.scrollIntoView({ behavior: "smooth" });
     }
     setCenterThisStation(updatedStationInfo);
+    console.log(updatedStationInfo)
   };
 
   // JSX rendering with station details
@@ -41,12 +42,12 @@ const KnowYourStation = ({ selectedStation, StationData, setCenterThisStation, f
       <h3 className="text-xl font-bold mt-2 mb-4">Know Your Station</h3>
       <div
         className="border shadow-lg rounded-lg p-6"
-        onClick={handleStationClick}
+
         style={{ cursor: "pointer" }}
       >
         <div className="flex items-stretch gap-24 justify-center">
           {/* Entry/Exit Gates */}
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center" onClick={handleStationClick}>
             <h4 className="text-lg font-semibold mb-2">Entry/Exit</h4>
             <img
               src="./Entry_Exit_Gates.svg"
@@ -58,7 +59,10 @@ const KnowYourStation = ({ selectedStation, StationData, setCenterThisStation, f
             </p>
           </div>
           {/* Lift Status */}
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center" onClick={() => {
+            handleStationClick();
+            setShowLift(true);
+          }}>
             <h4 className="text-lg font-semibold mb-2">Lift</h4>
             <img
               src="./Lift_Status.svg"
