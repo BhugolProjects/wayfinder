@@ -179,7 +179,7 @@ const createCircleMarker = (
   return marker;
 };
 
-// Map initialization (modified)
+// Map initialization (unchanged)
 const initializeMap = (
   containerId,
   coordinates,
@@ -225,10 +225,10 @@ const handleGetDirections = async (place, username, nearestStation) => {
     latitude && longitude
       ? `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`
       : address
-        ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+      ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
           address
         )}`
-        : null;
+      : null;
   if (url) window.open(url, "_blank");
   else alert("Location information is not available.");
 };
@@ -256,13 +256,14 @@ function FullMapView({
   showLift,
   setShowLift,
 }) {
-  console.log("showLift", showLift)
+  const [deviceHeading, setDeviceHeading] = useState(null);
+  const [isDragging, setIsDragging] = useState(false); // Added new state
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [locationSource, setLocationSource] = useState("geolocation");
   const [stationData, setStationData] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const [mapLoaded, setMapLoaded] = useState(false); // New state to track map load
+  const [mapLoaded, setMapLoaded] = useState(false);
   const mapRef = useRef(null);
   const markersRef = useRef([]);
   const selfMarkerRef = useRef(null);
@@ -339,7 +340,7 @@ function FullMapView({
     }
   };
 
-  // Map initialization effect
+  // Map initialization effect (unchanged)
   useEffect(() => {
     if (!mapRef.current && coordinates.lat && coordinates.lng) {
       mapRef.current = initializeMap(
@@ -417,43 +418,102 @@ function FullMapView({
           });
         });
 
-        setMapLoaded(true); // Set map as loaded
+        setMapLoaded(true);
       });
     }
   }, [coordinates, setCoordinates, setLocationSource]);
 
-  // Update self marker and buffer effect (modified)
-  useEffect(() => {
-    if (!mapRef.current || !mapLoaded || !coordinates.lat || !coordinates.lng)
-      return;
+  // Update self marker and handle icon/popup updates (modified)
+  const updateSelfMarker = () => {
+    if (!coordinates || isNaN(coordinates.lat) || isNaN(coordinates.lng)) return;
 
-    updateSelfMarker();
-    if (selfMarkerRef.current) {
-      selfMarkerRef.current.setPopup(
-        locationSource === "geolocation"
-          ? new tt.Popup({ offset: 30 }).setText("You are here")
-          : null
+    const { lng, lat } = coordinates;
+    const isGeolocation = locationSource === "geolocation";
+    const iconUrl = isGeolocation ? "arrow-icon.png" : "current-location-pin-map.png";
+
+    if (!selfMarkerRef.current) {
+      selfMarkerRef.current = createSelfMarker(
+        iconUrl,
+        [lng, lat],
+        "#c31a26",
+        isGeolocation ? "You are here" : "",
+        true,
+        mapRef.current,
+        () => {
+          const lngLat = selfMarkerRef.current.getLngLat();
+          setCoordinates({ lat: lngLat.lat, lng: lngLat.lng });
+          setLocationSource("drag");
+          debouncedAddBuffer(lngLat.lng, lngLat.lat);
+          setIsDragging(false); // Set isDragging to false on drag end
+        }
       );
+      selfMarkerRef.current.on("dragstart", () => setIsDragging(true)); // Set isDragging to true on drag start
+    } else {
+      selfMarkerRef.current.setLngLat([lng, lat]);
+      const markerIcon = selfMarkerRef.current.getElement().querySelector(".marker-circle-icon");
+      if (markerIcon) {
+        markerIcon.style.backgroundImage = `url(${iconUrl})`;
+      }
+      if (isGeolocation) {
+        selfMarkerRef.current.setPopup(new tt.Popup({ offset: 30 }).setText("You are here"));
+      } else {
+        selfMarkerRef.current.setPopup(null);
+      }
     }
 
-    mapRef.current.easeTo({
-      center: [coordinates.lng, coordinates.lat],
-      zoom: 13,
-      speed: 0.8,
-    });
+    debouncedAddBuffer(lng, lat);
+  };
+
+  // Self marker update effect (unchanged except for dependency)
+  useEffect(() => {
+    if (!mapRef.current || !mapLoaded || !coordinates.lat || !coordinates.lng) return;
+    updateSelfMarker();
   }, [coordinates, locationSource, mapLoaded]);
-  const layerRef = useRef(null);
+
+  // Rotation effect (modified)
+  useEffect(() => {
+    if (selfMarkerRef.current) {
+      const markerIcon = selfMarkerRef.current.getElement().querySelector(".marker-circle-icon");
+      if (markerIcon) {
+        if (
+          locationSource === "geolocation" &&
+          deviceHeading !== null &&
+          !isDragging
+        ) {
+          markerIcon.style.transform = `rotate(${deviceHeading + 45}deg)`;
+        } else {
+          markerIcon.style.transform = "rotate(45deg)";
+        }
+      }
+    }
+  }, [deviceHeading, locationSource, isDragging]);
+
+  // Device orientation effect (unchanged)
+  useEffect(() => {
+    const handleDeviceOrientation = (event) => {
+      let heading;
+      if (event.webkitCompassHeading !== undefined) {
+        heading = event.webkitCompassHeading;
+      } else {
+        heading = event.alpha !== null ? event.alpha : 0;
+        if (event.beta !== null && event.gamma !== null) {
+          heading = (360 - heading) % 360;
+        }
+      }
+      setDeviceHeading(heading);
+    };
+    window.addEventListener("deviceorientation", handleDeviceOrientation);
+    return () => {
+      window.removeEventListener("deviceorientation", handleDeviceOrientation);
+    };
+  }, []);
+
   // Center on selected station effect (unchanged)
   useEffect(() => {
-    console.log("entryExitBoxes:", entryExitBoxes);
     if (centerThisStation && mapRef.current) {
-      console.log("Centerthis:", centerThisStation);
-  
-      // Remove existing markers first (cleanup before adding new ones)
       markersRef.current.forEach((marker) => marker.remove());
       markersRef.current = [];
-  
-      // Only add lift markers if showLift is true
+
       if (showLift) {
         fetch(entryExitBoxes)
           .then((response) => {
@@ -461,30 +521,20 @@ function FullMapView({
             return response.json();
           })
           .then((geojsonData) => {
-            const liftGates = centerThisStation.Lift_Status.split(", ").map(
-              (gate) => gate.trim()
+            const liftGates = centerThisStation.Lift_Status.split(", ").map((gate) =>
+              gate.trim()
             );
-            console.log("Lift Gates:", liftGates);
-  
             const matchingFeatures = geojsonData.features.filter(
               (feature) =>
                 feature.properties.id === centerThisStation.id &&
                 liftGates.includes(feature.properties.descriptio)
             );
-            console.log("Matching Features:", matchingFeatures);
-  
             matchingFeatures.forEach((feature) => {
               const coordinates = feature.geometry.coordinates[0][0];
               const uniqueCoordinates = coordinates.slice(0, -1);
-  
-              const topmostCoord = uniqueCoordinates.reduce(
-                (max, current) => (current[1] > max[1] ? current : max)
+              const topmostCoord = uniqueCoordinates.reduce((max, current) =>
+                current[1] > max[1] ? current : max
               );
-  
-              console.log(
-                `Gate: ${feature.properties.descriptio}, Topmost Coordinate: [${topmostCoord[0]}, ${topmostCoord[1]}]`
-              );
-  
               const liftMarker = createMarker(
                 `${process.env.PUBLIC_URL}/Lift_Status.svg`,
                 [topmostCoord[0], topmostCoord[1]],
@@ -498,16 +548,12 @@ function FullMapView({
                 { Locality_Name: `` },
                 setTopPlaceId
               );
-  
               markersRef.current.push(liftMarker);
             });
           })
           .catch((error) => console.error("Error fetching GeoJSON:", error));
-      } else {
-        console.log("showLift is false, lift icons not added");
       }
-  
-      // Center the map on the station regardless of showLift
+
       const lat = parseFloat(centerThisStation.Station_Latitude);
       const lng = parseFloat(centerThisStation.Station_Longitude);
       if (!isNaN(lat) && !isNaN(lng)) {
@@ -515,8 +561,7 @@ function FullMapView({
         mapRef.current.zoomTo(17);
       }
     }
-  
-    // Cleanup function to remove markers when centerThisStation or showLift changes
+
     return () => {
       markersRef.current.forEach((marker) => marker.remove());
       markersRef.current = [];
@@ -531,8 +576,6 @@ function FullMapView({
     entryExitBoxes,
   ]);
 
-
-  
   // Fetch station data effect (unchanged)
   useEffect(() => {
     getStationData().then(setStationData);
@@ -583,38 +626,10 @@ function FullMapView({
     markersRef.current = [];
   };
 
-  const updateSelfMarker = () => {
-    if (!coordinates || isNaN(coordinates.lat) || isNaN(coordinates.lng))
-      return;
-
-    const { lng, lat } = coordinates;
-    if (!selfMarkerRef.current) {
-      selfMarkerRef.current = createSelfMarker(
-        "current-location-pin-map.png",
-        [lng, lat],
-        "#c31a26",
-        "You are here",
-        true,
-        mapRef.current,
-        () => {
-          const lngLat = selfMarkerRef.current.getLngLat();
-          setCoordinates({ lat: lngLat.lat, lng: lngLat.lng });
-          setLocationSource("drag");
-          debouncedAddBuffer(lngLat.lng, lngLat.lat);
-        }
-      );
-      debouncedAddBuffer(lng, lat);
-    } else {
-      selfMarkerRef.current.setLngLat([lng, lat]);
-      debouncedAddBuffer(lng, lat);
-    }
-  };
-
   useEffect(() => {
     if (!mapRef.current || !coordinates.lat || !coordinates.lng) return;
 
     removeMarkers();
-    // console.log("places before filter", places);
     markersRef.current = places
       .filter((place) => place.Type_of_Locality === type)
       .map((place, i) =>
@@ -656,18 +671,16 @@ function FullMapView({
       );
     });
 
-    // Fly to self marker position after updating markers
     if (selfMarkerRef.current) {
       const { lng, lat } = coordinates;
       mapRef.current.flyTo({
         center: [lng, lat],
-        zoom: 13, // You can adjust this zoom level as needed
+        zoom: 13,
         speed: 2,
-        curve: 1, // Controls the flight curve (1 is default)
-        easing: (t) => t // Linear easing, you can modify this for different animation effects
+        curve: 1,
+        easing: (t) => t,
       });
     }
-
   }, [
     places,
     type,
@@ -675,7 +688,7 @@ function FullMapView({
     setChildClicked,
     setSelectedPlace,
     setTopPlaceId,
-    coordinates // Add coordinates to dependency array
+    coordinates,
   ]);
 
   // Input and suggestion handlers (unchanged)
@@ -685,8 +698,8 @@ function FullMapView({
     setSuggestions(
       value
         ? places.filter((place) =>
-          place.Locality_Name?.toLowerCase().includes(value.toLowerCase())
-        )
+            place.Locality_Name?.toLowerCase().includes(value.toLowerCase())
+          )
         : []
     );
   };
@@ -807,6 +820,7 @@ function FullMapView({
           }}
           onClick={() => navigate("/map")}
         >
+          
           <img src="fullscreen.png" style={{ width: "35px" }} />
         </button>
       )}
@@ -839,22 +853,13 @@ function FullMapView({
               component="img"
               image={
                 selectedPlace.Image
-                  ? `${process.env.REACT_APP_BASE_URL +
-                  "assets/" +
-                  selectedPlace.Image
-                  }`
+                  ? `${process.env.REACT_APP_BASE_URL + "assets/" + selectedPlace.Image}`
                   : "https://plus.unsplash.com/premium_photo-1686090448301-4c453ee74718?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               }
               title={selectedPlace.Locality_Name}
             />
-            <Box
-              display="flex"
-              flexDirection="column"
-              justifyContent="flex-start"
-            >
-              <CardContent
-                style={{ flexGrow: 1, padding: 5, marginTop: "10px" }}
-              >
+            <Box display="flex" flexDirection="column" justifyContent="flex-start">
+              <CardContent style={{ flexGrow: 1, padding: 5, marginTop: "10px" }}>
                 <Typography
                   gutterBottom
                   variant="h6"
@@ -896,19 +901,10 @@ function FullMapView({
                 >
                   Nearest Gates:{" "}
                   {nearestGates.map((gate, index) => (
-                    <span
-                      key={index}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "1px",
-                      }}
-                    >
+                    <span key={index} style={{ display: "flex", alignItems: "center", gap: "1px" }}>
                       {gate}
                       {metroStations[stationId]?.lifts?.includes(gate) && (
-                        <AccessibleIcon
-                          sx={{ fontSize: "16px", color: "rgb(232, 23, 23)" }}
-                        />
+                        <AccessibleIcon sx={{ fontSize: "16px", color: "rgb(232, 23, 23)" }} />
                       )}
                     </span>
                   ))}
@@ -928,9 +924,7 @@ function FullMapView({
             <Button
               endIcon={<Directions style={{ fontSize: 23 }} />}
               color="primary"
-              onClick={() =>
-                handleGetDirections(selectedPlace, username, nearestStation)
-              }
+              onClick={() => handleGetDirections(selectedPlace, username, nearestStation)}
               style={{
                 marginTop: 5,
                 backgroundColor: "#212021",
