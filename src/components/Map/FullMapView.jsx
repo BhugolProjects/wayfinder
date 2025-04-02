@@ -233,7 +233,7 @@ const handleGetDirections = async (place, username, nearestStation) => {
   else alert("Location information is not available.");
 };
 
-// Main Component (modified)
+// Main Component (modified with device orientation permission)
 function FullMapView({
   topPlaceId,
   setTopPlaceId,
@@ -257,13 +257,14 @@ function FullMapView({
   setShowLift,
 }) {
   const [deviceHeading, setDeviceHeading] = useState(null);
-  const [isDragging, setIsDragging] = useState(false); // Added new state
+  const [isDragging, setIsDragging] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [locationSource, setLocationSource] = useState("geolocation");
   const [stationData, setStationData] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [hasOrientationPermission, setHasOrientationPermission] = useState(false); // New state for permission
   const mapRef = useRef(null);
   const markersRef = useRef([]);
   const selfMarkerRef = useRef(null);
@@ -337,6 +338,31 @@ function FullMapView({
         source: "self-marker-buffer",
         paint: { "fill-color": "#c31a26", "fill-opacity": 0.2 },
       });
+    }
+  };
+
+  // Request device orientation permission
+  const requestOrientationPermission = async () => {
+    if (
+      typeof DeviceOrientationEvent !== "undefined" &&
+      typeof DeviceOrientationEvent.requestPermission === "function"
+    ) {
+      try {
+        const permissionState = await DeviceOrientationEvent.requestPermission();
+        if (permissionState === "granted") {
+          setHasOrientationPermission(true);
+          console.log("Orientation permission granted!");
+        } else {
+          console.log("Orientation permission denied.");
+          alert("Permission denied. Please enable Motion & Orientation access in Settings.");
+        }
+      } catch (error) {
+        console.error("Error requesting orientation permission:", error);
+      }
+    } else {
+      // If the browser doesn't require explicit permission, assume it's available
+      setHasOrientationPermission(true);
+      console.log("No permission request needed for this browser.");
     }
   };
 
@@ -423,7 +449,7 @@ function FullMapView({
     }
   }, [coordinates, setCoordinates, setLocationSource]);
 
-  // Update self marker and handle icon/popup updates (modified)
+  // Update self marker and handle icon/popup updates (unchanged)
   const updateSelfMarker = () => {
     if (!coordinates || isNaN(coordinates.lat) || isNaN(coordinates.lng)) return;
 
@@ -444,10 +470,10 @@ function FullMapView({
           setCoordinates({ lat: lngLat.lat, lng: lngLat.lng });
           setLocationSource("drag");
           debouncedAddBuffer(lngLat.lng, lngLat.lat);
-          setIsDragging(false); // Set isDragging to false on drag end
+          setIsDragging(false);
         }
       );
-      selfMarkerRef.current.on("dragstart", () => setIsDragging(true)); // Set isDragging to true on drag start
+      selfMarkerRef.current.on("dragstart", () => setIsDragging(true));
     } else {
       selfMarkerRef.current.setLngLat([lng, lat]);
       const markerIcon = selfMarkerRef.current.getElement().querySelector(".marker-circle-icon");
@@ -470,7 +496,36 @@ function FullMapView({
     updateSelfMarker();
   }, [coordinates, locationSource, mapLoaded]);
 
-  // Rotation effect (modified)
+  // Request orientation permission on mount and handle orientation events
+  useEffect(() => {
+    // Request permission when the component mounts
+    requestOrientationPermission();
+
+    const handleDeviceOrientation = (event) => {
+      if (!hasOrientationPermission) return; // Only proceed if permission is granted
+
+      let heading;
+      if (event.webkitCompassHeading !== undefined) {
+        heading = event.webkitCompassHeading; // Safari-specific
+      } else {
+        heading = event.alpha !== null ? event.alpha : 0;
+        if (event.beta !== null && event.gamma !== null) {
+          heading = (360 - heading) % 360; // Adjust for standard compass heading
+        }
+      }
+      setDeviceHeading(heading);
+    };
+
+    if (hasOrientationPermission) {
+      window.addEventListener("deviceorientation", handleDeviceOrientation);
+    }
+
+    return () => {
+      window.removeEventListener("deviceorientation", handleDeviceOrientation);
+    };
+  }, [hasOrientationPermission]);
+
+  // Rotation effect (unchanged)
   useEffect(() => {
     if (selfMarkerRef.current) {
       const markerIcon = selfMarkerRef.current.getElement().querySelector(".marker-circle-icon");
@@ -487,26 +542,6 @@ function FullMapView({
       }
     }
   }, [deviceHeading, locationSource, isDragging]);
-
-  // Device orientation effect (unchanged)
-  useEffect(() => {
-    const handleDeviceOrientation = (event) => {
-      let heading;
-      if (event.webkitCompassHeading !== undefined) {
-        heading = event.webkitCompassHeading;
-      } else {
-        heading = event.alpha !== null ? event.alpha : 0;
-        if (event.beta !== null && event.gamma !== null) {
-          heading = (360 - heading) % 360;
-        }
-      }
-      setDeviceHeading(heading);
-    };
-    window.addEventListener("deviceorientation", handleDeviceOrientation);
-    return () => {
-      window.removeEventListener("deviceorientation", handleDeviceOrientation);
-    };
-  }, []);
 
   // Center on selected station effect (unchanged)
   useEffect(() => {
@@ -716,7 +751,7 @@ function FullMapView({
     setSuggestions([]);
   };
 
-  // Render (unchanged)
+  // Render (modified to include permission button if needed)
   return (
     <MapContainer
       isDesktop={isDesktop}
@@ -802,6 +837,25 @@ function FullMapView({
               </ul>
             )}
           </form>
+          {/* Button to request permission if not granted */}
+          {!hasOrientationPermission && (
+            <Button
+              onClick={requestOrientationPermission}
+              style={{
+                position: "absolute",
+                top: "50px",
+                left: "50%",
+                transform: "translateX(-50%)",
+                zIndex: 50,
+                backgroundColor: "#212021",
+                color: "white",
+                borderRadius: "12px",
+                padding: "5px 15px",
+              }}
+            >
+              Enable Compass
+            </Button>
+          )}
         </div>
       )}
       <div id="map" style={{ width: "100%", height: "100%" }} />
@@ -820,7 +874,6 @@ function FullMapView({
           }}
           onClick={() => navigate("/map")}
         >
-          
           <img src="fullscreen.png" style={{ width: "35px" }} />
         </button>
       )}
