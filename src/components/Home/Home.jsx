@@ -6,7 +6,7 @@ import Header from "./Header";
 import CategorySection from "./CategorySection";
 import { addVisitor, getPlacesData, getStationData } from "../../api";
 import FullMapView from "../Map/FullMapView";
-import Map from "../Map/Map";
+
 import KnowYourStation from "./KnowYourStation";
 import PlaceList from "./PlaceList/PLaceList";
 import { getDistance } from "geolib";

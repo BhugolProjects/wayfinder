@@ -43,7 +43,7 @@ function Map({
 
       {/* CategoryList placed above the map */}
       <div className="absolute top-3 left-0 w-full z-10 p-4">
-        <CategoryList type={type} setType={setType} />
+        <CategoryList type={type} setType={setType} places={places}/>
       </div>
     </main>
   );
