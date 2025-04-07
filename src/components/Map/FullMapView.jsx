@@ -179,39 +179,54 @@ const createCircleMarker = (
   return marker;
 };
 
-// Map initialization (unchanged)
 const initializeMap = (
   containerId,
   coordinates,
   setCoordinates,
   setLocationSource
 ) => {
+  // Use fallback coordinates if initial coordinates are invalid
+  const fallbackCoordinates = { lat: 19.0760, lng: 72.8777 }; // Mumbai center as default
+  const initialCoords = coordinates.lat && coordinates.lng && !isNaN(coordinates.lat) && !isNaN(coordinates.lng)
+    ? coordinates
+    : fallbackCoordinates;
+
   const map = tt.map({
     key: process.env.REACT_APP_TOMTOM_API_KEY,
     container: containerId,
-    center: [coordinates.lng, coordinates.lat],
+    center: [initialCoords.lng, initialCoords.lat],
     zoom: 14,
     stylesVisibility: { poi: false },
   });
 
+  // Add NavigationControl for zoom/pan
   map.addControl(new tt.NavigationControl());
+
+  // Add GeolocateControl with optimized settings
   const geolocateControl = new tt.GeolocateControl({
-    positionOptions: { enableHighAccuracy: false },
+    positionOptions: { enableHighAccuracy: false, timeout: 5000, maximumAge: 60000 },
   });
   geolocateControl.on("geolocate", (e) => {
     const { latitude, longitude } = e.coords;
     setCoordinates({ lat: latitude, lng: longitude });
     setLocationSource("geolocation");
-    map.setCenter([longitude, latitude]);
+    map.flyTo({ center: [longitude, latitude], speed: 1.5, zoom: 15 }); // Smooth transition
   });
   map.addControl(geolocateControl);
 
+  // Fetch geolocation with optimization and fallback
   navigator.geolocation.getCurrentPosition(
     ({ coords: { latitude, longitude } }) => {
       setCoordinates({ lat: latitude, lng: longitude });
       setLocationSource("geolocation");
-      map.setCenter([longitude, latitude]);
-    }
+      map.flyTo({ center: [longitude, latitude], speed: 1.5 }); // Smooth transition
+    },
+    (error) => {
+      console.error("Geolocation error:", error);
+      setCoordinates(fallbackCoordinates); // Fallback on error
+      map.setCenter([fallbackCoordinates.lng, fallbackCoordinates.lat]);
+    },
+    { enableHighAccuracy: false, timeout: 5000, maximumAge: 60000 } // Optimize for speed
   );
 
   return map;
@@ -366,28 +381,35 @@ function FullMapView({
     }
   };
 
-  // Map initialization effect (unchanged)
   useEffect(() => {
-    if (!mapRef.current && coordinates.lat && coordinates.lng) {
-      mapRef.current = initializeMap(
-        "map",
-        coordinates,
-        setCoordinates,
-        setLocationSource
-      );
+    if (!mapRef.current) {
+      // Use fallback coordinates if initial coordinates are invalid or missing
+      const fallbackCoordinates = { lat: 19.0760, lng: 72.8777 }; // Mumbai center
+      const initialCoordinates = coordinates.lat && coordinates.lng && !isNaN(coordinates.lat) && !isNaN(coordinates.lng)
+        ? coordinates
+        : fallbackCoordinates;
+  
+      mapRef.current = initializeMap("map", initialCoordinates, setCoordinates, setLocationSource);
+  
       mapRef.current.on("load", () => {
+        // Predefine GeoJSON sources for faster layer addition
+        mapRef.current.addSource("metro-line-source", { type: "geojson", data: stationGeoJSON });
+        mapRef.current.addSource("station-box-source", { type: "geojson", data: stationBox });
+        mapRef.current.addSource("entry-exit-source", { type: "geojson", data: entryExitBoxes });
+  
+        // Add layers using sources
         mapRef.current.addLayer({
           id: "metro-line",
           type: "line",
-          source: { type: "geojson", data: stationGeoJSON },
+          source: "metro-line-source",
           layout: { "line-join": "round", "line-cap": "round" },
           paint: { "line-color": "#02D8E9", "line-width": 5 },
         });
-
+  
         mapRef.current.addLayer({
           id: "station-box",
           type: "fill",
-          source: { type: "geojson", data: stationBox },
+          source: "station-box-source",
           paint: {
             "fill-color": [
               "case",
@@ -398,18 +420,18 @@ function FullMapView({
             "fill-opacity": 0.9,
           },
         });
-
+  
         mapRef.current.addLayer({
           id: "entry-exit-boxes",
           type: "fill",
-          source: { type: "geojson", data: entryExitBoxes },
+          source: "entry-exit-source",
           paint: { "fill-color": "rgb(50, 91, 84)", "fill-opacity": 0.9 },
         });
-
+  
         mapRef.current.addLayer({
           id: "entry-exit-labels",
           type: "symbol",
-          source: { type: "geojson", data: entryExitBoxes },
+          source: "entry-exit-source",
           layout: {
             "text-field": ["get", "descriptio"],
             "text-size": 14,
@@ -424,7 +446,8 @@ function FullMapView({
             "text-halo-width": 2,
           },
         });
-
+  
+        // Combine zoom event listeners into one for efficiency
         mapRef.current.on("zoom", () => {
           const zoom = mapRef.current.getZoom();
           mapRef.current.setLayoutProperty(
@@ -432,10 +455,6 @@ function FullMapView({
             "visibility",
             zoom > 16 ? "visible" : "none"
           );
-        });
-
-        mapRef.current.on("zoom", () => {
-          const zoom = mapRef.current.getZoom();
           document.querySelectorAll(".marker-label").forEach((label) => {
             label.style.display = zoom > 16 ? "block" : "none";
           });
@@ -443,11 +462,11 @@ function FullMapView({
             label.style.display = zoom > 12 ? "block" : "none";
           });
         });
-
+  
         setMapLoaded(true);
       });
     }
-  }, [coordinates, setCoordinates, setLocationSource]);
+  }, [setCoordinates, setLocationSource]); // Removed `coordinates` from deps to initialize only once
 
   // Update self marker and handle icon/popup updates (unchanged)
   const updateSelfMarker = () => {
